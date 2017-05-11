@@ -172,7 +172,7 @@ LOGGING = {
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # Python social auth
-UTHENTICATION_BACKENDS = (  
+AUTHENTICATION_BACKENDS = (  
    'social.backends.azuread.AzureADOAuth2',  
 )  
 TEMPLATE_CONTEXT_PROCESSORS = (  
