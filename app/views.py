@@ -24,11 +24,13 @@ def landing(request):
     assert isinstance(request, HttpRequest)
     return render(
         request,
-        'app/login.html',
+        'app/landing.html',
         context_instance = RequestContext(request,
         {
             'title':'Home Page',
             'year':datetime.now().year,
+            'request':request,
+            'user':request.user
         })
     )
 

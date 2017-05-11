@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'social.apps.django_app.default',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -169,3 +170,24 @@ LOGGING = {
 
 # Specify the default test runner.
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+# Python social auth
+UTHENTICATION_BACKENDS = (  
+   'social.backends.azuread.AzureADOAuth2',  
+)  
+TEMPLATE_CONTEXT_PROCESSORS = (  
+   'django.contrib.auth.context_processors.auth',  
+   'django.core.context_processors.debug',  
+   'django.core.context_processors.i18n',  
+   'django.core.context_processors.media',  
+   'django.core.context_processors.static',  
+   'django.core.context_processors.tz',  
+   'django.contrib.messages.context_processors.messages',  
+   'social.apps.django_app.context_processors.backends',  
+   'social.apps.django_app.context_processors.login_redirect',  
+ )
+ 
+LOGIN_REDIRECT_URL = '/'
+ 
+SOCIAL_AUTH_AZUREAD_OAUTH2_KEY = 'dceaab8e-6a17-46f1-8b21-2ee5fc2a89ad'        
+SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET = 'tijh1z2sf5UwvbGe3Dym7gwAT/ciMnX/uD5RAKNZl10='
