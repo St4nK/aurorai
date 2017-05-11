@@ -19,6 +19,18 @@ def home(request):
             'year':datetime.now().year,
         })
     )
+def landing(request):
+    """Renders the home page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/login.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'Home Page',
+            'year':datetime.now().year,
+        })
+    )
 
 def contact(request):
     """Renders the contact page."""
