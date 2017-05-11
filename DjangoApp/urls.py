@@ -18,7 +18,7 @@ from django.contrib.auth.views import *
 urlpatterns = [
     # Examples:
      
-    url(r'^$', home, name='landing'),
+    url(r'^$', landing, name='landing'),
     url(r'^home', home, name='home'),
     url(r'^contact$', contact, name='contact'),
     url(r'^about', about, name='about'),
