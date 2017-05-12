@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="col-sm-4 border-right">
                     <div class="description-block">
-                        <h5 class="description-header">10</h5>
+                        <h5 class="description-header">0</h5>
                         <span class="description-text">PROJECTS</span>
                     </div>
                     <!-- /.description-block -->
@@ -73,6 +73,11 @@
         </div>
     </div>
   <!-- /.login-box-body -->
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-warning"></i> No Projects</h4>
+        You are currently not assigned to any project. Please contact PMO to grant access to your project!
+    </div>
     <a class="btn btn-block btn-social btn-bitbucket" href="{% url 'auth:logout' %}?next=/">
         <i class="fa fa-chevron-right"></i> Sign Out
     </a>
