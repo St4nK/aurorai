@@ -17,7 +17,7 @@ from django.contrib.auth.views import *
 
 urlpatterns = [
     # Examples:
-    url('', include('social.apps.django_app.urls', namespace='social')),  
+    url('', include('social_django.urls', namespace='social')),  
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^$', landing, name='landing'),
     url(r'^home', home, name='home'),

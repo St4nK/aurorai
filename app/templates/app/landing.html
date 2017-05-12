@@ -33,6 +33,9 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
+      {% if user.is_authenticated %}
+      {{ user.first_name }}
+      {% endif %}
 
     <form action="../../index2.html" method="post">
       <div class="form-group has-feedback">
@@ -60,9 +63,8 @@
     </form>
 
 
-    <a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>
-    <a href="{% url 'social:begin' 'azuread-oauth2' %}?next={{ request.path }}">Login with Azure AD</a>
+    
+    <a href="{% url 'social:begin' 'azuread-oauth2' %}?next={{ request.path }}" class="text-center">Login with Azure AD</a>
 
   </div>
   <!-- /.login-box-body -->
