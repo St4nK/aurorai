@@ -20,6 +20,7 @@ urlpatterns = [
     url('', include('social_django.urls', namespace='social')),  
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^$', landing, name='landing'),
+    url(r'^welcome', welcome, name='welcome'),
     url(r'^home', home, name='home'),
     url(r'^contact$', contact, name='contact'),
     url(r'^about', about, name='about'),

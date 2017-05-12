@@ -33,9 +33,7 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
-      {% if user.is_authenticated %}
-      {{ user.first_name }}
-      {% endif %}
+      
 
     <form action="../../index2.html" method="post">
       <div class="form-group has-feedback">
@@ -63,9 +61,10 @@
     </form>
 
 
-    
-    <a href="{% url 'social:begin' 'azuread-oauth2' %}?next={{ request.path }}" class="text-center">Login with Azure AD</a>
-      <a href="{% url 'auth:logout' %}?next={{ request.path }}">Log off</a>
+      <a class="btn btn-block btn-social btn-bitbucket" href="{% url 'social:begin' 'azuread-oauth2' %}?next=/welcome">
+          <i class="fa fa-chevron-right"></i> Sign in with Accenture Account
+      </a>
+      <a href="{% url 'auth:logout' %}?next=/">Log off</a>
 
   </div>
   <!-- /.login-box-body -->

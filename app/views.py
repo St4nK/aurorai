@@ -33,6 +33,20 @@ def landing(request):
             'user':request.user
         })
     )
+def welcome(request):
+    """Renders the home page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/welcome.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'Home Page',
+            'year':datetime.now().year,
+            'request':request,
+            'user':request.user
+        })
+    )
 
 def contact(request):
     """Renders the contact page."""
