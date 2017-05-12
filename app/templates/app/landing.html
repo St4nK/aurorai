@@ -65,6 +65,7 @@
 
     
     <a href="{% url 'social:begin' 'azuread-oauth2' %}?next={{ request.path }}" class="text-center">Login with Azure AD</a>
+      <a href="{% url 'auth:logout' %}?next={{ request.path }}">Log off</a>
 
   </div>
   <!-- /.login-box-body -->
