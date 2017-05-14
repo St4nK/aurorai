@@ -257,7 +257,7 @@ a:focus {
   font-family: fontAwesome;
 }
 .main-header .sidebar-toggle:before {
-  content: "\f0c9";
+  content: "\f131";
 }
 .main-header .sidebar-toggle:hover {
   color: #fff;
@@ -1520,7 +1520,7 @@ a:focus {
   -o-transition: all 0.3s linear;
   transition: all 0.3s linear;
   position: absolute;
-  top: -10px;
+  top: 0px;
   right: 10px;
   z-index: 0;
   font-size: 90px;
@@ -1535,10 +1535,10 @@ a:focus {
 }
 @media (max-width: 767px) {
   .small-box {
-    text-align: center;
+    /*text-align: center;*/
   }
   .small-box .icon {
-    display: none;
+    /*display: none;*/
   }
   .small-box p {
     font-size: 12px;
