@@ -68,7 +68,7 @@ def opex_visi_dashboard(request):
     data2_json = json.dumps(list(data2), cls=DjangoJSONEncoder)
     return render(
         request,
-        'app/OPEX/dashboard.html',
+        'app/OPEX/visibility/dashboard.html',
         context_instance = RequestContext(request,
         {
             'data':data_json,

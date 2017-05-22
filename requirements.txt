@@ -1,3 +1,4 @@
+--find-links wheelhouse
 Django==1.9.4
 numpy==1.12.1
 oauthlib==2.0.2
