@@ -15,7 +15,7 @@
         <ol class="breadcrumb">
             <li>
 <a href="#"><i class="fa fa-dashboard"></i> Demo Project</a></li>
-            <li class="active">OPEX</li><li class="active">Dashboard</li>
+            <li class="active">OPEX</li><li class="active">Visibility</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -39,6 +39,65 @@
         
         {% verbatim %}
         <div class="row">
+            <div class="col-sm-12">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            Confidence Index
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+
+                                <div class="progress-group">
+                                    <span class="progress-text">Current Confidence</span>
+                                    <span class="progress-number"><b>91</b>%</span>
+
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-green" style="width: 91%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Lines Reviewed by Humans</span>
+                                    <span class="progress-number"><b>3,000</b>/523,024</span>
+
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-light-blue" style="width: 1%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Lines Mapped by AurorAI</span>
+                                    <span class="progress-number"><b>475,164</b>/523,024</span>
+
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-yellow" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Lines to be reviewed to reach 100%</span>
+                                    <span class="progress-number"><b>47,560</b>/523,024</span>
+
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-yellow" style="width: 9%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+
+                            </div>
+                            <div class="col-lg-8" style="height:200px;">
+                                <svg id="areaChart1" style="display:block; width:100%; height:100%; padding:0px"></svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="box box-warning">
                     <div class="box-header with-border">
@@ -54,7 +113,7 @@
                 <div class="box">
                     <div class="box-header">
                         <div class="box-title">
-                            Visibility
+                            Package
                         </div>
                     </div>
                     <div class="box-body">
@@ -63,48 +122,27 @@
                         </div>
                         
                     </div>
-                    <div class="box-footer">
-                        <div class="col-sm-12">
-                            <!-- Progress bars -->
-                            <div class="clearfix">
-                                <span class="pull-left">Visibility Confidence</span>
-                                <small class="pull-right">91%</small>
-                            </div>
-                            <div class="progress xs">
-                                <div class="progress-bar progress-bar-green" style="width: 91%;"></div>
-                            </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="box-title">
+                            SubPackage
                         </div>
-                        <div class="col-sm-12">
-                            <div class="callout callout-success">
-                                <h4>Improve the confidence!</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart1" style="height:300px; width:100%">
+                            <svg id="areaChart2" style="display:block; width:100%; height:100%; padding:0px"></svg>
+                        </div>
 
-                                <p>Review 10 new transactions patterns to improve your visibility confidence. <a>GO!</a></p>
-                            </div>
-                        </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                    <div class="box-title">
-                        Budgeting
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                    <div class="box-title">
-                        Control & Monitoring
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
             
 
                     <!-- /.box-header -->
@@ -126,6 +164,35 @@
 <script type="text/javascript">
     function dataCleaned(){
         return {{data2|safe}}
+    };
+    function dataHistoric(){
+        return [ 
+    { 
+        "key" : "Demo Project" , 
+        "values" : [
+  [ 1487790206000, 0.4 ],
+  [ 1487911166000, 0.55 ],
+  [ 1488032126000, 0.65 ],
+  [ 1488153086000, 0.72 ],
+  [ 1488274046000, 0.76 ],
+  [ 1488395006000, 0.7914 ],
+  [ 1488515966000, 0.8009 ],
+  [ 1488636926000, 0.8098 ],
+  [ 1488757886000, 0.8185 ],
+  [ 1488878846000, 0.8267 ],
+  [ 1488999806000, 0.8346 ],
+  [ 1489120766000, 0.8423 ],
+  [ 1489241726000, 0.8496 ],
+  [ 1489362686000, 0.8567 ],
+  [ 1489483646000, 0.8635 ],
+  [ 1489604606000, 0.8701 ],
+  [ 1489725566000, 0.8765 ],
+  [ 1489846526000, 0.8827 ],
+  [ 1489967486000, 0.8887 ],
+  [ 1490088446000, 0.8946 ],
+  [ 1490209406000, 0.9103 ]
+        ]}]
+
     };
 </script>
 <<!-- Dataset Objects and functions-->
@@ -172,6 +239,16 @@
         view:myview2,
         format:'multi',
         dataset:myds.returnDataSet(myview2, 'multi'),
+        dimension:'subpackage',
+        hasFilter:false
+        
+    });
+    var myStackedAreaChart = new AuroraChart({
+        chartType:'StackedAreaChart',
+        div:'#areaChart1',
+        view:myview2,
+        format:'multi',
+        dataset:dataHistoric(),
         dimension:'subpackage',
         hasFilter:false
         
