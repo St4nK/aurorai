@@ -1,0 +1,240 @@
+﻿{% extends "app/layout.html" %}
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Upload Manager 
+        <small>File Manager v0.1</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-home"></i> Opex</a></li>
+      </ol>
+    </section>
+
+    <div id="ractive">
+
+    </div>
+  </div>
+
+  <!-- /.content-wrapper -->
+{% endblock %}
+{% block javascript %}
+<script src="static/dist/js/dropzone.js"></script>
+<link rel="stylesheet" href="static/dist/css/dropzone.css">
+<script src='http://cdn.ractivejs.org/latest/ractive.min.js'></script>
+<script id="template-ractive" type="text/ractive">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="dropzone" action="/upload" method="post" enctype="multipart/form-data" id="filesdz">
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        {% verbatim %}
+                        <h3 class="box-title">{{table_name}}</h3>
+                    </div>
+                    <div class="box-body table-responsive no-padding table-bordered">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+
+                                    {{#each data_columns:k,i}}
+                                    <th>{{.}}</th>
+                                    {{/each}}
+
+                                </tr>
+                                {{#each data_table:i}}
+                                <tr>
+                                    {{#each data_table[i]:j}}
+                                    <td>{{data_table[i][j]}}</td>
+                                    {{/each}}
+                                </tr>
+                                {{/each}}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Load {{table_name}} to Database</h3>
+                    </div>
+                    <div class="box-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>Select Model</label>
+                                <select class="form-control" value="{{selectedModelIndex}}">
+                                    {{#each table_models:i}}
+                                    <option value="{{i}}">{{table_models[i][0]}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </form>
+                        <div class="table-responsive no-padding table-bordered">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+
+                                        {{#each selected_model_columns:i}}
+                                        <th {{#if (data_columns_reworked[i]==='missing')}} style="color:orangered"{{/if}}>{{selected_model_columns[i]}}</th>
+                                        {{/each}}
+
+                                    </tr>
+                                    <tr>
+
+                                        {{#each data_columns_reworked:i}}
+                                        <th>
+                                            {{#if . === 'missing'}}
+                                            missing
+                                            {{else}}
+                                            <input type="text" class="form-control" value="{{.}}" />
+                                            {{/if}}
+                                        </th>
+                                        {{/each}}
+
+                                    </tr>
+                                    
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <button type="button" class="btn btn-block btn-success">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    {% endverbatim %}
+    <!-- /.content -->
+
+</script>
+<script type="text/javascript">
+
+    /////////////////
+    // AJAX Functions
+    /////////////////
+
+    function dzClick(id) {
+        var file = $(id).context.children[1].children[0].innerText;
+        ractive.set('table_name', file);
+        $.ajax({
+            url: '/get_json_table',
+            type: 'get',
+            data: {
+                'user_id':ractive.get('user_id'),
+                'file':file.toString()
+            },
+            dataType: 'json',
+            success: function (data) {
+                json_columns =JSON.parse(data.json_columns);
+                json_table = JSON.parse(data.json_table);
+                ractive.set('data_table',json_table);
+                ractive.set('data_columns', json_columns);
+                ractive.set('data_columns_reworked', compareColumns(ractive.get('selected_model_columns'), json_columns));
+                
+                }
+        });
+    };
+
+    ////////////////////
+    // Classic Functions
+    ////////////////////
+
+    function compareColumns(model_columns, table_columns){
+        var new_table_columns = [];
+        var table_columns_copy = table_columns;
+        for (col in model_columns){
+            var value = model_columns[col];
+            if (table_columns.includes(value)){
+               
+                new_table_columns.push(value);
+                var index_table = table_columns.indexOf(value);
+                table_columns.splice(index_table,1);
+            }
+            else{
+                new_table_columns.push('missing');
+            }
+        }
+        for(col in table_columns){
+            if(table_columns[col] != 'missing'){
+                new_table_columns.push(table_columns[col]);
+            }
+            
+        }
+        return new_table_columns;
+
+    };
+    
+    ////////////////////
+    // Ractive Functions
+    ////////////////////
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '#ractive',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#template-ractive',
+          
+        // Here, we're passing in some initial data
+        data: {
+            name: 'world',
+            table_name : 'Table Overview',
+            data_table: {},
+            data_columns: [],
+            user_id: '{{user}}',
+            table_models: {{table_models|safe}},
+            selected_model_columns:[],
+            data_columns_reworked:[]
+        }
+    });
+    ractive.observe('selectedModelIndex', function(index){
+        model = this.get('table_models['+index+'][1]');
+        this.set('selected_model_columns', model);
+        
+        this.set('data_columns_reworked', compareColumns(this.get('selected_model_columns'), this.get('data_columns_reworked')))
+    });
+</script>
+<script type="text/javascript">
+    /////////////////////
+    // Dropzone Functions
+    /////////////////////
+    Dropzone.options.filesdz = {
+      paramName: "file", // The name that will be used to transfer the file
+      maxFilesize: 2, // MB
+      //autoProcessQueue: false,
+      addRemoveLinks: true,
+      acceptedFiles: ".xls, .xlsx, .xlsb",
+      accept: function(file, done) {
+        if (file.name == "pp4.jpg") {
+          done("Naha, you don't.");
+        }
+        else { done(); }
+      },
+      init: function() {
+          this.on("success", function (file) {});
+      }
+    };
+</script>
+{% endblock %}
