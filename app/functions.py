@@ -4,6 +4,7 @@ Author: Christophe Castan
 Date of creation : 18/05/2017
 Last Update: 18/05/2017
 """
+import numpy
 import pandas
 import time
 import json
