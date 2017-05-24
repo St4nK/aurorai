@@ -15,7 +15,6 @@ function AuroraChart(options) {
             switch (chartType) {
                 case 'DiscreteBarChart':
                     nv.addGraph(function () {
-                        console.log('coucou');
                         var chart = nv.models.discreteBarChart()
                             .x(function (d) { return d.key })    //Specify the data accessors.
                             .y(function (d) { return d.value })
@@ -99,6 +98,59 @@ function AuroraChart(options) {
                                 }
                             });
                         chart
+                        return chart;
+                    });
+                    break;
+                case 'StackedAreaChart':
+                    nv.addGraph(function () {
+                        var chart = nv.models.stackedAreaChart()
+                            .x(function (d) { return d[0] })    //Specify the data accessors.
+                            .y(function (d) { return d[1] })
+                            .duration(1000)
+                            .color(function (d) {
+                                return 'rgb(0,166,90)'
+                            })
+                            //.color(function (d) {
+                            //    if (options.hasFilter) {
+                            //        if (filters.hasOwnProperty(options.dimension)) {
+                            //            if (filters[options.dimension] === d.key) {
+                            //                return 'rgb(255, 127, 14)'
+                            //            }
+                            //            else {
+                            //                return 'rgb(31, 119, 180)'
+                            //            }
+                            //        }
+                            //        else {
+                            //            return 'rgb(31, 119, 180)'
+                            //        }
+                            //    }
+                            //    else {
+                            //        return 'rgb(31, 119, 180)'
+                            //    }
+                            //})
+                        //.valueFormat(d3.format('.2s'))
+                        .showLegend(false)
+                        .showControls(false)
+                        ;
+                        //chart.xAxis.rotateLabels(-45)
+                        chart.xAxis
+                            .tickFormat(function (d) {
+                                return d3.time.format('%x')(new Date(d))
+                        });
+                        chart.yAxis.tickFormat(d3.format(',%'));
+                        d3.select(options.div)
+                            .datum(data)
+                            .call(chart);
+
+                        //chart.discretebar.dispatch.on(
+                        //    "elementClick",
+                        //    function (e) {
+                        //        if (options.hasFilter) {
+                        //            ractive.animate('filters.' + options.dimension, e.data.key);
+                        //        }
+                        //    });
+                        nv.utils.windowResize(chart.update);
+
                         return chart;
                     });
                     break;
