@@ -162,9 +162,6 @@
 <!--retrieving data from python : TO add API call/Ajax async load-->
 
 <script type="text/javascript">
-    function dataCleaned(){
-        return {{data2|safe}}
-    };
     function dataHistoric(){
         return [ 
     { 
@@ -194,6 +191,10 @@
         ]}]
 
     };
+    function dataCleaned(){
+        return {{data2|safe}}
+    };
+    
 </script>
 <<!-- Dataset Objects and functions-->
 <script src="/static/dist/js/dataset.js"></script>
