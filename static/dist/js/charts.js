@@ -29,15 +29,15 @@ function AuroraChart(options) {
                                             return 'rgb(255, 127, 14)'
                                         }
                                         else {
-                                            return 'rgb(31, 119, 180)'
+                                            return 'rgb(0, 183, 238)'
                                         }
                                     }
                                     else {
-                                        return 'rgb(31, 119, 180)'
+                                        return 'rgb(0, 183, 238)'
                                     }
                                 }
                                 else {
-                                    return 'rgb(31, 119, 180)'
+                                    return 'rgb(0, 183, 238)'
                                 }
                             })
                             .valueFormat(d3.format('.2s'))
@@ -75,15 +75,15 @@ function AuroraChart(options) {
                                             return 'rgb(255, 127, 14)'
                                         }
                                         else {
-                                            return 'rgb(31, 119, 180)'
+                                            return 'rgb(0, 183, 238)'
                                         }
                                     }
                                     else {
-                                        return 'rgb(31, 119, 180)'
+                                        return 'rgb(0, 183, 238)'
                                     }
                                 }
                                 else {
-                                    return 'rgb(31, 119, 180)'
+                                    return 'rgb(0, 183, 238)'
                                 }
                             })
                             .showLegend(false);
