@@ -10,17 +10,17 @@ from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 import json
 from django.core.urlresolvers import reverse
 import functions as f
-from django.db.models import Count, F, Sum
+from run_functions import *
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
-from app.models import *
 
 def home(request):
     """Renders the home page."""
+    template = 'app/home.html'
     assert isinstance(request, HttpRequest)
     return render(
         request,
-        'app/home.html',
+        template,
         context_instance = RequestContext(request,
         {
             'title':'Home Page',
@@ -42,18 +42,13 @@ def opex_home(request):
 def opex_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    ppcs=Transaction.objects
-    data=ppcs.values('package').annotate(label=F('package'), value=Sum('spend')).order_by('-value')
-    data_json = json.dumps(list(data), cls=DjangoJSONEncoder)
-    data2 = ppcs.values('package','sub_package').annotate(value=Sum('spend'))
-    data2_json = json.dumps(list(data2), cls=DjangoJSONEncoder)
+    dataset = f.get_dataset("transactions", ['package','sub_package'])
     return render(
         request,
         'app/OPEX/dashboard.html',
         context_instance = RequestContext(request,
         {
-            'data':data_json,
-            'data2':data2_json,
+            'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
         })
@@ -61,18 +56,13 @@ def opex_dashboard(request):
 def opex_visi_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    ppcs=Transaction.objects
-    data=ppcs.values('package').annotate(label=F('package'), value=Sum('spend')).order_by('-value')
-    data_json = json.dumps(list(data), cls=DjangoJSONEncoder)
-    data2 = ppcs.values('package','sub_package').annotate(value=Sum('spend'))
-    data2_json = json.dumps(list(data2), cls=DjangoJSONEncoder)
+    dataset = f.get_dataset("transactions", ['package','sub_package'])
     return render(
         request,
         'app/OPEX/visibility/dashboard.html',
         context_instance = RequestContext(request,
         {
-            'data':data_json,
-            'data2':data2_json,
+            'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
         })
@@ -115,6 +105,7 @@ def landing(request):
             'user':request.user
         })
     )
+
 def welcome(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -154,6 +145,65 @@ def about(request):
         {
             'title':'About',
             'message':'Your application description page.',
+            'year':datetime.now().year,
+        })
+    )
+
+################
+# TEMPLATE V2 ##
+################
+def home_v2(request):
+    """Renders the home page."""
+    template = 'v2/index.html'
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        template,
+        context_instance = RequestContext(request,
+        {
+            'title':'Home Page',
+            'year':datetime.now().year,
+        })
+    )
+def landingv2(request):
+    """Renders the home page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'v2/login.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'Home Page',
+            'year':datetime.now().year,
+            'request':request,
+            'user':request.user
+        })
+    )
+def opex_dashboard_v2(request):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+    dataset = f.get_dataset("transactions", ['package','sub_package'])
+    return render(
+        request,
+        'v2/opex_dashboard.html',
+        context_instance = RequestContext(request,
+        {
+            'data2':dataset,
+            'title':'Home Page',
+            'year':datetime.now().year,
+        })
+    )
+def opex_candm_dashboard(request):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+    dataset = f.get_visi(1, ['package','month'])
+    return render(
+        request,
+        'v2/c_and_m_dashboard.html',
+        context_instance = RequestContext(request,
+        {
+            'data2':dataset,
+            'title':'Home Page',
             'year':datetime.now().year,
         })
     )

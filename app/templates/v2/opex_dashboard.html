@@ -1,0 +1,340 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AigO | Dashboard</title>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'plugins/bootstrap-slider/bootstrap-slider.css' %}">
+{% endblock %}
+{% block content %}
+            <!-- Start content -->
+        <div class="row  border-bottom white-bg dashboard-header">
+
+            <div class="col-md-3">
+                <h2>OPEX Dashboard</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="index.html">Project Demo</a>
+                    </li>
+                    <li class="active">
+                        <strong>Opex</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <section class="content">
+
+        </section>
+        
+            <!-- End Content -->
+{% endblock %}
+{% block javascript %}
+<!-- NVD3 Graphs -->
+<script src="/static/dist/js/d3.js"></script>
+<script src="/static/dist/js/crossfilter.js"></script>
+<script src="/static/dist/js/nv.d3.js"></script>
+<link rel="stylesheet" href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css">
+<script type="text/html" id="content_ractive">
+
+    <!-- Info boxes -->
+    {% verbatim %}
+    <div class="row row m-b-lg m-t-lg">
+        <div class="col-md-12">
+            <button on-click="removeFilter:package" type="button" class="btn btn-warning">Package: {{filters.package}}</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Visibility</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="chart1" style="height:330px; width:100%">
+                                <svg id="areaChart3" style="display:block; width:100%; height:100%; padding:0px"></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h5 class="m-b-md">Visibility Confidence</h5>
+                            <h2>91%</h2>
+                            <div class="progress progress-mini" style="margin-bottom:12px">
+                                <div class="progress-bar progress-bar-green" style="width: 91%;"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h5 class="m-b-md">Go further</h5>
+                            <h2 class="text-info">
+                                <i class="fa fa-arrow-circle-up"></i> Improve Confidence
+                            </h2>
+                            <small>by mapping 10 additional transactions</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Value Targeting</h5>
+                        </div>
+                        <div class="ibox-content no-padding">
+                            <table class="table no-margins">
+                                <tbody>
+                                    <tr>
+                                        <th>Package</th>
+                                        <th>Benchmark</th>
+                                        <th style="width: 40px">Potential</th>
+                                    </tr>
+                                    <tr {{#if filters.package==='Comp and Ben'}} class="yellow-bg" {{/if}}>
+                                        <td>Compensation and Benefits</td>
+                                        <td>
+                                            <input id="ex14" type="text" data-slider-ticks="[0, 100, 200, 300]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' ticks_positions="[0, 30, 60, 70, 90, 100]" />
+
+                                        </td>
+                                        <td class="text-center text-danger"><i class="fa fa-chevron-circle-down"></i>30%</td>
+                                    </tr>
+                                    <tr {{#if filters.package==='Travel'}} class="yellow-bg" {{/if}}>
+                                        <td>Travel</td>
+                                        <td>
+                                            <input id="ex13" type="text" data-slider-ticks="[0, 100, 200, 300]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' ticks_positions="[0, 30, 60, 70, 90, 100]" />
+
+                                        </td>
+                                        <td class="text-center text-danger"><i class="fa fa-chevron-circle-down"></i>40%</td>
+                                    </tr>
+                                    <tr {{#if filters.package==='Maintenance'}} class="yellow-bg" {{/if}}>
+                                        <td>Maintenance</td>
+                                        <td>
+                                            <input id="ex15" type="text" data-slider-ticks="[0, 100, 200, 300]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' ticks_positions="[0, 30, 60, 70, 90, 100]" />
+
+                                        </td>
+                                        <td class="text-center text-info"><i class="fa fa-chevron-circle-down"></i>5%</td>
+                                    </tr>
+                                    <tr {{#if filters.package==='Marketing'}} class="yellow-bg" {{/if}}>
+                                        <td>Marketing</td>
+                                        <td>
+                                            <input id="ex16" type="text" data-slider-ticks="[0, 100, 200, 300]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' ticks_positions="[0, 30, 60, 70, 90, 100]" />
+
+                                        </td>
+                                        <td class="text-center text-warning"><i class="fa fa-chevron-circle-down"></i>20%</td>
+                                    </tr>
+                                    <tr {{#if filters.package==='Sales'}} class="yellow-bg" {{/if}}>
+                                        <td>Sales</td>
+                                        <td>
+                                            <input id="ex17" type="text" data-slider-ticks="[0, 100, 200, 300]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' ticks_positions="[0, 30, 60, 70, 90, 100]" />
+
+                                        </td>
+                                        <td class="text-center text-warning"><i class="fa fa-chevron-circle-down"></i>15%</td>
+                                    </tr>
+                                    <tr {{#if filters.package==='Contr and Cons'}} class="yellow-bg" {{/if}}>
+                                        <td>Contractors and Consultants</td>
+                                        <td>
+                                            <input id="ex18" type="text" data-slider-ticks="[0, 100, 200, 300]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]' ticks_positions="[0, 30, 60, 70, 90, 100]" />
+
+                                        </td>
+                                        <td class="text-center text-warning"><i class="fa fa-chevron-circle-down"></i>25%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Updated Today</span>
+                            <h5>Savings Opportunities</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">&euro; 500 000 000</h1>
+                            <div class="stat-percent font-bold text-navy">23% <i class="fa fa-arrow-circle-up"></i></div>
+                            <small>Of which 60% already identified</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ibox">
+                    <div class="ibox-title">
+                        Budgeting
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ibox">
+                
+                    <div class="ibox-title">
+                        Control & Monitoring
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /.box-header -->
+    <!-- /.row -->
+    {% endverbatim %}
+
+
+
+</script>
+
+<!-- Models to draw graphs, to be exported in separate .js -->
+<script src="{% static 'dist/js/charts.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-slider/bootstrap-slider.js' %}"></script>
+<!-- Data Models and Manipulation -->
+<!--retrieving data from python : TO add API call/Ajax async load-->
+
+<script type="text/javascript">
+    function dataCleaned(){
+        return {{data2|safe}}
+    };
+</script>
+<<!-- Dataset Objects and functions-->
+<script src="/static/dist/js/dataset.js"></script>
+<script type="text/javascript">
+    //initiating the dimensions for the view
+    myds = new DataSet(dataCleaned());
+    mydim = myds.createDimension('package');
+    myview = myds.createView(mydim, 'sum', 'value');
+    mydim = myds.createDimension('sub_package');
+    myview2 = myds.createView(mydim, 'sum', 'value');
+
+    //Function to refresh the data based on filters
+    function refreshData(){
+        //apply the filters
+        for(var key in ractive.get('filters')){
+            var dimFilter = ractive.get('filters.'+key);
+            if(dimFilter===''){
+                //No filters applied
+                myds.removeFilter(key);
+            }
+            else{
+                myds.applyFilter(key, dimFilter);
+            }
+        }
+        //refresh the graphs
+        ractive.get('charts').forEach(function(c){
+            c.update(myds.returnDataSet(c.view, 'multi'),ractive.get('filters'));
+        });
+    };
+    var myDiscreteBarChart2 = new AuroraChart({
+        chartType:'DiscreteBarChart',
+        div:'#areaChart3',
+        view:myview,
+        format:'multi',
+        dataset: myds.returnDataSet(myview, 'multi'),
+        dimension:'package',
+        hasFilter:true,
+
+    });
+    var myDiscreteBarChart = new AuroraChart({
+        chartType:'DiscreteBarChart',
+        div:'#areaChart2',
+        view:myview2,
+        format:'multi',
+        dataset:myds.returnDataSet(myview2, 'multi'),
+        dimension:'subpackage',
+        hasFilter:false
+
+    });
+
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '.content',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#content_ractive',
+
+        // Here, we're passing in some initial data
+        data: {
+            totalspend: '100.200',
+            charts:[
+                myDiscreteBarChart,
+                myDiscreteBarChart2
+            ],
+            filters:{
+                package:''
+            },
+        }
+    });
+    observer = ractive.observe( 'filters.*', function ( newValue, oldValue, keypath ) {
+        if(newValue!==oldValue){
+
+            refreshData();
+        }
+    });
+    ractive.on( 'removeFilter', function ( event, dim ) {
+        ractive.animate('filters.package','');
+    });
+</script>
+<script type="text/javascript">
+    $("#ex14").bootstrapSlider ({
+        ticks: [0, 100, 200, 300],
+        ticks_positions: [30, 60, 70, 90, 100],
+        ticks_labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        ticks_snap_bounds: 30,
+        value: 200
+    });
+
+    $("#ex13").bootstrapSlider ({
+        ticks: [0, 100, 200, 300],
+        ticks_positions: [30, 60, 80, 90, 100],
+        ticks_labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        ticks_snap_bounds: 30,
+        value: 250
+    });
+    $("#ex15").bootstrapSlider ({
+        tticks: [0, 100, 200, 300],
+        ticks_positions: [20, 60, 70, 90, 100],
+        ticks_labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        ticks_snap_bounds: 30,
+        value: 50
+    });
+    $("#ex16").bootstrapSlider ({
+        ticks: [0, 100, 200, 300],
+        ticks_positions: [10, 40, 70, 90, 100],
+        ticks_labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        ticks_snap_bounds: 30,
+        value: 150
+    });
+    $("#ex17").bootstrapSlider ({
+        ticks: [0, 100, 200, 300],
+        ticks_positions: [20, 55, 70, 90, 100],
+        ticks_labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        ticks_snap_bounds: 30,
+        value: 100
+    });
+    $("#ex18").bootstrapSlider ({
+        ticks: [0, 100, 200, 300],
+        ticks_positions: [10, 30, 70, 90, 100],
+        ticks_labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        ticks_snap_bounds: 30,
+        value: 140
+    });
+
+    
+</script>
+{% endblock %}
+

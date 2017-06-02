@@ -1,0 +1,90 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AigO | Dashboard</title>
+{% endblock %}
+{% block content %}
+            <!-- Start content -->
+        <div class="row  border-bottom white-bg dashboard-header">
+
+            <div class="col-md-3">
+                <h2>Welcome {{ user.first_name }} </h2>
+                <small>You have 42 messages and 6 notifications.</small>
+                        
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="wrapper">
+                    <div class="row">
+                        <div class="widget style1 navy-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span> Focus on Growth</span>
+                                    <h2 class="font-bold">TOP LINE</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="wrapper">
+                    <div class="row">
+                        <div class="widget style1 red-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-industry fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span>Value Engineering</span>
+                                    <h2 class="font-bold">COGS</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="wrapper">
+                    <div class="row">
+                        <a href="{% url 'opex_dashboard' %}">
+                            <div class="widget style1 yellow-bg">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <i class="fa fa-sliders fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-8 text-right">
+                                        <span>Optimization</span>
+                                        <h2 class="font-bold">OPEX</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="wrapper">
+                    <div class="row">
+                        <div class="widget style1 lazur-bg">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <i class="fa fa-usd fa-5x"></i>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <span>Improvements</span>
+                                    <h2 class="font-bold">W CAP</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            <!-- End Content -->
+{% endblock %}
+        

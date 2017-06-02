@@ -9,7 +9,13 @@ import pandas
 import time
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Count, F, Sum
+from app.models import *
+
 start_time = time.time()
+######################################
+###### EXCEL IMPORT FUNCTIONS ########
+######################################
 
 
 def open_excel(file):
@@ -39,8 +45,23 @@ def get_models():
     json_models = json.dumps(models, cls=DjangoJSONEncoder)
     return json_models
 
-print (get_models())
 
-#print(excel_to_json("C:\Users\christophe.castan\Documents\AurorAI\AurorAIApp\uploads\user_4\Data1_light.xlsx"))
+######################################
+######## DATA SET FUNCTIONS ##########
+######################################
 
-#print("--- %s seconds ---" % (time.time() - start_time))
+def get_dataset(table,dimensions):
+    if table == 'transactions' :
+        object=Transaction.objects
+        dataset = object.values(*dimensions).annotate(value=Sum('spend'), count = Count('uid'))
+        dataset_json = json.dumps(list(dataset), cls=DjangoJSONEncoder)
+
+    return dataset_json
+
+def get_visi(company_id, dimensions):
+    company = CompanyInfo.objects.get(id = company_id)
+    object = CompanyVisi.objects.filter(company = company)
+    dataset = object.values(*dimensions).annotate(value = Sum('spend'))
+    dataset_json = json.dumps(list(dataset), cls = DjangoJSONEncoder)
+    return dataset_json
+

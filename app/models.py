@@ -25,6 +25,24 @@ class Transaction(models.Model):
     
     def __str__(self):
         return str(self.uid)
-    
 
-# Create your models here.
+class CompanyInfo(models.Model):
+    company=models.CharField(max_length=255, default='')
+    fte=models.FloatField(default=0)
+    rev=models.FloatField(default=0)
+
+class CompanyVisi(models.Model):
+    company=models.ForeignKey(CompanyInfo)
+    package=models.CharField(max_length=255, default='')
+    sub_package=models.CharField(max_length=255, default='')
+    month=models.FloatField(default=0)
+    spend=models.FloatField(default=0)
+
+
+class BenchmarkVisi(models.Model):
+    quartile=models.CharField(max_length=255, default='')
+    package=models.CharField(max_length=255, default='')
+    month=models.FloatField(default=0)
+    kpi=models.CharField(max_length=255, default='')
+    value=models.FloatField(default=0)
+    
