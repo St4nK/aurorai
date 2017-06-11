@@ -42,7 +42,7 @@ def opex_home(request):
 def opex_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    dataset = f.get_dataset("transactions", ['package','sub_package'])
+    dataset = f.get_dataset("transactions", ['package','sub_package', 'vendor'])
     return render(
         request,
         'app/OPEX/dashboard.html',
@@ -53,20 +53,7 @@ def opex_dashboard(request):
             'year':datetime.now().year,
         })
     )
-def opex_visi_dashboard(request):
-    """Renders the opex dashboard."""
-    assert isinstance(request, HttpRequest)
-    dataset = f.get_dataset("transactions", ['package','sub_package'])
-    return render(
-        request,
-        'app/OPEX/visibility/dashboard.html',
-        context_instance = RequestContext(request,
-        {
-            'data2':dataset,
-            'title':'Home Page',
-            'year':datetime.now().year,
-        })
-    )
+
 
 
 from forms import UploadFileForm
@@ -182,7 +169,7 @@ def landingv2(request):
 def opex_dashboard_v2(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    dataset = f.get_dataset("transactions", ['package','sub_package'])
+    dataset = f.get_dataset("transactions", ['package','sub_package', 'vendor', 'gl'])
     return render(
         request,
         'v2/opex_dashboard.html',
@@ -191,6 +178,36 @@ def opex_dashboard_v2(request):
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
+        })
+    )
+def opex_visi_dashboard(request):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+    dataset = f.get_dataset("transactions", ['package','sub_package', 'vendor'])
+    return render(
+        request,
+        'v2/visibility_dashboard.html',
+        context_instance = RequestContext(request,
+        {
+            'data2':dataset,
+            'title':'Home Page',
+            'year':datetime.now().year,
+        })
+    )
+def opex_package_visi_dashboard(request, package):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+    dataset = f.get_dataset("transactions", ['sub_package', 'vendor'], {"package":package})
+    package_list= f.get_value_list("transactions", "package")
+    return render(
+        request,
+        'v2/package_visi_dashboard.html',
+        context_instance = RequestContext(request,
+        {
+            'package_list':package_list,
+            'data2':dataset,
+            'package':package
+            
         })
     )
 def opex_candm_dashboard(request):
@@ -205,6 +222,25 @@ def opex_candm_dashboard(request):
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
+        })
+    )
+def adddata(request):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+    message = 'none'
+    if request.method == 'POST':
+        model = request.POST['model']
+        variables = request.POST
+        message = f.insert_new_data(variables)
+    model_list = f.get_models_details()
+    return render(
+        request,
+        'v2/adddata.html',
+        context_instance = RequestContext(request,
+        {
+            'model_list':model_list,
+            'page':'Add Data',
+            'message':message,
         })
     )
 ################

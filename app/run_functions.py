@@ -91,5 +91,3 @@ def get_visi(company_id, dimensions):
     dataset = object.values(*dimensions).annotate(value = Sum('spend'))
     dataset_json = json.dumps(list(dataset), cls = DjangoJSONEncoder)
     return dataset_json
-
-print(get_visi(1, ['package', 'month']))

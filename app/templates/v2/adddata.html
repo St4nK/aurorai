@@ -1,0 +1,104 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AigO | Add Data</title>
+{% endblock %}
+{% block content %}
+            <!-- Start content -->
+        <div class="row wrapper border-bottom white-bg dashboard-header">
+
+            <div class="col-md-3">
+                <h2>Add Data</h2>
+                <small>Select Your model then fil in the form</small>
+                        
+            </div>
+        </div>
+        <div class="row wrapper wrapper-content" id="ractive">
+
+        </div>
+            <!-- End Content -->
+<script id="template-ractive" type="text/ractive">
+    
+    
+        <div class="col-lg-12">
+            
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Upload form</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <form method="post" class="form-horizontal">
+                            {% csrf_token %}
+                            {% verbatim %}
+                            <select class="form-control m-b" name="model" value="{{selectedModelIndex}}">
+                                {{#each models:i}}
+                                <option value="{{i}}">{{models[i][0]}}</option>
+                                {{/each}}
+                            </select>
+                            {{#each selected_model_fields:i}}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{{selected_model_fields[i]}}</label>
+
+                                <div class="col-sm-10"><input type="text" {{#if selected_model_fields[i] ==='id'}}disabled{{/if}} class="form-control" name="{{selected_model_fields[i]}}"></div>
+                            </div>
+                            {{/each}}
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button class="btn btn-white" type="">Cancel</button>
+                                    <button class="btn btn-primary" type="submit">Save changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+        </div>
+    {% endverbatim %}
+</script>
+    {% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    ////////////////////
+    // Ractive Functions
+    ////////////////////
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '#ractive',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#template-ractive',
+          
+        // Here, we're passing in some initial data
+        data: {
+            name: 'world',
+            models: {{ model_list | safe }},
+            selected_model_fields:[]
+            
+        }
+    });
+    ractive.observe('selectedModelIndex', function(index){
+        fields = this.get('models['+index+'][1]');
+        this.set('selected_model_fields', fields);
+    });
+
+    ////////////////////
+    // Basics Functions
+    ////////////////////
+
+    function getfields(model) {
+        models = {{ model_list | safe }};
+        //console.log(models[][0]);
+        models_list = [];
+        for (i=0; i < models.length; i++){
+            console.log(models[i][0])
+            models_list.push(models[i][0]);
+        };
+        return(models_list);
+    };
+
+    function fields_for_selection() {
+
+    }
+</script>
+{% endblock %}
+

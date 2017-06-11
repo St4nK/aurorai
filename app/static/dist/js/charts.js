@@ -25,8 +25,8 @@ function AuroraChart(options) {
                             .color(function (d) {
                                 if (options.hasFilter) {
                                     if (filters.hasOwnProperty(options.dimension)) {
-                                        if (filters[options.dimension] === d.key) {
-                                            return 'rgb(255, 127, 14)'
+                                        if (filters[options.dimension] === d.key && d.key !=='') {
+                                            return 'rgb(248, 172, 89)'
                                         }
                                         else {
                                             return 'rgb(0, 183, 238)'
@@ -107,27 +107,9 @@ function AuroraChart(options) {
                             .x(function (d) { return d[0] })    //Specify the data accessors.
                             .y(function (d) { return d[1] })
                             .duration(1000)
-                            .color(function (d) {
-                                return 'rgb(0,166,90)'
-                            })
-                            //.color(function (d) {
-                            //    if (options.hasFilter) {
-                            //        if (filters.hasOwnProperty(options.dimension)) {
-                            //            if (filters[options.dimension] === d.key) {
-                            //                return 'rgb(255, 127, 14)'
-                            //            }
-                            //            else {
-                            //                return 'rgb(31, 119, 180)'
-                            //            }
-                            //        }
-                            //        else {
-                            //            return 'rgb(31, 119, 180)'
-                            //        }
-                            //    }
-                            //    else {
-                            //        return 'rgb(31, 119, 180)'
-                            //    }
-                            //})
+                            .color(this.colors(d))
+                           
+                            
                         //.valueFormat(d3.format('.2s'))
                         .showLegend(false)
                         .showControls(false)
@@ -154,6 +136,45 @@ function AuroraChart(options) {
                         return chart;
                     });
                     break;
+                case 'LineChart':
+                    nv.addGraph(function () {
+                        var chart = nv.models.lineChart()
+                                .x(function (d) { return d[0] })    //Specify the data accessors.
+                                .y(function (d) { return d[1] })
+                                .useInteractiveGuideline(true)  //We want nice looking tooltips and a guideline!
+                                .duration(350)  //how fast do you want the lines to transition?
+                                .showLegend(false)       //Show the legend, allowing users to turn on/off line series.
+                                .showYAxis(true)        //Show the y-axis
+                                .showXAxis(true)        //Show the x-axis
+                                
+                        ;
+                        chart.xAxis
+                            .tickFormat(function (d) {
+                                return d3.time.format('%x')(new Date(d))
+                            })
+                            
+
+                        chart.yAxis.tickFormat(d3.format(',%'));
+                        chart.interactiveLayer.tooltip
+                            .gravity('w')
+                        ;
+                        d3.select(options.div)
+                            .datum(data)
+                            .call(chart);
+                        chart.interactiveLayer.dispatch.on(
+                            "elementClick",
+                            function (e) {
+                                //if (options.hasFilter) {
+                                //    ractive.animate('filters.' + options.dimension, e.data.key);
+                                //}
+                                console.log(e.pointXValue)
+                            });
+                        nv.utils.windowResize(chart.update);
+                        
+
+                        return chart;
+                    });
+                    break;
             }
             
 
@@ -163,50 +184,15 @@ function AuroraChart(options) {
     this.update(this.dataset, this.filters);
 };
 
-
-var PieChart = function (options) {
+function AuroraKPI(options) {
     this.view = options.view;
     this.format = options.format;
-    this.update = function (data, filters) {
-        nv.addGraph(function () {
-            var chart = nv.models.pieChart()
-                .x(function (d) { return d.key })
-                .y(function (d) { return d.value })
-                .showLabels(true)
-                .labelsOutside(true)
-                .donut(true)
-                .color(function (d) {
-                    if (options.hasFilter) {
-                        if (filters.hasOwnProperty(options.dimension)) {
-                            if (filters[options.dimension] === d.key) {
-                                return 'rgb(255, 127, 14)'
-                            }
-                            else {
-                                return 'rgb(31, 119, 180)'
-                            }
-                        }
-                        else {
-                            return 'rgb(31, 119, 180)'
-                        }
-                    }
-                    else {
-                        return 'rgb(31, 119, 180)'
-                    }
-                })
-                .showLegend(false);
-            d3.select(options.div)
-                .datum(options.dataset)
-                .call(chart);
-            chart.pie.dispatch.on(
-                "elementClick",
-                function (e) {
-                    if (options.hasFilter) {
-                        ractive.animate('filters.' + options.dimension, e.data.key);
-                    }
-                });
-            chart
-            return chart;
-        });
+    this.value = options.value
+    this.update = function (value) {
+        this.value = value;
+        return value;
     };
-    this.update(options.dataset, {});
+    this.getValue = function () {
+        return this.value
+    }
 };

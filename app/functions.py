@@ -38,25 +38,48 @@ def excel_to_json(file, n_lines=None):
 
 def get_models():
     models = []
-    model1 = ['Column1', 'data', 'Column3']
-    models.append(['model1',model1])
-    model2 = ['uin', 'Column4', 'Column5', 'Column6']
-    models.append(['model2',model2])
+    model1 = fields(VisiFinancials)
+    models.append(['VisiFinancials',model1])
+    model2 = fields(VisiMappings)
+    models.append(['VisiMappings',model2])
     json_models = json.dumps(models, cls=DjangoJSONEncoder)
     return json_models
+
+from django.apps import apps
+from django.contrib import admin
+from django.contrib.admin.sites import AlreadyRegistered
+
+def get_models_details():
+    models_details = []
+    app_models = apps.get_app_config('app').get_models()
+    for model in app_models:
+        models_details.append([model._meta.db_table, 
+                              fields(model)])
+    json_models = json.dumps(models_details, cls=DjangoJSONEncoder)
+    return json_models
+
 
 
 ######################################
 ######## DATA SET FUNCTIONS ##########
 ######################################
 
-def get_dataset(table,dimensions):
+def get_dataset(table,dimensions, filters={}):
     if table == 'transactions' :
-        object=Transaction.objects
+        if filters != {} :
+            object=Transaction.objects.filter(**filters)
+        else:
+            object=Transaction.objects
         dataset = object.values(*dimensions).annotate(value=Sum('spend'), count = Count('uid'))
         dataset_json = json.dumps(list(dataset), cls=DjangoJSONEncoder)
 
     return dataset_json
+
+def get_value_list(table,dimension):
+    object=Transaction.objects
+    value_list = object.order_by(dimension).values_list(dimension, flat = True).distinct()
+    
+    return json.dumps(list(value_list), cls=DjangoJSONEncoder)
 
 def get_visi(company_id, dimensions):
     company = CompanyInfo.objects.get(id = company_id)
@@ -65,3 +88,13 @@ def get_visi(company_id, dimensions):
     dataset_json = json.dumps(list(dataset), cls = DjangoJSONEncoder)
     return dataset_json
 
+######################################
+########  UPLOAD FUNCTIONS  ##########
+######################################
+
+def insert_new_data(variables):
+    model = ''
+    fields = []
+    for key, value in variables.iteritems():
+        print ("%s %s" % (key, value))
+    return 'ok'
