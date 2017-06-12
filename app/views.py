@@ -197,7 +197,7 @@ def opex_visi_dashboard(request):
 def opex_package_visi_dashboard(request, package):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    dataset = f.get_dataset("transactions", ['sub_package', 'vendor'], {"package":package})
+    dataset = f.get_dataset("transactions", ['sub_package', 'vendor', 'gl'], {"package":package})
     package_list= f.get_value_list("transactions", "package")
     return render(
         request,

@@ -1,4 +1,4 @@
-﻿{% extends "v2/layout.html" %}
+{% extends "v2/layout.html" %}
 {% block head %}
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'plugins/bootstrap-slider/bootstrap-slider.css' %}">
@@ -43,13 +43,13 @@
             
         </div>
         <div class="col-md-2 m-t-sm">
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Change Package</button>
+            <button on-click="loading_data:true" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Change Package</button>
         </div>
         <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content animated pulse">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
                         <i class="fa fa-search modal-icon"></i>
                         <h4 class="modal-title">Choose Package</h4>
                     </div>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button on-click="loading_data:false" type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">See Package</button>
                     </div>
                 </div>
@@ -84,10 +84,14 @@
     </div>
     <div class="row">
         <div class="col-lg-3">
-            <div class="ibox">
-                <div class="ibox-content">
+            <div class="ibox" id="ibox1">
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <h5>Number of Transactions</h5>
-                    <h1 class="no-margins">886,200</h1>
+                    <h1 class="no-margins">{{format(kpi[1].value)}}</h1>
                     <div class="stat-percent font-bold text-navy">20%<i class="fa fa-bolt"></i></div>
                     <small>Total Dataset</small>
                 </div>
@@ -95,7 +99,11 @@
         </div>
         <div class="col-lg-3">
             <div class="ibox">
-                <div class="ibox-content">
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <h5>Spend in Million</h5>
                     <h1 class="no-margins">{{format(kpi[0].value)}}</h1>
                     <div class="stat-percent font-bold text-navy">32% <i class="fa fa-bolt"></i></div>
@@ -105,7 +113,11 @@
         </div>
         <div class="col-lg-3">
             <div class="ibox">
-                <div class="ibox-content">
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <h5>Vendors</h5>
                     <h1 class="no-margins">12,000</h1>
                     <div class="stat-percent font-bold text-info">12% <i class="fa fa-bolt"></i></div>
@@ -115,7 +127,11 @@
         </div>
         <div class="col-lg-3">
             <div class="ibox">
-                <div class="ibox-content">
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <h5>GL Accounts</h5>
                     <h1 class="no-margins">12</h1>
                     <div class="stat-percent font-bold text-danger">24% <i class="fa fa-bolt"></i></div>
@@ -130,7 +146,11 @@
                 <div class="ibox-title">
                     Sub-Packages
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <div class="chart1" style="height:300px; width:100%">
                         <svg id="areaChart3" style="display:block; width:100%; height:100%; padding:0px"></svg>
                     </div>
@@ -144,13 +164,58 @@
                     <div class="ibox-title">
                         Vendors - Top 20
                     </div>
-                <div class="ibox-content">
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
                     <div class="chart1" style="height:300px; width:100%">
                         <svg id="areaChart2" style="display:block; width:100%; height:100%; padding:0px"></svg>
                     </div>
 
                 </div>
                     
+            </div>
+        </div>
+      </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="ibox">
+                <div class="ibox-title">
+                    Gl Accounts Lists
+                </div>
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    Functions
+                </div>
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    Geography
+                </div>
+                <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
+                    <div class="sk-spinner sk-spinner-double-bounce">
+                        <div class="sk-double-bounce1"></div>
+                        <div class="sk-double-bounce2"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -193,6 +258,7 @@
     mydim = myds.createDimension('vendor');
     myview2 = myds.createView(mydim, 'sum', 'value');
     myview3 = myds.createView('kpi', 'sum', 'value');
+    myview4 = myds.createView('kpi', 'sum', 'count');
     
     //Function to refresh the data based on filters
     function refreshData(){
@@ -211,9 +277,9 @@
         ractive.get('charts').forEach(function(c){
             c.update(myds.returnDataSet(c.view, 'multi'),ractive.get('filters'));
         });
-        ractive.get('kpi').forEach(function(k){
+        ractive.get('kpi').forEach(function(k, index, array){
             k.update(myds.returnKPI(k.view));
-            ractive.animate('kpi[0]', k);
+            ractive.animate('kpi['+index+']', k);
         });
         
     };
@@ -243,6 +309,12 @@
         hasFilter:false,
         value: myds.returnKPI(myview3)
     });
+    var mykpi2 = new AuroraKPI({
+        view:myview4,
+        format:'millions',
+        hasFilter:false,
+        value: myds.returnKPI(myview4)
+    });
     var ractive = new Ractive({
         // The `el` option can be a node, an ID, or a CSS selector.
         el: '.content',
@@ -260,12 +332,14 @@
                 myDiscreteBarChart2
             ],
             kpi:[
-                mykpi1
+                mykpi1,
+                mykpi2
             ],
             filters:{
                 sub_package:'',
                 vendor:''
             },
+            loading_data:false,
             package_list: {{ package_list | safe }},
             package:"{{ package | safe }}",
             format: function ( num ) {
@@ -283,6 +357,9 @@
     });
     ractive.on( 'removeFilter', function ( event, dim ) {
         ractive.animate('filters.'+dim,'');
+    });
+    ractive.on('loading_data', function(event, value) {
+        ractive.set('loading_data', value);
     });
 </script>
 <script type="text/javascript">
