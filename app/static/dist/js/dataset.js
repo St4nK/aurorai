@@ -53,6 +53,5 @@ var DataSet = function (data) {
     };
     this.returnKPI = function (view) {
         return this.views[view].value();
-        console.log(this.views[view].value())
     };
 };
