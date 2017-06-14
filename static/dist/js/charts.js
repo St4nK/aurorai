@@ -187,12 +187,27 @@ function AuroraChart(options) {
 function AuroraKPI(options) {
     this.view = options.view;
     this.format = options.format;
-    this.value = options.value
+    this.value = options.value;
     this.update = function (value) {
         this.value = value;
         return value;
     };
     this.getValue = function () {
-        return this.value
+        return this.value;
     }
 };
+function AuroraTable(options) {
+    this.view = options.view;
+    this.dimensions = options.dimensions;
+    this.headers = [];
+    this.headers.push(...options.dimensions);
+    this.headers.push('Spend', 'Transactions');
+    this.columns = [];
+    this.columns.push(...options.dimensions);
+    this.columns.push('count', 'value');
+    this.content = options.content;
+    this.update = function (content) {
+        this.content = content;
+        return content;
+    }
+}
