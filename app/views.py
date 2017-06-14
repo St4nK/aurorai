@@ -258,3 +258,15 @@ def get_json_table(request):
         }
         data = json.dumps(data, cls=DjangoJSONEncoder)
         return HttpResponse(data)
+def get_json_dataset(request):
+    if request.method == 'POST' :
+        print(request.POST)
+        table = request.POST['table']
+        dimensions = request.POST.get('dimensions')
+        filters = request.POST.get('filters')
+        package = 'Sales'
+        dataset = f.get_dataset("transactions", ['sub_package', 'vendor', 'gl'], {"package":package})
+        data = {
+            'dataset':dataset
+            }
+        return HttpResponse(data)

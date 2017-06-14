@@ -1,6 +1,7 @@
 {% extends "v2/layout.html" %}
 {% block head %}
 {% load staticfiles %}
+<title>AurorAI Package View</title>
 <link rel="stylesheet" href="{% static 'plugins/bootstrap-slider/bootstrap-slider.css' %}">
 {% endblock %}
 {% block content %}
@@ -91,9 +92,9 @@
                         <div class="sk-double-bounce2"></div>
                     </div>
                     <h5>Number of Transactions</h5>
-                    <h1 class="no-margins">{{format(kpi[1].value)}}</h1>
-                    <div class="stat-percent font-bold text-navy">20%<i class="fa fa-bolt"></i></div>
-                    <small>Total Dataset</small>
+                    <h1 class="no-margins">{{format(kpiValuesList['total_count'])}}</h1>
+                    <div class="stat-percent font-bold text-navy">{{format(kpiValuesList['total_count']/kpiValuesListStick['total_count']*100)}} %<i class="fa fa-bolt"></i></div>
+                    <small>Total Dataset - {{format(kpiValuesListStick['total_count'])}}</small>
                 </div>
             </div>
         </div>
@@ -105,9 +106,9 @@
                         <div class="sk-double-bounce2"></div>
                     </div>
                     <h5>Spend in Million</h5>
-                    <h1 class="no-margins">{{format(kpi[0].value)}}</h1>
-                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-bolt"></i></div>
-                    <small>Total Spend</small>
+                    <h1 class="no-margins">{{format(kpiValuesList['total_sum'])}}</h1>
+                    <div class="stat-percent font-bold text-navy">{{format(kpiValuesList['total_sum']/kpiValuesListStick['total_sum']*100)}}% <i class="fa fa-bolt"></i></div>
+                    <small>Total Spend - {{format(kpiValuesListStick['total_sum'])}}</small>
                 </div>
             </div>
         </div>
@@ -119,9 +120,9 @@
                         <div class="sk-double-bounce2"></div>
                     </div>
                     <h5>Vendors</h5>
-                    <h1 class="no-margins">12,000</h1>
-                    <div class="stat-percent font-bold text-info">12% <i class="fa fa-bolt"></i></div>
-                    <small>Total Vendors</small>
+                    <h1 class="no-margins">{{format(kpiValuesList['vendor_count'])}}</h1>
+                    <div class="stat-percent font-bold text-info">{{format(kpiValuesList['vendor_count']/kpiValuesListStick['vendor_count']*100)}}% <i class="fa fa-bolt"></i></div>
+                    <small>Total Vendors - {{format(kpiValuesListStick['vendor_count'])}}</small>
                 </div>
             </div>
         </div>
@@ -133,9 +134,9 @@
                         <div class="sk-double-bounce2"></div>
                     </div>
                     <h5>GL Accounts</h5>
-                    <h1 class="no-margins">12</h1>
-                    <div class="stat-percent font-bold text-danger">24% <i class="fa fa-bolt"></i></div>
-                    <small>Total GL Accounts</small>
+                    <h1 class="no-margins">{{format(kpiValuesList['gl_count'])}}</h1>
+                    <div class="stat-percent font-bold text-danger">{{format(kpiValuesList['gl_count']/kpiValuesListStick['gl_count']*100)}}% <i class="fa fa-bolt"></i></div>
+                    <small>Total GL Accounts - {{format(kpiValuesListStick['gl_count'])}}</small>
                 </div>
             </div>
         </div>
@@ -162,7 +163,7 @@
         <div class="col-md-6">
             <div class="ibox">
                     <div class="ibox-title">
-                        Vendors - Top 20
+                        Vendors - Top 20 ( {{format(20/kpiValuesList['vendor_count']*100)}} %)
                     </div>
                 <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
                     <div class="sk-spinner sk-spinner-double-bounce">
@@ -182,7 +183,7 @@
         <div class="col-md-6">
             <div class="ibox">
                 <div class="ibox-title">
-                    Gl Accounts Lists
+                    Gl Accounts Lists - Top 20 ( {{format(20/kpiValuesList['gl_count']*100)}} %)
                 </div>
                 <div class="ibox-content {{#if loading_data}} sk-loading {{/if}}">
                     <div class="sk-spinner sk-spinner-double-bounce">
@@ -192,38 +193,22 @@
                     <div class="scroll_content">
                         <table class="table table-hover">
                             <thead>
-                                <tr>
-                                    <th class="text-center">Size in spend</th>
-                                    <th>GL Account Name</th>
-                                    <th>Spend</th>
-                                    <th>Transactions</th>
+                                <tr>{{#each tables['table_gl'].headers}}
+                                    <th class="text-center">{{.}}</th>
+                                    {{/each}}
                                 </tr>
                             </thead>
                             <tbody>
+                                {{#each tables['table_gl'].content:i}}
                                 <tr>
-                                    <td class="text-center"><span class="pie" style="display: none;">0.5,0.5</span></td>
-                                    <td>Account 1</td>
-                                    <td> 200</td>
-                                    <td> 1000 </td>
+                                    {{#each tables['table_gl'].content[i]:j}}
+                                        {{#each tables['table_gl'].content[i][j]}}
+                                        <!--<td class="text-center"><span class="pie" style="display: none;">0.5,0.5</span></td>-->
+                                        <td {{#if j==="value"}} class ="text-center" {{/if}}>{{format(.)}}</td>
+                                        {{/each}}
+                                    {{/each}}
                                 </tr>
-                                <tr>
-                                    <td class="text-center"><span class="pie" style="display: none;">0.4,0.6</span></td>
-                                    <td>Account 1</td>
-                                    <td> 150</td>
-                                    <td> 1000 </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><span class="pie" style="display: none;">0.3,0.7</span></td>
-                                    <td>Account 1</td>
-                                    <td> 100</td>
-                                    <td> 1000 </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center"><span class="pie" style="display: none;">0.2,0.8</span></td>
-                                    <td>Account 1</td>
-                                    <td> 20</td>
-                                    <td> 1000 </td>
-                                </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>
@@ -286,8 +271,53 @@
 <!--retrieving data from python : TO add API call/Ajax async load-->
 
 <script type="text/javascript">
-    
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
     function dataCleaned(){
+        //this.dataset = {}
+        //$.ajaxSetup({
+        //    beforeSend: function(xhr, settings) {
+        //        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        //            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        //        }
+        //    }
+        //});
+        //$.ajax({
+        //    url: '/get_json_dataset',
+        //    type: 'post',
+        //    data: {
+        //        table:'transactions',
+        //        dimensions:['sub_package', 'vendor', 'gl'],
+        //        filters: {package:'Sales'}
+        //    },
+        //    dataType: 'json',
+        //    success: function (data) {
+        //        console.log(JSON.parse(data.dataset))
+        //        this.dataset = JSON.parse(data.dataset);
+                
+                
+        //    }
+        //});
+        
         return {{data2|safe}}
     };
     
@@ -297,77 +327,17 @@
 <script type="text/javascript">
     //initiating the dimensions for the view
     myds = new DataSet(dataCleaned());
-    mydim = myds.createDimension('sub_package');
-    myview = myds.createView(mydim, 'sum', 'value');
-    mydim = myds.createDimension('vendor');
-    myview2 = myds.createView(mydim, 'sum', 'value');
-    myview3 = myds.createView('kpi', 'sum', 'value');
-    myview4 = myds.createView('kpi', 'sum', 'count');
-    
-    //Function to refresh the data based on filters
-    function refreshData(){
-        //apply the filters
-        for(var key in ractive.get('filters')){
-            var dimFilter = ractive.get('filters.'+key);
-            if(dimFilter===''){
-                //No filters applied
-                myds.removeFilter(key);
-            }
-            else{
-                myds.applyFilter(key, dimFilter);
-            }
-        }
-        //refresh the graphs
-        ractive.get('charts').forEach(function(c){
-            c.update(myds.returnDataSet(c.view, 'multi'),ractive.get('filters'));
-        });
-        ractive.get('kpi').forEach(function(k, index, array){
-            k.update(myds.returnKPI(k.view));
-            ractive.animate('kpi['+index+']', k);
-        });
-        
-    };
-    var myDiscreteBarChart2 = new AuroraChart({
-        chartType:'DiscreteBarChart',
-        div:'#areaChart3',
-        view:myview,
-        format:'multi',
-        dataset: myds.returnDataSet(myview, 'multi'),
-        dimension:'sub_package',
-        hasFilter:true,
-        
+    var ADash = new AuroraDash({
+        dataset:myds
     });
-    var myDiscreteBarChart = new AuroraChart({
-        chartType:'DiscreteBarChart',
-        div:'#areaChart2',
-        view:myview2,
-        format:'multi',
-        dataset:myds.returnDataSet(myview2, 'multi'),
-        dimension:'vendor',
-        hasFilter:true
-        
-    });
-    var myPieChart = new AuroraChart({
-        chartType:'PieChart',
-        div:'#areaChart1',
-        view:myview,
-        format:'unique',
-        dataset:myds.returnDataSet(myview2, 'unique'),
-        dimension:'sub_package',
-        hasFilter:true
-    });
-    var mykpi1 = new AuroraKPI({
-        view:myview3,
-        format:'millions',
-        hasFilter:false,
-        value: myds.returnKPI(myview3)
-    });
-    var mykpi2 = new AuroraKPI({
-        view:myview4,
-        format:'millions',
-        hasFilter:false,
-        value: myds.returnKPI(myview4)
-    });
+    ADash.addChart('sub_package_chart', 'DiscreteBarChart', 'sub_package', 'sum', 'value', '#areaChart3', true);
+    ADash.addChart('vendor_chart', 'DiscreteBarChart', 'vendor', 'sum', 'value', '#areaChart2', true);
+    ADash.addChart('functions_chart', 'PieChart', 'vendor', 'sum', 'value', '#areaChart1', true);
+    ADash.addKPI('total_sum','total', 'sum', 'value', 'millions', true);
+    ADash.addKPI('total_count','total', 'sum', 'count', 'millions', true);
+    ADash.addKPI('vendor_count','vendor', 'sum', 'count', 'millions', true);
+    ADash.addKPI('gl_count','gl', 'sum', 'count', 'millions', true);
+    ADash.addTable('table_gl', ['gl'], true);
     var ractive = new Ractive({
         // The `el` option can be a node, an ID, or a CSS selector.
         el: '.content',
@@ -378,35 +348,29 @@
 
         // Here, we're passing in some initial data
         data: { 
-            totalspend: '100.200',
-            ds:myds,
-            charts:[
-                myDiscreteBarChart,
-                myDiscreteBarChart2,
-                myPieChart
-            ],
-            kpi:[
-                mykpi1,
-                mykpi2
-            ],
+            myDash:ADash,
             filters:{
                 sub_package:'',
                 vendor:''
             },
+            kpiValuesListStick:ADash.kpiValues(),
+            kpiValuesList:ADash.kpiValues,
+            tables:ADash.refreshTables,
             loading_data:false,
             package_list: {{ package_list | safe }},
             package:"{{ package | safe }}",
             format: function ( num ) {
-                if ( num > 1000000000 ) return ( num / 1000000000 ).toFixed( 1 ) + ' billion';
-                if ( num > 1000000 ) return ( num / 1000000 ).toFixed( 1 ) + ' million';
-                if ( num > 1000 ) return ( Math.floor( num / 1000 ) ) + ',' + ( num % 1000 );
+                if ( num > 1000000000 ) return ( num / 1000000000 ).toFixed( 1 ) + ' b';
+                if ( num > 1000000 ) return ( num / 1000000 ).toFixed( 1 ) + ' m';
+                if ( num > 1000 ) return (num / 1000 ).toFixed( 1 ) + ' k';
+                if ( num > 0 ) return ( Math.round(num * 100) / 100);
                 return num;
             }
         }
     });
     observer = ractive.observe( 'filters.*', function ( newValue, oldValue, keypath ) {
         if(newValue!==oldValue){
-            refreshData();
+            ADash.refreshData(ractive);
         }
     });
     ractive.on( 'removeFilter', function ( event, dim ) {

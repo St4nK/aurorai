@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^about', about, name='about'),
     url(r'^v2', home_v2, name='home_v2'),
     url(r'^get_json_table', get_json_table, name='get_json_table'),
+    url(r'^get_json_dataset', get_json_dataset, name='get_json_datase'),
     url(r'^login/$', login, {
             'template_name': 'app/login.html',
             'authentication_form': BootstrapAuthenticationForm,
