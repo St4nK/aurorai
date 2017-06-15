@@ -5,6 +5,7 @@ var DataSet = function (data) {
     this.dimensions = {};
     this.views = {};
     this.createDimension = function (dimension) {
+        
         if (this.dimensions.hasOwnProperty(dimension)) {
             var tempDim = this.dimensions[dimension]        
         }
@@ -36,37 +37,42 @@ var DataSet = function (data) {
         return dimName
     };
     this.createView = function (dimension, type, on) {
-        if (dimension === 'kpi_total') {
-            if (type === 'sum') {
-                var tempView = this.rawData.groupAll().reduceSum(function (f) { return f[on]; });
-            }
-            if (type === 'count') {
-                var tempView = this.rawData.groupAll().reduceCount(function (f) { return f[on]; });
-            }
-            this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
-            return 'view_' + dimension + '_' + type + '_on_' + on
-        }
-        if (dimension.substring(0, 3) === 'kpi') {
-            dimension = dimension.substring(3);
-            if (type === 'sum') {
-                var tempView = this.bin_counter(this.dimensions[dimension].group())
-            }
-            if (type === 'count') {
-                var tempView = this.dimensions[dimension].groupAll().reduceCount(function (f) { return f[on]; });
-            }
-            this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
+        if (this.views.hasOwnProperty('view_' + dimension + '_' + type + '_on_' + on)) {
             return 'view_' + dimension + '_' + type + '_on_' + on
         }
         else {
-            if (type === 'sum') {
-                var tempView = this.dimensions[dimension].group().reduceSum(function (f) { return f[on]; });
+            if (dimension === 'kpi_total') {
+                if (type === 'sum') {
+                    var tempView = this.rawData.groupAll().reduceSum(function (f) { return f[on]; });
+                }
+                if (type === 'count') {
+                    var tempView = this.rawData.groupAll().reduceCount(function (f) { return f[on]; });
+                }
+                this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
+                return 'view_' + dimension + '_' + type + '_on_' + on
             }
-            if (type === 'count') {
-                var tempView = this.dimensions[dimension].group().reduceCount(function (f) { return f[on]; });
+            if (dimension.substring(0, 3) === 'kpi') {
+                dimension = dimension.substring(3);
+                if (type === 'sum') {
+                    var tempView = this.bin_counter(this.dimensions[dimension].group())
+                }
+                if (type === 'count') {
+                    var tempView = this.dimensions[dimension].groupAll().reduceCount(function (f) { return f[on]; });
+                }
+                this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
+                return 'view_' + dimension + '_' + type + '_on_' + on
             }
-            this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
-            return 'view_' + dimension + '_' + type + '_on_' + on
-        }
+            else {
+                if (type === 'sum') {
+                    var tempView = this.dimensions[dimension].group().reduceSum(function (f) { return f[on]; });
+                }
+                if (type === 'count') {
+                    var tempView = this.dimensions[dimension].group().reduceCount(function (f) { return f[on]; });
+                }
+                this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
+                return 'view_' + dimension + '_' + type + '_on_' + on
+            }
+            }
         
     };
     this.createViewMultiple = function (dimension) {
@@ -138,10 +144,14 @@ var DataSet = function (data) {
 ///////////////////////////////
 
 var AuroraDash = function(options) {
-    this.dataset = options.dataset;
+    this.dataset = {};
     this.charts = {};
     this.kpis = {};
     this.tables = {};
+    this.addDataSet = function (dataset) {
+        this.dataset = dataset;
+        return true
+    }
     this.addChart = function (name, chart_type, dimension, sum_count, on, div, hasfilter) {
         mydim = this.dataset.createDimension(dimension);
         myview = this.dataset.createView(mydim, sum_count, on);
@@ -151,6 +161,7 @@ var AuroraDash = function(options) {
         else {
             format = 'unique';
         }
+        
         mychart = new AuroraChart({
             chartType: chart_type,
             div: div,
@@ -169,7 +180,7 @@ var AuroraDash = function(options) {
                 view: myview,
                 format: format,
                 hasFilter: hasFilter,
-                value: myds.returnKPI(myview)
+                value: this.dataset.returnKPI(myview)
             });
         }
         else {
@@ -204,10 +215,10 @@ var AuroraDash = function(options) {
             var dimFilter = ractive.get('filters.' + key);
             if (dimFilter === '') {
                 //No filters applied
-                myds.removeFilter(key);
+                this.dataset.removeFilter(key);
             }
             else {
-                myds.applyFilter(key, dimFilter);
+                this.dataset.applyFilter(key, dimFilter);
             }
         };
         //refresh the graphs
@@ -239,6 +250,13 @@ var AuroraDash = function(options) {
             }
         };
         return this.tables;
+    };
+    this.setRactive = function (ractive) {
+        ractive.set('myDash', this);
+        ractive.set('kpiValuesListStick', this.kpiValues());
+        ractive.set('kpiValuesList', this.kpiValues());
+        ractive.set('tables', this.refreshTables());
+        ractive.set('loading_data', false);
     }
     
 };
