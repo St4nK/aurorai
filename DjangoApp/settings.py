@@ -116,12 +116,21 @@ ROOT_URLCONF = 'DjangoApp.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'DjangoApp.wsgi.application'
-
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            path.join(PROJECT_ROOT, 'app/templates').replace('\\','/'),
+            
+        ],
+    },
+]
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or
     # "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    path.join(PROJECT_ROOT, 'app/templates').replace('\\','/'),
 )
 
 INSTALLED_APPS = (

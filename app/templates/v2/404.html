@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -6,13 +6,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | 404 Error</title>
+    <title>AurorAI | 404 Error</title>
+    {% load staticfiles %}
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="{% static 'v2/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'v2/css/line-awesome-font-awesome.min.css' %}" rel="stylesheet">
 
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{% static 'v2/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'v2/css/style.css' %}" rel="stylesheet">
 
 </head>
 
@@ -35,8 +36,8 @@
     </div>
 
     <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static 'v2/js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'v2/js/bootstrap.min.js' %}"></script>
 
 </body>
 

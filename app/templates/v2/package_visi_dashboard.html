@@ -66,7 +66,7 @@
                     </div>
                     <div class="modal-footer">
                         <button on-click="loading_data:false" type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">See Package</button>
+                        <button on-click="refresh_package:{{selectedPackage}}" type="button" class="btn btn-primary" data-dismiss="modal">See Package</button>
                     </div>
                 </div>
             </div>
@@ -292,71 +292,35 @@
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
 
-    function dataCleaned(){
-        //this.dataset = {}
-        //$.ajaxSetup({
-        //    beforeSend: function(xhr, settings) {
-        //        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-        //            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-        //        }
-        //    }
-        //});
-        //$.ajax({
-        //    url: '/get_json_dataset',
-        //    type: 'post',
-        //    data: {
-        //        table:'transactions',
-        //        dimensions:['sub_package', 'vendor', 'gl'],
-        //        filters: {package:'Sales'}
-        //    },
-        //    dataType: 'json',
-        //    success: function (data) {
-        //        console.log(JSON.parse(data.dataset))
-        //        this.dataset = JSON.parse(data.dataset);
-                
-                
-        //    }
-        //});
-        
-        return {{data2|safe}}
-    };
+    
     
 </script>
 <<!-- Dataset Objects and functions-->
 <script src="/static/dist/js/dataset.js"></script>
 <script type="text/javascript">
-    //initiating the dimensions for the view
-    myds = new DataSet(dataCleaned());
-    var ADash = new AuroraDash({
-        dataset:myds
-    });
-    ADash.addChart('sub_package_chart', 'DiscreteBarChart', 'sub_package', 'sum', 'value', '#areaChart3', true);
-    ADash.addChart('vendor_chart', 'DiscreteBarChart', 'vendor', 'sum', 'value', '#areaChart2', true);
-    ADash.addChart('functions_chart', 'PieChart', 'vendor', 'sum', 'value', '#areaChart1', true);
-    ADash.addKPI('total_sum','total', 'sum', 'value', 'millions', true);
-    ADash.addKPI('total_count','total', 'sum', 'count', 'millions', true);
-    ADash.addKPI('vendor_count','vendor', 'sum', 'count', 'millions', true);
-    ADash.addKPI('gl_count','gl', 'sum', 'count', 'millions', true);
-    ADash.addTable('table_gl', ['gl'], true);
+    //the ractive makes the dashboard dynamic and super fast reactive.
+    
     var ractive = new Ractive({
-        // The `el` option can be a node, an ID, or a CSS selector.
+        // the class where to put the content
         el: '.content',
 
-        // We could pass in a string, but for the sake of convenience
-        // we're passing the ID of the <script> tag above.
+        
+        // the id of the <script> div to put in the content. This piece only will be reactive
         template: '#content_ractive',
 
-        // Here, we're passing in some initial data
+        // The data, partially for AuroraDash, rest for specific template binding
         data: { 
-            myDash:ADash,
+            //Needed for AuroraDash
+            myDash:'',
             filters:{
                 sub_package:'',
                 vendor:''
             },
-            kpiValuesListStick:ADash.kpiValues(),
-            kpiValuesList:ADash.kpiValues,
-            tables:ADash.refreshTables,
-            loading_data:false,
+            kpiValuesListStick:{},
+            kpiValuesList:{},
+            tables:{},
+            loading_data:true,
+            // specific for template
             package_list: {{ package_list | safe }},
             package:"{{ package | safe }}",
             format: function ( num ) {
@@ -368,17 +332,76 @@
             }
         }
     });
-    observer = ractive.observe( 'filters.*', function ( newValue, oldValue, keypath ) {
-        if(newValue!==oldValue){
-            ADash.refreshData(ractive);
-        }
-    });
     ractive.on( 'removeFilter', function ( event, dim ) {
         ractive.animate('filters.'+dim,'');
     });
     ractive.on('loading_data', function(event, value) {
         ractive.set('loading_data', value);
     });
+    ractive.on('refresh_package', function(event, value) {
+        ractive.set('package', value);
+        get_dataset_ajax("transactions", ['sub_package', 'vendor', 'gl'], {package:value});
+
+    });
+    launchDash = function(ds){
+        var ADash = new AuroraDash();
+        ADash.addDataSet(ds);
+        ADash.addChart('sub_package_chart', 'DiscreteBarChart', 'sub_package', 'sum', 'value', '#areaChart3', true);
+        ADash.addChart('vendor_chart', 'DiscreteBarChart', 'vendor', 'sum', 'value', '#areaChart2', true);
+        ADash.addChart('functions_chart', 'PieChart', 'vendor', 'sum', 'value', '#areaChart1', true);
+        ADash.addKPI('total_sum','total', 'sum', 'value', 'millions', true);
+        ADash.addKPI('total_count','total', 'sum', 'count', 'millions', true);
+        ADash.addKPI('vendor_count','vendor', 'sum', 'count', 'millions', true);
+        ADash.addKPI('gl_count','gl', 'sum', 'count', 'millions', true);
+        ADash.addTable('table_gl', ['gl'], true);
+        ADash.setRactive(ractive);
+        observer = ractive.observe( 'filters.*', function ( newValue, oldValue, keypath ) {
+            if(newValue!==oldValue){
+                ADash.refreshData(ractive);
+            }
+        });
+        
+
+    };
+    get_dataset_ajax = function(table, dimensions, filters){
+        $.ajax({
+            url: '/get_json_dataset',
+            type: 'post',
+            data: {
+                table:table,
+                dimensions:dimensions,
+                filters: JSON.stringify(filters)
+            },
+            //dataType: 'json',
+            success: function (results) {
+                myds2 = new DataSet(JSON.parse(results));
+                launchDash(myds2);
+            },
+            error: function(jqxhr,textStatus,errorThrown) {
+                console.log('failure');-
+                console.log(jqxhr);
+                console.log(textStatus);
+                console.log(errorThrown);                               
+
+            }
+        });
+    };
+    
+    $(document).ready(function() {
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            },
+            
+        });
+        get_dataset_ajax("transactions", ['sub_package', 'vendor', 'gl'], {package:'{{package}}'});
+
+        
+    });
+        
+    
 </script>
 <script type="text/javascript">
     var mapData = {

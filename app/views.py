@@ -14,6 +14,19 @@ from run_functions import *
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
 
+def handler404(request):
+    response = render_to_response('v2/404.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request):
+    response = render_to_response('v2/500.html', {},
+                                  context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
+
 def home(request):
     """Renders the home page."""
     template = 'app/home.html'
@@ -81,17 +94,18 @@ def upload(request):
 def landing(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'app/landing.html',
-        context_instance = RequestContext(request,
-        {
+    context = {
             'title':'Home Page',
             'year':datetime.now().year,
             'request':request,
             'user':request.user
-        })
-    )
+        }
+    return render(
+        request,
+        'app/landing.html',
+        context
+        )
+    
 
 def welcome(request):
     """Renders the home page."""
@@ -155,17 +169,17 @@ def home_v2(request):
 def landingv2(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'v2/login.html',
-        context_instance = RequestContext(request,
-        {
+    context = {
             'title':'Home Page',
             'year':datetime.now().year,
             'request':request,
             'user':request.user
-        })
-    )
+        }
+    return render(
+        request,
+        'v2/login.html',
+        context)
+    
 def opex_dashboard_v2(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -197,19 +211,20 @@ def opex_visi_dashboard(request):
 def opex_package_visi_dashboard(request, package):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    dataset = f.get_dataset("transactions", ['sub_package', 'vendor', 'gl'], {"package":package})
+    #dataset = f.get_dataset("transactions", ['sub_package', 'vendor', 'gl'], {"package":package})
     package_list= f.get_value_list("transactions", "package")
+    context = {
+            'package_list':package_list,
+            #'data2':dataset,
+            'package':package
+            
+        }
     return render(
         request,
         'v2/package_visi_dashboard.html',
-        context_instance = RequestContext(request,
-        {
-            'package_list':package_list,
-            'data2':dataset,
-            'package':package
-            
-        })
-    )
+        context
+        )
+    
 def opex_candm_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -260,13 +275,11 @@ def get_json_table(request):
         return HttpResponse(data)
 def get_json_dataset(request):
     if request.method == 'POST' :
-        print(request.POST)
+        queryset = request.POST
         table = request.POST['table']
-        dimensions = request.POST.get('dimensions')
-        filters = request.POST.get('filters')
+        dimensions = queryset.getlist('dimensions[]')
+        filters = json.loads(request.POST.get('filters'))
         package = 'Sales'
-        dataset = f.get_dataset("transactions", ['sub_package', 'vendor', 'gl'], {"package":package})
-        data = {
-            'dataset':dataset
-            }
-        return HttpResponse(data)
+        dataset = f.get_dataset(table, dimensions, filters)
+        #print(dataset)
+        return HttpResponse(dataset)
