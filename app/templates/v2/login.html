@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <input type="password" class="form-control" disabled placeholder="Password" required="">
                 </div>
-                <a class="btn btn-primary block full-width m-b" href="{% url 'social:begin' 'azuread-oauth2' %}?next=/home">Login with Company Account</a>
+                <a class="btn btn-primary block full-width m-b" href="{% url 'social:begin' 'azuread-oauth2' %}?next={{ path }}">Login with Company Account</a>
 
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>

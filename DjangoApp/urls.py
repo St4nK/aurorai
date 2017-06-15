@@ -34,16 +34,7 @@ urlpatterns = [
     url(r'^v2', home_v2, name='home_v2'),
     url(r'^get_json_table', get_json_table, name='get_json_table'),
     url(r'^get_json_dataset', get_json_dataset, name='get_json_datase'),
-    url(r'^login/$', login, {
-            'template_name': 'app/login.html',
-            'authentication_form': BootstrapAuthenticationForm,
-            'extra_context':
-            {
-                'title':'Log in',
-                'year':datetime.now().year,
-            }
-        },
-        name='login'),
+    url(r'^login/$', landingv2, name='landing'),
     url(r'^logout$', logout, {  'next_page': '/'  },        name='logout'),
 
     # Uncomment the admin/doc line below to enable admin documentation:

@@ -3,6 +3,7 @@ Definition of views.
 """
 
 from django.shortcuts import render, render_to_response
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
@@ -153,33 +154,52 @@ def about(request):
 ################
 # TEMPLATE V2 ##
 ################
-def home_v2(request):
+
+def logout(request):
     """Renders the home page."""
-    template = 'v2/index.html'
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        template,
-        context_instance = RequestContext(request,
-        {
-            'title':'Home Page',
-            'year':datetime.now().year,
-        })
-    )
-def landingv2(request):
-    """Renders the home page."""
+    auth_logout(request)
     assert isinstance(request, HttpRequest)
     context = {
-            'title':'Home Page',
+            'title':'Login',
             'year':datetime.now().year,
-            'request':request,
-            'user':request.user
+            'path':request.get_full_path()
         }
     return render(
         request,
         'v2/login.html',
         context)
-    
+
+@login_required
+def home_v2(request):
+    """Renders the home page."""
+    template = 'v2/index.html'
+    assert isinstance(request, HttpRequest)
+    context = {
+            'title':'Home Page',
+            'year':datetime.now().year,
+            'user':request.user
+        }
+    return render(
+        request,
+        template,
+        context
+    )
+
+def landingv2(request):
+    """Renders the home page."""
+    assert isinstance(request, HttpRequest)
+    path = request.get_full_path()[7:]
+    context = {
+            'title':'Home Page',
+            'year':datetime.now().year,
+            'path':path
+        }
+    return render(
+        request,
+        'v2/login.html',
+        context)
+
+@login_required
 def opex_dashboard_v2(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -187,13 +207,14 @@ def opex_dashboard_v2(request):
     return render(
         request,
         'v2/opex_dashboard.html',
-        context_instance = RequestContext(request,
         {
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
-        })
+        }
     )
+
+@login_required
 def opex_visi_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -201,13 +222,14 @@ def opex_visi_dashboard(request):
     return render(
         request,
         'v2/visibility_dashboard.html',
-        context_instance = RequestContext(request,
         {
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
-        })
+        }
     )
+
+@login_required
 def opex_package_visi_dashboard(request, package):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -224,7 +246,8 @@ def opex_package_visi_dashboard(request, package):
         'v2/package_visi_dashboard.html',
         context
         )
-    
+ 
+@login_required   
 def opex_candm_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -232,13 +255,14 @@ def opex_candm_dashboard(request):
     return render(
         request,
         'v2/c_and_m_dashboard.html',
-        context_instance = RequestContext(request,
         {
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
-        })
+        }
     )
+
+@login_required
 def adddata(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -251,12 +275,11 @@ def adddata(request):
     return render(
         request,
         'v2/adddata.html',
-        context_instance = RequestContext(request,
         {
             'model_list':model_list,
             'page':'Add Data',
             'message':message,
-        })
+        }
     )
 ################
 # JSON REQUESTS 
