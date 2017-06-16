@@ -1,0 +1,84 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AurorAI | Projects</title>
+{% endblock %}
+{% block content %}
+            <!-- Start content -->
+        <div class="row  border-bottom white-bg dashboard-header">
+
+            <div class="col-md-3">
+                <h2>Welcome {{ user.first_name }} </h2>
+                <small>You have 1 project running</small>
+                        
+            </div>
+        </div>
+       <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-4">
+            <a href="{% url 'project_view' project='Demo Project' %}">
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">NEW</span>
+                        <h5>Demo Project</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="team-members">
+                            <img alt="member" class="img-circle" src="/static/v2/img/a1.jpg">
+                            <img alt="member" class="img-circle" src="/static/v2/img/a2.jpg">
+                            <img alt="member" class="img-circle" src="/static/v2/img/a3.jpg">
+                            <img alt="member" class="img-circle" src="/static/v2/img/a5.jpg">
+                            <img alt="member" class="img-circle" src="/static/v2/img/a6.jpg">
+                        </div>
+                        <h4>Description of Demo Project</h4>
+                        <p>
+                            This is a demo project to showcase the capabilities of the AurorAI platform. Create a new project to start using it in real life!
+                        </p>
+                        <div>
+                            <span>Status of the project:</span>
+                            <div class="stat-percent">48%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 48%;" class="progress-bar"></div>
+                            </div>
+                        </div>
+                        <div class="row  m-t-sm">
+                            <div class="col-sm-4">
+                                <div class="font-bold">VISIBILIY</div>
+                                Running
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <div class="font-bold">VT</div>
+                                Running
+                            </div>
+                            <div class="col-sm-4 text-right">
+                                <div class="font-bold">BUDGETING</div>
+                                Not started
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3">
+            <a href="#">
+                <div class="widget navy-bg p-xl no-margins text-center">
+                    <div class="m-lg p-xl">
+                        <i class="fa fa-plus fa-4x"></i>
+
+                        <h3 class="font-bold no-margins">
+                            Create
+                        </h3>
+                        <small>Project</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+        
+            <!-- End Content -->
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}
+        

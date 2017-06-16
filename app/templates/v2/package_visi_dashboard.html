@@ -193,7 +193,8 @@
                     <div class="scroll_content">
                         <table class="table table-hover">
                             <thead>
-                                <tr>{{#each tables['table_gl'].headers}}
+                                <tr>
+                                    {{#each tables['table_gl'].headers}}
                                     <th class="text-center">{{.}}</th>
                                     {{/each}}
                                 </tr>
@@ -201,6 +202,7 @@
                             <tbody>
                                 {{#each tables['table_gl'].content:i}}
                                 <tr>
+                                    
                                     {{#each tables['table_gl'].content[i]:j}}
                                         {{#each tables['table_gl'].content[i][j]}}
                                         <!--<td class="text-center"><span class="pie" style="display: none;">0.5,0.5</span></td>-->
@@ -322,7 +324,7 @@
             loading_data:true,
             // specific for template
             package_list: {{ package_list | safe }},
-            package:"{{ package | safe }}",
+            package:"{{ package }}",
             format: function ( num ) {
                 if ( num > 1000000000 ) return ( num / 1000000000 ).toFixed( 1 ) + ' b';
                 if ( num > 1000000 ) return ( num / 1000000 ).toFixed( 1 ) + ' m';

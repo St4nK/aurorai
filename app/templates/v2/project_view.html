@@ -1,0 +1,395 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AurorAI | Projects</title>
+{% endblock %}
+{% block content %}
+            <!-- Start content -->
+<div class="row  border-bottom white-bg dashboard-header">
+
+    <div class="col-md-3">
+        <h2>Project : {{ project }} </h2>                        
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-9">
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-b-md">
+                                <a href="#" class="btn btn-white btn-xs pull-right">Edit project</a>
+                                <h2>Agility to Compete at Demo Inc.</h2>
+                            </div>
+                            <dl class="dl-horizontal">
+                                <dt>Status:</dt>
+                                <dd><span class="label label-primary">Active</span></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <dl class="dl-horizontal">
+
+                                <dt>Created by:</dt>
+                                <dd>Chris Castan</dd>
+                                <dt>Lead by:</dt>
+                                <dd>Amaury Reychler</dd>
+                                <dt>Client:</dt>
+                                <dd><a href="#" class="text-navy"> Demo Inc.</a> </dd>
+                            </dl>
+                        </div>
+                        <div class="col-lg-7" id="cluster_info">
+                            <dl class="dl-horizontal">
+
+                                <dt>Last Updated:</dt>
+                                <dd>16.05.2017 12:15:57</dd>
+                                <dt>Created:</dt>
+                                <dd> 	10.03.2017 23:36:57 </dd>
+                                <dt>Team:</dt>
+                                <dd class="project-people">
+                                    <img alt="member" class="img-circle" src="/static/v2/img/a1.jpg">
+                                    <img alt="member" class="img-circle" src="/static/v2/img/a2.jpg">
+                                    <img alt="member" class="img-circle" src="/static/v2/img/a3.jpg">
+                                    <img alt="member" class="img-circle" src="/static/v2/img/a5.jpg">
+                                    <img alt="member" class="img-circle" src="/static/v2/img/a6.jpg">
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <dl class="dl-horizontal">
+                                <dt>Completed:</dt>
+                                <dd>
+                                    <div class="progress progress-striped active m-b-sm">
+                                        <div style="width: 60%;" class="progress-bar"></div>
+                                    </div>
+                                    <small>Project completed in <strong>60%</strong> Finalysing Visibility and in the middle of Value Targeting</small>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="row m-t-sm">
+                        <div class="col-lg-12">
+                            <div class="panel blank-panel">
+                                <div class="panel-heading">
+                                    <div class="panel-options">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active"><a href="#tab-1" data-toggle="tab">Phases Summary</a></li>
+                                            <li class=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab-1">
+                                            <div class="col-lg-3">
+                                                <a href="{% url 'opex_visi_dashboard' %}">
+                                                    <div class="widget navy-bg p-lg text-center">
+                                                        <div class="m-b-md">
+                                                            <i class="fa fa-search fa-4x"></i>
+                                                            <h1 class="m-xs">91%</h1>
+                                                            <h3 class="font-bold no-margins">
+                                                                Visibility
+                                                            </h3>
+                                                            <small>confidence</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <a href="#">
+                                                    <div class="widget yellow-bg p-lg text-center">
+                                                        <div class="m-b-md">
+                                                            <i class="fa fa-dollar fa-4x"></i>
+                                                            <h1 class="m-xs">53%</h1>
+                                                            <h3 class="font-bold no-margins">
+                                                                Savings
+                                                            </h3>
+                                                            <small>quantified</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <a href="#">
+                                                    <div class="widget p-lg text-center">
+                                                        <div class="m-b-md">
+                                                            <i class="fa fa-edit fa-4x"></i>
+                                                            <h1 class="m-xs">-</h1>
+                                                            <h3 class="font-bold no-margins">
+                                                                Budget
+                                                            </h3>
+                                                            <small>not started</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <a href="#">
+                                                    <div class="widget p-lg text-center">
+                                                        <div class="m-b-md">
+                                                            <i class="fa fa-line-chart fa-4x"></i>
+                                                            <h1 class="m-xs">-</h1>
+                                                            <h3 class="font-bold no-margins">
+                                                                C &amp; M
+                                                            </h3>
+                                                            <small>not started</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane" id="tab-2">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Status</th>
+                                                        <th>Title</th>
+                                                        <th>Start Time</th>
+                                                        <th>End Time</th>
+                                                        <th>Comments</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
+                                                        </td>
+                                                        <td>
+                                                            Create project in webapp
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
+                                                        </td>
+                                                        <td>
+                                                            Various versions
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
+                                                        </td>
+                                                        <td>
+                                                            There are many variations
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
+                                                        </td>
+                                                        <td>
+                                                            Latin words
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                Latin words, combined with a handful of model sentence structures
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Accepted</span>
+                                                        </td>
+                                                        <td>
+                                                            The generated Lorem
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
+                                                        </td>
+                                                        <td>
+                                                            The first line
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Reported</span>
+                                                        </td>
+                                                        <td>
+                                                            The standard chunk
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested.
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Completed</span>
+                                                        </td>
+                                                        <td>
+                                                            Lorem Ipsum is that
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable.
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span class="label label-primary"><i class="fa fa-check"></i> Sent</span>
+                                                        </td>
+                                                        <td>
+                                                            Contrary to popular
+                                                        </td>
+                                                        <td>
+                                                            12.07.2014 10:10:1
+                                                        </td>
+                                                        <td>
+                                                            14.07.2014 10:16:36
+                                                        </td>
+                                                        <td>
+                                                            <p class="small">
+                                                                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                                                            </p>
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="wrapper wrapper-content project-manager">
+            <h2>Company Infos</h2>
+            <img src="/static/v2/img/demo-company.png" class="img-responsive">
+            <p class="small">
+                This is a demo company with demo data. None of this information pictures entirely or partially an existing company
+            </p>
+            
+            <h4>Company Industry</h4>
+            <p>Consumer Goods - Non Food</p>
+            <h4>Company Figures</h4>
+            <ul class="list-group clear-list m-t">
+                <li class="list-group-item fist-item">
+                    <span class="pull-right">
+                        FTE
+                    </span>
+                    <span class="btn btn-sm btn-primary"> <i class="fa fa-group"></i> 4.000</span> 
+                </li>
+                <li class="list-group-item">
+                    <span class="pull-right">
+                        Net Revenues
+                    </span>
+                    <span class="btn btn-sm btn-success"> <i class="fa fa-dollar"></i> 451 M</span>
+                </li>
+                
+            </ul>
+            <div class="text-center m-t-md">
+                <a href="#" class="btn btn-xs btn-primary">Add File with company figures</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+        
+            <!-- End Content -->
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}
+        

@@ -38,37 +38,37 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" height="48" width="48" src="{% static 'v2/img/pp4.jpg' %}" />
+                            <img alt="image" class="img-circle" height="48" width="48" src="{% static 'v2/img/pp4.png' %}" />
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ user.first_name }} {{ user.last_name }}</strong>
                              </span> <span class="text-muted text-xs block">Demo Project <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a href="profile.html">Profile</a></li>
-                                <li><a href="contacts.html">Contacts</a></li>
-                                <li><a href="mailbox.html">Mailbox</a></li>
+                                <li><a href="{% url 'projects_list' %}">Change Project</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{% url 'auth:logout' %}?next={{ request.path }}">Log off</a></li>
+                                <li><a href="{% url 'logout' %}">Log off</a></li>
                             </ul>
                         </div>
                         <div class="logo-element">
                             AurorAI
                         </div>
                     </li>
-                    <li class="active">
+                    <li {% if page in "projects_list,project_view" %} class="active" {% endif %}>
                         <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">Home</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li class="active"><a href="index.html">Dashboard General</a></li>
+                            <li {% if page == "projects_list" %} class="active" {% endif %}><a href="{% url 'projects_list' %}">Projects List</a></li>
+                            <li {% if page == "project_view" %} class="active" {% endif %}><a href="{% url 'project_view' project='Demo Project' %}">Project Overview</a></li>
+                            <li><a href="index.html">Dashboard General</a></li>
                             <li><a href="dashboard_2.html">Dashboard OPEX</a></li>
                             
                         </ul>
                     </li>
-                    <li>
+                    <li {% if page in "opex_visi_dashboard,opex_package_visi_dashboard" %} class="active" {% endif %}>
                         <a href="#"><i class="fa fa-search"></i> <span class="nav-label">Visibility</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="{% url 'opex_visi_dashboard' %}">Dashboard</a></li>
-                            <li><a href="{% url 'opex_package_visi_dashboard' 'Sales' %}">Package View</a></li>
-                            <li><a href="pages/charts/flot.html">Vendor Analysis</a></li>
+                            <li {% if page == "opex_visi_dashboard" %} class="active" {% endif %}><a href="{% url 'opex_visi_dashboard' %}">Dashboard</a></li{%>
+                            <li {% if page == "opex_package_visi_dashboard" %} class="active" {% endif %}><a href="{% url 'opex_package_visi_dashboard' 'Sales' %}">Package View</a></li>
+                            <li ><a href="pages/charts/flot.html">Vendor Analysis</a></li>
                             <li><a href="pages/charts/inline.html">Time Machine</a></li>
                             <li><a href="pages/charts/morris.html">Improve Confidence</a></li>
                         </ul>

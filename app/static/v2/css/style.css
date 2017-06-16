@@ -4277,6 +4277,9 @@ a.close-canvas-menu:hover {
 .p-xl {
   padding: 40px;
 }
+.p-xxl {
+  padding: 60px;
+}
 .p-w-xs {
   padding: 0 10px;
 }
@@ -4330,6 +4333,9 @@ a.close-canvas-menu:hover {
 }
 .m-lg {
   margin: 30px;
+}
+.m-xxlg {
+  margin: 80px;
 }
 .m-xl {
   margin: 50px;

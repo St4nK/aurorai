@@ -151,18 +151,35 @@ def about(request):
         })
     )
 
-################
-# TEMPLATE V2 ##
-################
+#################
+## TEMPLATE V2 ##
+#################
+## Login and Logout ##
+def landingv2(request):
+    """Renders the login page."""
+    assert isinstance(request, HttpRequest)
+    path = request.get_full_path()[7:]
+    if path =="" : path = "/home"
+    context = {
+            'title':'Home Page',
+            'year':datetime.now().year,
+            'path':path
+        }
+    return render(
+        request,
+        'v2/login.html',
+        context)
 
 def logout(request):
     """Renders the home page."""
     auth_logout(request)
     assert isinstance(request, HttpRequest)
+    path = request.get_full_path()[7:]
+    if path =="" : path = "/home"
     context = {
             'title':'Login',
             'year':datetime.now().year,
-            'path':request.get_full_path()
+            'path':path
         }
     return render(
         request,
@@ -184,20 +201,41 @@ def home_v2(request):
         template,
         context
     )
-
-def landingv2(request):
+@login_required
+def projects_list(request):
     """Renders the home page."""
+    template = 'v2/projects_list.html'
     assert isinstance(request, HttpRequest)
-    path = request.get_full_path()[7:]
     context = {
             'title':'Home Page',
             'year':datetime.now().year,
-            'path':path
+            'user':request.user,
+            'page':'projects_list'
         }
     return render(
         request,
-        'v2/login.html',
-        context)
+        template,
+        context
+    )
+
+@login_required
+def project_view(request, project):
+    """Renders the home page."""
+    template = 'v2/project_view.html'
+    assert isinstance(request, HttpRequest)
+    context = {
+            'title':'Home Page',
+            'year':datetime.now().year,
+            'user':request.user,
+            'project': project,
+            'page':'project_view'
+        }
+    return render(
+        request,
+        template,
+        context
+    )
+
 
 @login_required
 def opex_dashboard_v2(request):
@@ -226,6 +264,8 @@ def opex_visi_dashboard(request):
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
+            'user':request.user,
+            'page':'opex_visi_dashboard'
         }
     )
 
@@ -237,8 +277,9 @@ def opex_package_visi_dashboard(request, package):
     package_list= f.get_value_list("transactions", "package")
     context = {
             'package_list':package_list,
-            #'data2':dataset,
-            'package':package
+            'package':package,
+            'user':request.user,
+            'page':'opex_package_visi_dashboard'
             
         }
     return render(
@@ -259,6 +300,8 @@ def opex_candm_dashboard(request):
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
+            'user':request.user,
+            'page':'opex_candm_dashboard'
         }
     )
 
