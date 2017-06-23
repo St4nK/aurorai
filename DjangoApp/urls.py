@@ -30,8 +30,10 @@ urlpatterns = [
     url(r'^opex/dashboard', opex_dashboard_v2, name='opex_dashboard_v2'),
     url(r'^opex/visibility/$', opex_visi_dashboard, name='opex_visi_dashboard'),
     url(r'^opex/visibility/package/(?P<package>(\w*))', opex_package_visi_dashboard, name='opex_package_visi_dashboard'),
+    url(r'^opex/visibility/improve_confidence', improve_confidence, name='improve_confidence'),
     url(r'^opex/candm/', opex_candm_dashboard, name='opex_candm_dashboard'),
     url(r'^adddata/', adddata, name='adddata'),
+    url(r'^download/', download_file, name='download_file'),
 
     ## API Calls ##
     url(r'^get_json_table', get_json_table, name='get_json_table'),

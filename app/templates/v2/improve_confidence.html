@@ -1,0 +1,314 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AurorAI - Improve Confidence</title>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'plugins/bootstrap-slider/bootstrap-slider.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content"></section>
+    <!-- /.content -->
+
+</div>
+
+  <!-- /.content-wrapper -->
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'dist/js/dropzone.js' %}"></script>
+<link rel="stylesheet" href="{% static 'dist/css/dropzone.css' %}">
+<script id="content_ractive" type="text/ractive">
+    <!-- Main content -->
+    <section class="content">
+        <div class="row  border-bottom white-bg dashboard-header">
+
+            <div class="col-sm-12">
+                <h2>Improve Confidence</h2>
+                <h4>Current Confidence</h4>
+                <h2 class="text-navy">91% <smalll class="text-muted">(<i class="fa fa-arrow-up"></i>12%)</smalll></h2>
+                <div class="progress progress-mini m-b-md">
+                    <div style="width: 91%;" class="progress-bar"></div>
+                </div>
+                <h4>Mapping status</h4>
+                <span class="label label-success m-r-sm">Mapped by you</span><span class="label label-warning m-r-sm">Mapped by AI</span><span class="label pull-right">To be reviewed</span>
+                <div class="progress progress-mini">
+                    <div style="width: 2%" class="progress-bar progress-bar-success">
+                        <span class="sr-only">30% Complete (success)</span>
+                    </div>
+                    <div style="width: 80%" class="progress-bar progress-bar-warning">
+                        <span class="sr-only">15% Complete (warning)</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-spinner fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> Cycles Performed</span>
+                            <h2 class="font-bold">4</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-reorder fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> Lines reviewed</span>
+                            <h2 class="font-bold">430</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-expand fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> Efficiency</span>
+                            <h2 class="font-bold">x40.1</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            <div class="col-lg-3">
+                <a href="{% url 'download_file' %}">
+                    <div class="widget style1 yellow-bg">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <i class="fa fa-play-circle fa-5x"></i>
+                            </div>
+                            <div class="col-xs-8 text-right">
+                                <span> Get next lines</span>
+                                <h2 class="font-bold">GO</h2>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>              
+        </div>
+            <div class="row content-wrapper m-t-md m-b-md">
+                <div class="col-md-12">
+                    <form class="dropzone" action="/upload" method="post" enctype="multipart/form-data" id="filesdz">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        {% verbatim %}
+        <div class="row">
+            <div class="col-md-2">
+                <div class="widget {{#if status>0}}navy-bg{{/if}}">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-spinner fa-2x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h4 class="font-bold">Cycle: {{ upload[0] }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="widget {{#if status>1}}navy-bg{{/if}}">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-table fa-2x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h4 class="font-bold">Format: {{ upload[1] }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="widget {{#if status>2}}navy-bg{{/if}}">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-list-alt fa-2x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h4 class="font-bold">Content: {{ upload[2] }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="">
+                    <div class="widget {{#if status>3}}yellow-bg{{/if}}">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-check-square fa-2x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h4 class="font-bold">Ready to upload: {{ upload[3] }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ibox">
+                        <div class="ibox-title with-border">
+                            <h3 class="box-title">{{table_name}}</h3>
+                        </div>
+                        <div class="box-body table-responsive no-padding table-bordered">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+
+                                        {{#each data_columns:k,i}}
+                                        <th>{{.}}</th>
+                                        {{/each}}
+
+                                    </tr>
+                                    {{#each data_table:i}}
+                                    <tr>
+                                        {{#each data_table[i]:j}}
+                                        <td>{{data_table[i][j]}}</td>
+                                        {{/each}}
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+</section>
+    {% endverbatim %}
+    <!-- /.content -->
+
+</script>
+<script type="text/javascript">
+
+    /////////////////
+    // AJAX Functions
+    /////////////////
+
+    function dzClick(id) {
+        console.log($(id));
+        var file = $(id)[0].children[1].children[0].innerText;
+        ractive.set('table_name', file);
+        $.ajax({
+            url: '/get_json_table',
+            type: 'get',
+            data: {
+                'user_id':ractive.get('user_id'),
+                'file':file.toString()
+            },
+            dataType: 'json',
+            success: function (data) {
+                json_columns =JSON.parse(data.json_columns);
+                json_table = JSON.parse(data.json_table);
+                ractive.set('data_table',json_table);
+                ractive.set('data_columns', json_columns);
+                ractive.set('data_columns_reworked', compareColumns(ractive.get('selected_model_columns'), json_columns));
+                setTimeout(function(){ractive.animate('status',1),ractive.animate('upload[0]',5)},400)
+                setTimeout(function(){ractive.animate('status',2),ractive.animate('upload[1]','Yes')},400)
+                setTimeout(function(){ractive.animate('status',3),ractive.animate('upload[2]','Yes')},400)
+                setTimeout(function(){ractive.animate('status',4),ractive.animate('upload[3]','Yes')},400)
+                
+                }
+        });
+    };
+
+    ////////////////////
+    // Classic Functions
+    ////////////////////
+
+    function compareColumns(model_columns, table_columns){
+        var new_table_columns = [];
+        var table_columns_copy = table_columns;
+        for (col in model_columns){
+            var value = model_columns[col];
+            if (table_columns.includes(value)){
+               
+                new_table_columns.push(value);
+                var index_table = table_columns.indexOf(value);
+                table_columns.splice(index_table,1);
+            }
+            else{
+                new_table_columns.push('missing');
+            }
+        }
+        for(col in table_columns){
+            if(table_columns[col] != 'missing'){
+                new_table_columns.push(table_columns[col]);
+            }
+            
+        }
+        return new_table_columns;
+
+    };
+    
+    ////////////////////
+    // Ractive Functions
+    ////////////////////
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '.content',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#content_ractive',
+          
+        // Here, we're passing in some initial data
+        data: {
+            name: 'world',
+            table_name : 'Table Overview',
+            data_table: {},
+            data_columns: [],
+            user_id: '{{user_id}}',
+            table_models: {{table_models|safe}},
+            selected_model_columns:[],
+            data_columns_reworked:[],
+            status:0,
+            upload:[],
+        }
+    });
+    ractive.observe('selectedModelIndex', function(index){
+        model = this.get('table_models['+index+'][1]');
+        this.set('selected_model_columns', model);
+        
+        this.set('data_columns_reworked', compareColumns(this.get('selected_model_columns'), this.get('data_columns_reworked')))
+    });
+</script>
+<script type="text/javascript">
+    /////////////////////
+    // Dropzone Functions
+    /////////////////////
+    Dropzone.options.filesdz = {
+      paramName: "file", // The name that will be used to transfer the file
+      maxFilesize: 2, // MB
+      //autoProcessQueue: false,
+      addRemoveLinks: true,
+      acceptedFiles: ".xls, .xlsx, .xlsb",
+      accept: function(file, done) {
+        if (file.name == "pp4.jpg") {
+          done("Naha, you don't.");
+        }
+        else { done(); }
+      },
+      init: function() {
+          this.on("success", function (file) {});
+      }
+    };
+</script>
+{% endblock %}

@@ -350,7 +350,7 @@
         ADash.addDataSet(ds);
         ADash.addChart('sub_package_chart', 'DiscreteBarChart', 'sub_package', 'sum', 'value', '#areaChart3', true);
         ADash.addChart('vendor_chart', 'DiscreteBarChart', 'vendor', 'sum', 'value', '#areaChart2', true);
-        ADash.addChart('functions_chart', 'PieChart', 'vendor', 'sum', 'value', '#areaChart1', true);
+        ADash.addChart('functions_chart', 'PieChart', 'sub_package', 'sum', 'value', '#areaChart1', true);
         ADash.addKPI('total_sum','total', 'sum', 'value', 'millions', true);
         ADash.addKPI('total_count','total', 'sum', 'count', 'millions', true);
         ADash.addKPI('vendor_count','vendor', 'sum', 'count', 'millions', true);
@@ -362,8 +362,6 @@
                 ADash.refreshData(ractive);
             }
         });
-        
-
     };
     get_dataset_ajax = function(table, dimensions, filters){
         $.ajax({
@@ -383,8 +381,7 @@
                 console.log('failure');-
                 console.log(jqxhr);
                 console.log(textStatus);
-                console.log(errorThrown);                               
-
+                console.log(errorThrown);     
             }
         });
     };

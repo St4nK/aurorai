@@ -89,7 +89,8 @@ def upload(request):
     json_table, json_columns = f.excel_to_json(uploads_root +"/user_4/Data1_light.xlsx",3)
     models = f.get_models()
     data = {'form': form, 'table':json_table, 'columns':json_columns, 'table_models':models, 'user':request.user.id}
-    return render_to_response('app/OPEX/upload.html', data, context_instance=RequestContext(request))
+    #data=RequestContext(request, data2)
+    return render(request,'app/OPEX/upload.html', data)
 
 
 def landing(request):
@@ -306,6 +307,25 @@ def opex_candm_dashboard(request):
     )
 
 @login_required
+def improve_confidence(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_file = UploadFile(file = request.FILES['file'], user = request.user)
+            print(new_file)
+            new_file.save()
+ 
+            return HttpResponseRedirect(reverse('improve_confidence'))
+    else:
+        form = UploadFileForm()
+    uploads_root = settings.MEDIA_ROOT
+    json_table, json_columns = f.excel_to_json(uploads_root +"/user_4/Data1_light.xlsx",3)
+    models = f.get_models()
+    data = {'form': form, 'table':json_table, 'columns':json_columns, 'table_models':models, 'user_id':request.user.id, 'user':request.user, 'page':'improve_confidence'}
+    #data=RequestContext(request, data2)
+    return render(request,'v2/improve_confidence.html', data)
+
+@login_required
 def adddata(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
@@ -339,6 +359,7 @@ def get_json_table(request):
         }
         data = json.dumps(data, cls=DjangoJSONEncoder)
         return HttpResponse(data)
+
 def get_json_dataset(request):
     if request.method == 'POST' :
         queryset = request.POST
@@ -349,3 +370,16 @@ def get_json_dataset(request):
         dataset = f.get_dataset(table, dimensions, filters)
         #print(dataset)
         return HttpResponse(dataset)
+
+import django_excel as excel
+
+@login_required
+def download_file(request):
+    #if 'excel' in request.POST:
+    sheet = excel.pe.Sheet([[1, 2],[3, 4]])
+    output =  excel.make_response(sheet, "xlsx")
+    output["Content-Disposition"] = "attachment; filename=Demo-cycle-5.xlsx"
+    output["Content-type"] = "vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    return output
+    
+        

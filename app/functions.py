@@ -58,6 +58,8 @@ def get_models_details():
     json_models = json.dumps(models_details, cls=DjangoJSONEncoder)
     return json_models
 
+ 
+
 
 
 ######################################

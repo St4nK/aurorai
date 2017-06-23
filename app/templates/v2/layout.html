@@ -63,14 +63,14 @@
                             
                         </ul>
                     </li>
-                    <li {% if page in "opex_visi_dashboard,opex_package_visi_dashboard" %} class="active" {% endif %}>
+                    <li {% if page in "opex_visi_dashboard,opex_package_visi_dashboard,improve_confidence" %} class="active" {% endif %}>
                         <a href="#"><i class="fa fa-search"></i> <span class="nav-label">Visibility</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li {% if page == "opex_visi_dashboard" %} class="active" {% endif %}><a href="{% url 'opex_visi_dashboard' %}">Dashboard</a></li{%>
                             <li {% if page == "opex_package_visi_dashboard" %} class="active" {% endif %}><a href="{% url 'opex_package_visi_dashboard' 'Sales' %}">Package View</a></li>
-                            <li ><a href="pages/charts/flot.html">Vendor Analysis</a></li>
+                            <li {% if page == "testing" %} class="active" {% endif %}><a href="{% url 'opex_package_visi_dashboard' 'Sales' %}">Vendor Analysis</a></li>
                             <li><a href="pages/charts/inline.html">Time Machine</a></li>
-                            <li><a href="pages/charts/morris.html">Improve Confidence</a></li>
+                            <li{% if page == "improve_confidence" %} class="active" {% endif %}><a href="{% url 'improve_confidence' %}">Improve Confidence</a></li>
                         </ul>
                     </li>
                     <li>
