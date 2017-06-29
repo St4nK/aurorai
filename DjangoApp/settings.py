@@ -32,16 +32,35 @@ MANAGERS = ADMINS
 #            }
 #        }
 #    }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': path.join(PROJECT_ROOT, 'db.sqlite3'),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+DATABASE_CHOICE = 'sqlite' #'azure'
+
+if DATABASE_CHOICE == 'sqlite':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': path.join(PROJECT_ROOT, 'db.sqlite3'),
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default':{
+            'ENGINE': 'sql_server.pyodbc',
+            'NAME': 'aurorai',
+            'USER': 'christophe.castan@aurora',
+            'PASSWORD': 'STk5k3U2uG2q',
+            'HOST': 'aurora.database.windows.net',
+            'PORT': '1433',
+            'OPTIONS': {
+                'driver': 'SQL Server Native Client 11.0',
+                'MARS_Connection': 'True',
+            }
+        }
+    }
+DATABASE_ROUTERS = ['app.routers.MainRouter',]
 
 LOGIN_URL = '/'
 
