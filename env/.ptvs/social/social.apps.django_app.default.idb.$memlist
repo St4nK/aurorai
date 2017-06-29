@@ -1,0 +1,9 @@
+south_migrations
+managers
+migrations
+fields
+tests
+models
+config
+default_app_config
+admin

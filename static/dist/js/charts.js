@@ -1,10 +1,25 @@
 //Based on nvd3.js charts objects
 //@StanK 20170509
-
 function AuroraChart(options) {
     this.chartType = options.chartType;
     this.view = options.view;
     this.format = options.format;
+    this.xAxis = options.xAxis;
+    var monthsList = [
+    'none',
+    'jan',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sep',
+    'oct',
+    'nov',
+    'dec',
+    ];
     this.filters = {};
     this.dataset = options.dataset
     this.update = function (data, filters) {
@@ -148,13 +163,25 @@ function AuroraChart(options) {
                                 .showXAxis(true)        //Show the x-axis
                                 
                         ;
-                        chart.xAxis
+                        if (options.xAxis === 'month') {
+                            chart.xAxis.tickFormat(function(d){
+                                return monthsList[d];
+                            });
+                        }
+                        else {
+                            chart.xAxis
                             .tickFormat(function (d) {
                                 return d3.time.format('%x')(new Date(d))
-                            })
+                            });
+                        }
+                        
                             
-
-                        chart.yAxis.tickFormat(d3.format(',%'));
+                        if (options.yAxis === 'percent') {
+                            chart.yAxis.tickFormat(d3.format(',%'));
+                        }
+                        else {
+                            chart.yAxis.tickFormat(d3.format('.1f'));
+                        }
                         chart.interactiveLayer.tooltip
                             .gravity('w')
                         ;

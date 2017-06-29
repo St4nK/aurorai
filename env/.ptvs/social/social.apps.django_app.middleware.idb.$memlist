@@ -1,0 +1,9 @@
+social_logger
+messages
+six
+MessageFailure
+urlquote
+SocialAuthExceptionMiddleware
+SocialAuthBaseException
+redirect
+settings

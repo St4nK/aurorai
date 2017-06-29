@@ -195,7 +195,8 @@ def home_v2(request):
     context = {
             'title':'Home Page',
             'year':datetime.now().year,
-            'user':request.user
+            'user':request.user,
+            
         }
     return render(
         request,
@@ -250,6 +251,7 @@ def opex_dashboard_v2(request):
             'data2':dataset,
             'title':'Home Page',
             'year':datetime.now().year,
+            'page':'opex_dashboard_v2',
         }
     )
 
@@ -344,6 +346,27 @@ def adddata(request):
             'message':message,
         }
     )
+
+########################
+# Control and Monitoring  
+########################
+
+
+@login_required
+def candm_travel(request):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+    
+    #model_list = f.get_models_details()
+    return render(
+        request,
+        'v2/candm-travel.html',
+        {
+            'page':'candm_travel',
+        }
+    )
+
+
 ################
 # JSON REQUESTS 
 ################

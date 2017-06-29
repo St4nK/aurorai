@@ -1,0 +1,10 @@
+PY2
+AbstractSource
+HttpSource
+request
+XLSX
+FILE_TYPE_MIME_TABLE
+PARSER
+params
+constants
+_get_file_type_from_url

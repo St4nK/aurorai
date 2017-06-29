@@ -1,0 +1,17 @@
+sys
+logging
+PY2
+BytesIO
+types
+is_string
+StringIO
+NullHandler
+PY3_ABOVE
+Iterator
+isstream
+PY27_ABOVE
+irange
+text_type
+PY26
+PY27
+OrderedDict

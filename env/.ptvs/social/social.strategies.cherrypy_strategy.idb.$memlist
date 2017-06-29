@@ -1,0 +1,6 @@
+cherrypy
+BaseTemplateStrategy
+CherryPyStrategy
+BaseStrategy
+CherryPyJinja2TemplateStrategy
+six

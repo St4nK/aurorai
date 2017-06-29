@@ -1,0 +1,14 @@
+_register_class
+PluginManager
+do_import_class
+CACHED_PLUGIN_INFO
+logging
+_get_me_pypi_package_name
+PluginInfo
+_register_a_plugin
+PluginInfoChain
+log
+PLUG_IN_MANAGERS
+json_dumps
+defaultdict
+_load_me_later

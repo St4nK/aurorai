@@ -1,0 +1,10 @@
+lrange
+pd
+DataFrame
+tm
+np
+range
+compat
+StringIO
+CParserTests
+pytest

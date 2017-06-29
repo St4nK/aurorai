@@ -1,0 +1,5 @@
+_current_strategy_getter
+get_strategy
+get_current_strategy
+module_member
+set_current_strategy_getter

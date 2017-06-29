@@ -1,0 +1,10 @@
+get_io_type
+MIME_TYPES
+get_io
+BytesIO
+BINARY_STREAM_TYPES
+register_a_file_type
+TEXT_STREAM_TYPES
+StringIO
+register_stream_type
+FILE_TYPES

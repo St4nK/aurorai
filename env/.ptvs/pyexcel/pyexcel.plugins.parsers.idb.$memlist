@@ -1,0 +1,7 @@
+PyexcelPluginChain
+DB_SQL
+django
+READERS
+DB_DJANGO
+sqlalchemy
+excel

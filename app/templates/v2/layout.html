@@ -53,13 +53,13 @@
                             AurorAI
                         </div>
                     </li>
-                    <li {% if page in "projects_list,project_view" %} class="active" {% endif %}>
+                    <li {% if page in "projects_list,project_view,opex_dashboard_v2" %} class="active" {% endif %}>
                         <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">Home</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {% if page == "projects_list" %} class="active" {% endif %}><a href="{% url 'projects_list' %}">Projects List</a></li>
                             <li {% if page == "project_view" %} class="active" {% endif %}><a href="{% url 'project_view' project='Demo Project' %}">Project Overview</a></li>
                             <li><a href="index.html">Dashboard General</a></li>
-                            <li><a href="dashboard_2.html">Dashboard OPEX</a></li>
+                            <li{% if page == "opex_dashboard_v2" %} class="active" {% endif %}><a href="{% url 'opex_dashboard_v2' %}">Dashboard OPEX</a></li>
                             
                         </ul>
                     </li>
@@ -87,11 +87,11 @@
                             <li><a href="form_advanced.html">2</a></li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Control &amp; Monitoring</span></a>
+                    <li {% if page in "candm_travel" %} class="active" {% endif %}>
+                        <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Control &amp; Monitoring</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="contacts.html">1</a></li>
-                            <li><a href="profile.html">2</a></li>
+                            <li{% if page == "candm_travel" %} class="active" {% endif %}><a href="{% url 'candm_travel' %}">Travel</a></li>
+                            <li><a href="#">Events</a></li>
                         </ul>
                     </li>
                     <li>

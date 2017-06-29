@@ -1,0 +1,14 @@
+PyexcelPluginChain
+PARSER
+memory_input
+querysets
+db_sources
+django
+pydata
+RENDERER
+output_to_memory
+sqlalchemy
+params
+http
+file_output
+file_input

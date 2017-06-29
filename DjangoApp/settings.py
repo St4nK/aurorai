@@ -18,7 +18,20 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+#DATABASES = {
+#        'default': {
+#            'ENGINE': 'sql_server.pyodbc',
+#            'NAME': 'aurorai',
+#            'USER': 'christophe.castan@aurora',
+#            'PASSWORD': 'STk5k3U2uG2q',
+#            'HOST': 'aurora.database.windows.net',
+#            'PORT': '1433',
+#            'OPTIONS': {
+#                'driver': 'SQL Server Native Client 11.0',
+#                'MARS_Connection': 'True',
+#            }
+#        }
+#    }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

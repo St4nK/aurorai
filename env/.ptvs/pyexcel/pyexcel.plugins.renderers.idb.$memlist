@@ -1,0 +1,8 @@
+PyexcelPluginChain
+DB_SQL
+WRITERS
+django
+_texttable
+DB_DJANGO
+sqlalchemy
+excel

@@ -1,0 +1,10 @@
+parse_qs
+url_add_parameters
+requests
+OAuth1Test
+HTTPretty
+urlparse
+User
+BaseOAuthTest
+OAuth2Test
+BaseBackendTest

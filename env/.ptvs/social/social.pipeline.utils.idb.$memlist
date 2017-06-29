@@ -1,0 +1,4 @@
+partial_from_session
+partial_to_session
+SERIALIZABLE_TYPES
+six

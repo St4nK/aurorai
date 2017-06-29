@@ -1,0 +1,8 @@
+BaseAuth
+ConnectionError
+user_agent
+request
+parse_qs
+SSLHttpAdapter
+module_member
+AuthFailed

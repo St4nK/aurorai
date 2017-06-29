@@ -1,0 +1,427 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AurorAI - C and M</title>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'plugins/bootstrap-slider/bootstrap-slider.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+    </section>
+    <!-- /.content -->
+    
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}
+{% block javascript %}
+<!-- NVD3 Graphs -->
+<script src="/static/dist/js/d3.js"></script>
+<script src="/static/dist/js/crossfilter.js"></script>
+<!--<script src="/static/dist/js/streamlayer.js"></script>-->
+<script src="/static/dist/js/nv.d3.js"></script>
+<link rel="stylesheet" href="{% static 'dist/css/nvd3.css' %}">
+<script type="text/html" id="content_ractive">
+   
+        <!-- Info boxes -->
+        
+        {% verbatim %}
+    <div class="row  border-bottom dashboard-header">
+        
+        <div class="col-md-3">
+            <div class="widget style1 navy-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-6">
+                        <i class="fa fa-plane fa-4x"></i>
+                        <i class="fa fa-hotel fa-4x"></i>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <h2 class="font-bold">Travel</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox m-b-sm">
+                <div class="ibox-content">
+                    <h5>Current Spend</h5>
+                    <h1 class="no-margins text-danger">886,200 (<i class="fa fa-arrow-up"></i>12%)</h1>
+                    <div class="stat-percent font-bold text-danger">700,100<i class="fa fa-arrow-up"></i></div>
+                    <small>Budgeted Spend</small>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>Forecasted Year Spend</h5>
+                    <h1 class="no-margins text-danger">1,500,000 (<i class="fa fa-arrow-up"></i>14%)</h1>
+                    <div class="stat-percent font-bold text-danger">1,350,000<i class="fa fa-bolt"></i></div>
+                    <small>Year Budget</small>
+                </div>
+            </div>
+            <div class="btn-group btn-block m-l-xs">
+                <button type="button" class="btn btn-w-m btn-lg btn-success">Total Spend</button>
+                <button type="button" class="btn btn-w-m btn-lg btn-outline btn-success">per FTE</button>
+                <button type="button" class="btn btn-w-m btn-lg btn-outline btn-success"> as % of NR</button>
+            </div>
+        </div>
+        <div class="col-md-9" style="height:380px;">
+            <svg id="areaChart1" style="display:block; width:100%; height:100%;"></svg>
+        </div>
+       
+        
+    </div>
+        
+        <div class="row border-bottom wrapper-content">
+            <div class="col-md-4">
+                <div id="world-map" style="height: 200px;"></div>
+            </div>
+            <div class="col-md-1">
+                <div class="widget m-t-xs yellow-bg p-h-lg h-200 text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-plane fa-4x"></i>
+                        <h1 class="m-xs">520k</h1>
+                        <h3 class="font-bold no-margins">
+                            Airfare
+                        </h3>
+                        <small>+12%</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs"># trips</h2>
+                                <h1 class="no-margins">5,000</h1>
+                                <div class="font-bold text-danger">+10% <i class="fa fa-bolt"></i></div>
+                            </div>
+                            
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>4,700</strong> Last Year
+
+                                    </td>
+                                    
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>4,500</strong> Budgeted
+                                    </td>
+                                   
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs"># trips booked > 14d</h2>
+                                <h1 class="no-margins">500 (20%)</h1>
+                                <div class="font-bold text-danger">+10% <i class="fa fa-bolt"></i></div>
+                            </div>
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>520</strong> Last Year
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>480</strong> Budgeted
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row wrapper-content">
+            <div class="col-md-4" style="height:300px;">
+                <svg id="areaChart2" style="display:block; width:100%; height:100%;"></svg>
+            </div>
+            <div class="col-md-1">
+                <div class="widget m-t-xs navy-bg p-h-lg h-200 text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-hotel fa-4x"></i>
+                        <h1 class="m-xs">200k</h1>
+                        <h3 class="font-bold no-margins">
+                            Lodging
+                        </h3>
+                        <small>+10%</small>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 border-right">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs">Domestic trips > 2 d</h2>
+                                <h1 class="no-margins">200 (15%)</h1>
+                                <div class="font-bold text-danger">+10% <i class="fa fa-bolt"></i></div>
+                            </div>
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>170</strong> Last Year
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>160</strong> Budgeted
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="widget m-t-xs navy-bg p-h-lg h-200 text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-cutlery fa-4x"></i>
+                        <h1 class="m-xs">100k</h1>
+                        <h3 class="font-bold no-margins">
+                            Meals
+                        </h3>
+                        <small>+10%</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 border-right">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs">Meals over per diem allowance</h2>
+                                <h1 class="no-margins">20%</h1>
+                                <div class="font-bold text-success">5% <i class="fa fa-bolt"></i></div>
+                            </div>
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>25%</strong> Last Year
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>22%</strong> Budgeted
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+
+                    <!-- /.box-header -->
+                    
+                    
+        <!-- /.row -->
+        {% endverbatim %}
+       
+   
+    
+</script>
+
+<!-- Models to draw graphs, to be exported in separate .js -->
+<script src="{% static 'dist/js/charts.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-slider/bootstrap-slider.js' %}"></script>
+ <!-- Jvectormap -->
+<script src="{% static 'v2/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js' %}"></script>
+<script src="{% static 'v2/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- Data Models and Manipulation -->
+<!--retrieving data from python : TO add API call/Ajax async load-->
+
+<script type="text/javascript">
+    function dataHistoric(){
+        return [ 
+    { 
+        "key" : "Actuals" , 
+        "values" : [
+  [ 1, 0.4 ],
+  [ 2, 0.55 ],
+  [ 3, 0.65 ],
+  [ 4, 0.72 ],
+  [ 5, 0.76 ],
+  [ 6, 0.7914 ],
+  [ 7, 0.8009 ],
+  [ 8, 0.8098 ],
+  [ 9, 0.8185 ],
+  [ 10, 0.8267 ],
+  [ 11, 0.8346 ],
+  [ 12, 0.8423 ],
+        ],
+        "color":"rgb(0, 183, 238)"
+    },
+    { 
+        "key": "Budget",
+        "values" : [
+  [1, 0.3],
+  [2, 0.4],
+  [3, 0.5],
+  [4, 0.6],
+  [5, 0.65],
+  [6, 0.7],
+  [7, 0.74],
+  [8, 0.76],
+  [9, 0.77],
+  [10, 0.79],
+  [11, 0.80],
+  [12, 0.81],
+        ],
+        "color": "#f8ac59"
+    },
+    ]
+    };
+    function dataFunction() {
+        return [
+            {
+                "label": "actuals",
+                "values": [
+                    {
+                        "key": "Finance",
+                        "value": 10
+                    },
+                    {
+                        "key": "HR",
+                        "value": 20
+                    },
+                    {
+                        "key": "ExCom",
+                        "value": 5
+                    },
+                    {
+                        "key": "Marketing",
+                        "value": 15
+                    },
+                    {
+                        "key": "Supply",
+                        "value": 8
+                    }
+                ]
+            }
+        ]
+    };
+    
+</script>
+<<!-- Dataset Objects and functions-->
+<script src="/static/dist/js/dataset.js"></script>
+<script type="text/javascript">
+    
+    
+    var myStackedAreaChart = new AuroraChart({
+        chartType:'LineChart',
+        div:'#areaChart1',
+        view: '',
+        xAxis:'month',
+        format:'multi',
+        dataset:dataHistoric(),
+        dimension:'subpackage',
+        hasFilter:false
+        
+    });
+    var myBarChart = new AuroraChart({
+        chartType: 'DiscreteBarChart',
+        div: '#areaChart2',
+        view: '',
+        format: 'multi',
+        dataset: dataFunction(),
+        dimension: '',
+        hasFilter: false
+
+    });
+    
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '.content',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#content_ractive',
+
+        // Here, we're passing in some initial data
+        data: { 
+            totalspend: '100.200',
+            charts:[
+                
+            ],
+            filters:{
+                package:''
+            },
+        }
+    });
+    
+    ractive.on( 'removeFilter', function ( event, dim ) {
+        ractive.animate('filters.package','');
+    });
+</script>
+<script type="text/javascript">
+    
+    var mapData = {
+        "US": 298,
+        "SA": 200,
+        "DE": 220,
+        "FR": 540,
+        "CN": 120,
+        "AU": 760,
+        "BR": 550,
+        "IN": 200,
+        "GB": 120,
+        "BE": 50,
+    };
+
+    $('#world-map').vectorMap({
+        map: 'world_mill_en',
+        backgroundColor: "transparent",
+        regionStyle: {
+            initial: {
+                fill: '#e4e4e4',
+                "fill-opacity": 0.9,
+                stroke: 'none',
+                "stroke-width": 0,
+                "stroke-opacity": 0
+            }
+
+        },
+
+        series: {
+            regions: [{
+                values: mapData,
+                scale: ["#a2ff94", "#ff8080"],
+                normalizeFunction: 'polynomial'
+            }]
+        },
+        onRegionTipShow: function(e, el, code){
+            el.html(el.html()+' (Spend - '+mapData[code]+')');
+        }
+    });
+</script>
+{% endblock %}

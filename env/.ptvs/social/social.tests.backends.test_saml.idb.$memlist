@@ -1,0 +1,17 @@
+sys
+requests
+HTTPretty
+parse_qs
+urlparse
+AuthMissingParameter
+OneLogin_Saml2_Utils
+urlencode
+path
+patch
+re
+json
+BaseBackendTest
+SAMLTest
+unittest2
+DATA_DIR
+urlunparse

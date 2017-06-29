@@ -1,0 +1,14 @@
+Series
+pd
+DataFrame
+tm
+hash_array
+np
+Index
+catch_warnings
+hash_tuples
+test_deprecation
+hash_pandas_object
+pytest
+TestHashing
+MultiIndex

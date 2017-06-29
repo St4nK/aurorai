@@ -1,0 +1,13 @@
+GoogleOAuth2
+GoogleOpenId
+BaseOAuth1
+handle_http_errors
+AuthMissingParameter
+BaseGoogleOAuth2API
+BaseOAuth2
+GoogleOpenIdConnect
+GoogleOAuth
+OpenIdAuth
+GooglePlusAuth
+OpenIdConnectAuth
+BaseGoogleAuth

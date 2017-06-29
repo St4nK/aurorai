@@ -1,0 +1,16 @@
+get_writer
+PY2
+iget_data
+BytesIO
+save_data
+load_data
+_get_data
+StringIO
+isstream
+GeneratorType
+warnings
+READERS
+store_data
+constants
+get_data
+WRITERS

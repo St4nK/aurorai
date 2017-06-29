@@ -35,6 +35,9 @@ urlpatterns = [
     url(r'^adddata/', adddata, name='adddata'),
     url(r'^download/', download_file, name='download_file'),
 
+    ## Control and Monitoring
+    url(r'^candm/travel', candm_travel, name='candm_travel'),
+
     ## API Calls ##
     url(r'^get_json_table', get_json_table, name='get_json_table'),
     url(r'^get_json_dataset', get_json_dataset, name='get_json_datase'),

@@ -1,0 +1,9 @@
+PY2
+CSVinMemoryReader
+NamedContent
+FILE_FORMAT_CSVZ
+BookReader
+zipfile
+StringIO
+_get_sheet_name
+CSVZipBookReader
