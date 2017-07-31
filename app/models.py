@@ -85,6 +85,25 @@ class CompanyVisi(models.Model):
     month=models.FloatField(default=0)
     spend=models.FloatField(default=0)
 
+class CandMTravel(models.Model):
+    Region=models.CharField(max_length=255, default='')
+    Country=models.CharField(max_length=255, default='')
+    Function=models.CharField(max_length=255, default='')
+    Scenario=models.CharField(max_length=255, default='')
+    Package=models.CharField(max_length=255, default='')
+    SubPackage=models.CharField(max_length=255, default='')
+    FTE=models.FloatField(default=0)
+    Month=models.CharField(max_length=255, default='')
+    Spend=models.FloatField(default=0)
+    FTE_travel=models.FloatField(default=0)
+    NR_Month=models.FloatField(default=0)
+    Total_Trips=models.FloatField(default=0)
+    Trips_14D=models.FloatField(default=0)
+    DomTrip_2D=models.FloatField(default=0)
+    UnitPrice=models.FloatField(default=0)
+    Trip_length=models.FloatField(default=0)
+
+
 class BenchmarkVisi(models.Model):
     quartile=models.CharField(max_length=255, default='')
     package=models.CharField(max_length=255, default='')

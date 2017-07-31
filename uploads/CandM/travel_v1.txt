@@ -1,0 +1,198 @@
+id	Region	Country	Function	Scenario	Package	SubPackage	FTE	Month	Spend	FTE_travel	NR_Month	Total_Trips	Trips_14D	DomTrip_2D	UnitPrice	Trip_length
+1	Eucan	Switzerland	Procurement	Budget	Travel	Airfare	110	2	33976.8	12	4916666.667	15.6			2178	
+2	Eucan	Switzerland	Procurement	Actual 	Travel	Airfare	110	2	36163.4	14	4916666.667	18.2			1987	
+3	Eucan	Switzerland	Procurement	Forecast	Travel	Airfare	110	11	29003	10	4916666.667	13			2231	
+4	Eucan	Switzerland	Procurement	Budget	Travel	Lodging	110	2	4680	12	4916666.667	15.6			100	3
+5	Eucan	Switzerland	Procurement	Actual 	Travel	Lodging	110	2	5132.4	14	4916666.667	18.2			94	3
+6	Eucan	Switzerland	Procurement	Forecast	Travel	Lodging	110	11	3510	10	4916666.667	13			90	3
+7	Eucan	Switzerland	Procurement	Budget	Travel	meals	110	2	3463.2	12	4916666.667	15.6			74	3
+8	Eucan	Switzerland	Procurement	Actual 	Travel	meals	110	2	3494.4	14	4916666.667	18.2			64	3
+9	Eucan	Switzerland	Procurement	Forecast	Travel	meals	110	11	3042	10	4916666.667	13			78	3
+10	Eucan	Switzerland	Sales	Budget	Travel	Airfare	78	4	51296.7	21	4916666.667	27.3			1879	
+11	Eucan	Switzerland	Sales	Actual 	Travel	Airfare	78	4	41249	19	4916666.667	24.7			1670	
+12	Eucan	Switzerland	Sales	Forecast	Travel	Airfare	78	12	86361.6	24	4916666.667	31.2			2768	
+13	Eucan	Switzerland	Sales	Budget	Travel	Lodging	78	4	6879.6	21	4916666.667	27.3			84	3
+14	Eucan	Switzerland	Sales	Actual 	Travel	Lodging	78	4	5779.8	19	4916666.667	24.7			78	3
+15	Eucan	Switzerland	Sales	Forecast	Travel	Lodging	78	12	6739.2	24	4916666.667	31.2			72	3
+16	Eucan	Switzerland	Sales	Budget	Travel	meals	78	4	5896.8	21	4916666.667	27.3			72	3
+17	Eucan	Switzerland	Sales	Actual 	Travel	meals	78	4	4446	19	4916666.667	24.7			60	3
+18	Eucan	Switzerland	Sales	Forecast	Travel	meals	78	12	5990.4	24	4916666.667	31.2			64	3
+19	Eucan	UK	HR	Budget	Travel	Airfare	38	6	24675.3	9	5500000	11.7			2109	
+20	Eucan	UK	HR	Actual 	Travel	Airfare	38	6	21739.9	7	5500000	9.1			2389	
+21	Eucan	UK	HR	Forecast	Travel	Airfare	38	11	20997.6	8	5500000	10.4			2019	
+22	Eucan	UK	HR	Budget	Travel	Lodging	38	6	2316.6	9	5500000	11.7			66	3
+23	Eucan	UK	HR	Actual 	Travel	Lodging	38	6	2074.8	7	5500000	9.1			76	3
+24	Eucan	UK	HR	Forecast	Travel	Lodging	38	11	2308.8	8	5500000	10.4			74	3
+25	Eucan	UK	HR	Budget	Travel	meals	38	6	1684.8	9	5500000	11.7			48	3
+26	Eucan	UK	HR	Actual 	Travel	meals	38	6	1747.2	7	5500000	9.1			64	3
+27	Eucan	UK	HR	Forecast	Travel	meals	38	11	1809.6	8	5500000	10.4			58	3
+28	Eucan	UK	Sales	Budget	Travel	Airfare	56	9	41083.9	11	5500000	14.3			2873	
+29	Eucan	UK	Sales	Actual 	Travel	Airfare	56	1	37783.2	14	5500000	18.2			2076	
+30	Eucan	UK	Sales	Forecast	Travel	Airfare	56	9	26000	10	5500000	13			2000	
+31	Eucan	UK	Sales	Budget	Travel	Lodging	56	9	3346.2	11	5500000	14.3			78	3
+32	Eucan	UK	Sales	Actual 	Travel	Lodging	56	1	4586.4	14	5500000	18.2			84	3
+33	Eucan	UK	Sales	Forecast	Travel	Lodging	56	9	3081	10	5500000	13			79	3
+34	Eucan	UK	Sales	Budget	Travel	meals	56	9	2659.8	11	5500000	14.3			62	3
+35	Eucan	UK	Sales	Actual 	Travel	meals	56	1	3166.8	14	5500000	18.2			58	3
+36	Eucan	UK	Sales	Forecast	Travel	meals	56	9	2340	10	5500000	13			60	3
+37	Eucan	France	Supply chain	Budget	Travel	Airfare	89	5	56828.2	22	6500000	28.6			1987	
+38	Eucan	France	Supply chain	Actual 	Travel	Airfare	89	5	71555.9	19	6500000	24.7			2897	
+39	Eucan	France	Supply chain	Forecast	Travel	Airfare	89	10	46436	20	6500000	26			1786	
+40	Eucan	France	Supply chain	Budget	Travel	Lodging	89	5	7207.2	22	6500000	28.6			84	3
+41	Eucan	France	Supply chain	Actual 	Travel	Lodging	89	5	5928	19	6500000	24.7			80	3
+42	Eucan	France	Supply chain	Forecast	Travel	Lodging	89	10	5460	20	6500000	26			70	3
+43	Eucan	France	Supply chain	Budget	Travel	meals	89	5	4976.4	22	6500000	28.6			58	3
+44	Eucan	France	Supply chain	Actual 	Travel	meals	89	5	4742.4	19	6500000	24.7			64	3
+45	Eucan	France	Supply chain	Forecast	Travel	meals	89	10	2184	20	6500000	26			28	3
+46	Eucan	France	Procurement	Budget	Travel	Airfare	49	12	43644.9	19	6500000	24.7			1767	
+47	Eucan	France	Procurement	Actual 	Travel	Airfare	49	2	41329.6	16	6500000	20.8			1987	
+48	Eucan	France	Procurement	Forecast	Travel	Airfare	49	12	49647	19	6500000	24.7			2010	
+49	Eucan	France	Procurement	Budget	Travel	Lodging	49	2	5631.6	19	6500000	24.7			76	3
+50	Eucan	France	Procurement	Actual 	Travel	Lodging	49	2	4430.4	16	6500000	20.8			71	3
+51	Eucan	France	Procurement	Forecast	Travel	Lodging	49	12	4890.6	19	6500000	24.7			66	3
+52	Eucan	France	Procurement	Budget	Travel	meals	49	2	2519.4	19	6500000	24.7			34	3
+53	Eucan	France	Procurement	Actual 	Travel	meals	49	2	3619.2	16	6500000	20.8			58	3
+54	Eucan	France	Procurement	Forecast	Travel	meals	49	12	2223	19	6500000	24.7			30	3
+55	Eucan	Italy	Supply chain	Budget	Travel	Airfare	88	7	33580.3	13	3333333.333	16.9			1987	
+56	Eucan	Italy	Supply chain	Actual 	Travel	Airfare	88	7	34947.9	9	3333333.333	11.7			2987	
+57	Eucan	Italy	Supply chain	Forecast	Travel	Airfare	88	9	39234	15	3333333.333	19.5			2012	
+58	Eucan	Italy	Supply chain	Budget	Travel	Lodging	88	7	3042	13	3333333.333	16.9			60	3
+59	Eucan	Italy	Supply chain	Actual 	Travel	Lodging	88	7	2421.9	9	3333333.333	11.7			69	3
+60	Eucan	Italy	Supply chain	Forecast	Travel	Lodging	88	9	3393	15	3333333.333	19.5			58	3
+61	Eucan	Italy	Supply chain	Budget	Travel	meals	88	7	1926.6	13	3333333.333	16.9			38	3
+62	Eucan	Italy	Supply chain	Actual 	Travel	meals	88	7	1544.4	9	3333333.333	11.7			44	3
+63	Eucan	Italy	Supply chain	Forecast	Travel	meals	88	9	2223	15	3333333.333	19.5			38	3
+64	Eucan	Italy	Sales	Budget	Travel	Airfare	34	4	10332.4	4	3333333.333	5.2			1987	
+65	Eucan	Italy	Sales	Actual 	Travel	Airfare	34	4	16252.6	7	3333333.333	9.1			1786	
+66	Eucan	Italy	Sales	Forecast	Travel	Airfare	34	12	9869.6	4	3333333.333	5.2			1898	
+67	Eucan	Italy	Sales	Budget	Travel	Lodging	34	4	1060.8	4	3333333.333	5.2			68	3
+68	Eucan	Italy	Sales	Actual 	Travel	Lodging	34	4	1610.7	7	3333333.333	9.1			59	3
+69	Eucan	Italy	Sales	Forecast	Travel	Lodging	34	12	936	4	3333333.333	5.2			60	3
+70	Eucan	Italy	Sales	Budget	Travel	meals	34	4	842.4	4	3333333.333	5.2			54	3
+71	Eucan	Italy	Sales	Actual 	Travel	meals	34	4	1201.2	7	3333333.333	9.1			44	3
+72	Eucan	Italy	Sales	Forecast	Travel	meals	34	12	904.8	4	3333333.333	5.2			58	3
+73	Japan	Japan	Supply chain	Budget	Travel	Airfare	98	3	65208	24	8750000	31.2			2090	
+74	Japan	Japan	Supply chain	Actual 	Travel	Airfare	98	3	63177.4	22	8750000	28.6			2209	
+75	Japan	Japan	Supply chain	Forecast	Travel	Airfare	98	11	51820.6	19	8750000	24.7			2098	
+76	Japan	Japan	Supply chain	Budget	Travel	Lodging	98	3	20280	20	8750000	26			156	5
+77	Japan	Japan	Supply chain	Actual 	Travel	Lodging	98	3	41769	34	8750000	44.2			189	5
+78	Japan	Japan	Supply chain	Forecast	Travel	Lodging	98	11	33150	30	8750000	39			170	5
+79	Japan	Japan	Supply chain	Budget	Travel	meals	98	3	12064	29	8750000	37.7			64	5
+80	Japan	Japan	Supply chain	Actual 	Travel	meals	98	3	12350	25	8750000	32.5			76	5
+81	Japan	Japan	Supply chain	Forecast	Travel	meals	98	11	6422	19	8750000	24.7			52	5
+82	Japan	Japan	Sales	Budget	Travel	Airfare	34	6	57200	22	8750000	28.6			2000	
+83	Japan	Japan	Sales	Actual 	Travel	Airfare	34	6	46930	19	8750000	24.7			1900	
+84	Japan	Japan	Sales	Forecast	Travel	Airfare	34	9	93194.4	24	8750000	31.2			2987	
+85	Japan	Japan	Sales	Budget	Travel	Lodging	34	6	23140	20	8750000	26			178	5
+86	Japan	Japan	Sales	Actual 	Travel	Lodging	34	6	25740	22	8750000	28.6			180	5
+87	Japan	Japan	Sales	Forecast	Travel	Lodging	34	9	26000	20	8750000	26			200	5
+88	Japan	Japan	Sales	Budget	Travel	meals	34	6	9269	23	8750000	29.9			62	5
+89	Japan	Japan	Sales	Actual 	Travel	meals	34	6	7540	20	8750000	26			58	5
+90	Japan	Japan	Sales	Forecast	Travel	meals	34	9	8190	21	8750000	27.3			60	5
+91	EM	China	HR	Actual 	Travel	Airfare	215	3	15210	13	4250000	16.9			900	
+92	EM	China	HR	Forecast	Travel	Airfare	215	10	26970	20	4250000	31			870	
+93	EM	China	HR	Budget	Travel	Lodging	215	3	14490	18	4250000	21			230	3
+94	EM	China	HR	Actual 	Travel	Lodging	215	3	9600	13	4250000	16			200	3
+95	EM	China	HR	Forecast	Travel	Lodging	215	10	26970	21	4250000	31			290	3
+96	EM	China	HR	Budget	Travel	meals	215	3	2246.4	18	4250000	23.4			32	3
+97	EM	China	HR	Actual 	Travel	meals	215	3	2129.4	13	4250000	16.9			42	3
+98	EM	China	HR	Forecast	Travel	meals	215	10	5148	20	4250000	26			66	3
+99	EM	China	Sales	Budget	Travel	Airfare	380	2	69300	54	4250000	77			900	
+100	EM	China	Sales	Actual 	Travel	Airfare	380	1	45762	38	4250000	58			789	
+101	EM	China	Sales	Forecast	Travel	Airfare	380	12	69146	52	4250000	77			898	
+102	EM	China	Sales	Budget	Travel	Lodging	380	1	98560	38	4250000	77			320	4
+103	EM	China	Sales	Actual 	Travel	Lodging	380	1	48488	38	4250000	58			209	4
+104	EM	China	Sales	Forecast	Travel	Lodging	380	11	89320	55	4250000	77			290	4
+105	EM	China	Sales	Budget	Travel	meals	380	1	9724	55	4250000	71.5			34	4
+106	EM	China	Sales	Actual 	Travel	meals	380	1	11460.8	38	4250000	49.4			58	4
+107	EM	China	Sales	Forecast	Travel	meals	380	11	8580	55	4250000	71.5			30	4
+108	EM	Russia	HR	Budget	Travel	Airfare	43	6	21600	16	2333333.333	18			1200	
+109	EM	Russia	HR	Actual 	Travel	Airfare	43	6	27080	13	2333333.333	20			1354	
+110	EM	Russia	HR	Forecast	Travel	Airfare	43	11	22838	16	2333333.333	19			1202	
+111	EM	Russia	HR	Budget	Travel	Lodging	43	6	22320	16	2333333.333	18			310	4
+112	EM	Russia	HR	Actual 	Travel	Lodging	43	6	23200	13	2333333.333	20			290	4
+113	EM	Russia	HR	Forecast	Travel	Lodging	43	11	24320	16	2333333.333	19			320	4
+114	EM	Russia	HR	Budget	Travel	meals	43	6	2995.2	16	2333333.333	20.8			36	4
+115	EM	Russia	HR	Actual 	Travel	meals	43	6	2568.8	13	2333333.333	16.9			38	4
+116	EM	Russia	HR	Forecast	Travel	meals	43	11	3328	16	2333333.333	20.8			40	4
+117	EM	Russia	Sales	Budget	Travel	Airfare	123	7	13500	71	2333333.333	10			1350	
+118	EM	Russia	Sales	Actual 	Travel	Airfare	123	7	13673	92	2333333.333	11			1243	
+119	EM	Russia	Sales	Forecast	Travel	Airfare	123	12	11456	64	2333333.333	8			1432	
+120	EM	Russia	Sales	Budget	Travel	Lodging	123	7	5200	71	2333333.333	10			130	4
+121	EM	Russia	Sales	Actual 	Travel	Lodging	123	7	5676	92	2333333.333	11			129	4
+122	EM	Russia	Sales	Forecast	Travel	Lodging	123	12	4480	64	2333333.333	8			140	4
+123	EM	Russia	Sales	Budget	Travel	meals	123	7	1548	71	2333333.333	9			43	4
+124	EM	Russia	Sales	Actual 	Travel	meals	123	7	2304	92	2333333.333	12			48	4
+125	EM	Russia	Sales	Forecast	Travel	meals	123	12	1024	64	2333333.333	8			32	4
+126	EM	Brazil	HR	Budget	Travel	Airfare	35	5	24752	12	3416666.667	17			1456	
+127	EM	Brazil	HR	Actual 	Travel	Airfare	35	5	17276	10	3416666.667	14			1234	
+128	EM	Brazil	HR	Forecast	Travel	Airfare	35	10	17430	13	3416666.667	14			1245	
+129	EM	Brazil	HR	Budget	Travel	Lodging	35	5	16660	12	3416666.667	17			245	4
+130	EM	Brazil	HR	Actual 	Travel	Lodging	35	5	12656	10	3416666.667	14			226	4
+131	EM	Brazil	HR	Forecast	Travel	Lodging	35	10	12600	13	3416666.667	14			225	4
+132	EM	Brazil	HR	Budget	Travel	meals	35	5	2121.6	12	3416666.667	15.6			34	4
+133	EM	Brazil	HR	Actual 	Travel	meals	35	5	2288	10	3416666.667	13			44	4
+134	EM	Brazil	HR	Forecast	Travel	meals	35	10	2366	13	3416666.667	16.9			35	4
+135	EM	Brazil	Sales	Budget	Travel	Airfare	329	2	53193	32	3416666.667	51			1043	
+136	EM	Brazil	Sales	Actual 	Travel	Airfare	329	2	34485	22	3416666.667	33			1045	
+137	EM	Brazil	Sales	Forecast	Travel	Airfare	329	10	29568	25	3416666.667	28			1056	
+138	EM	Brazil	Sales	Budget	Travel	Lodging	329	2	29274	32	3416666.667	51			287	2
+139	EM	Brazil	Sales	Actual 	Travel	Lodging	329	2	18348	22	3416666.667	33			278	2
+140	EM	Brazil	Sales	Forecast	Travel	Lodging	329	10	13720	25	3416666.667	28			245	2
+141	EM	Brazil	Sales	Budget	Travel	meals	329	2	3696	32	3416666.667	42			44	2
+142	EM	Brazil	Sales	Actual 	Travel	meals	329	2	2059.2	22	3416666.667	28.6			36	2
+143	EM	Brazil	Sales	Forecast	Travel	meals	329	10	3380	25	3416666.667	32.5			52	2
+144	North America	Illinois	Manufacturing	Budget	Travel	Airfare	212	5	34242	15	8416666.667	19.5			1756	
+145	North America	Illinois	Manufacturing	Actual 	Travel	Airfare	212	5	31959.2	14	8416666.667	18.2			1756	
+146	North America	Illinois	Manufacturing	Forecast	Travel	Airfare	212	9	30088.5	15	8416666.667	19.5			1543	
+147	North America	Illinois	Manufacturing	Budget	Travel	Lodging	212	5	16965	15	8416666.667	19.5			290	3
+148	North America	Illinois	Manufacturing	Actual 	Travel	Lodging	212	5	15670.2	14	8416666.667	18.2			287	3
+149	North America	Illinois	Manufacturing	Forecast	Travel	Lodging	212	9	18135	15	8416666.667	19.5			310	3
+150	North America	Illinois	Manufacturing	Budget	Travel	meals	212	5	3334.5	15	8416666.667	19.5			57	3
+151	North America	Illinois	Manufacturing	Actual 	Travel	meals	212	5	2784.6	14	8416666.667	18.2			51	3
+152	North America	Illinois	Manufacturing	Forecast	Travel	meals	212	9	3393	15	8416666.667	19.5			58	3
+153	North America	Illinois	Procurement	Budget	Travel	Airfare	34	5	16731	9	8416666.667	11.7			1430	
+154	North America	Illinois	Procurement	Actual 	Travel	Airfare	34	7	36524.8	16	8416666.667	20.8			1756	
+155	North America	Illinois	Procurement	Forecast	Travel	Airfare	34	10	23595	11	8416666.667	14.3			1650	
+156	North America	Illinois	Procurement	Budget	Travel	Lodging	34	7	9652.5	9	8416666.667	11.7			275	3
+157	North America	Illinois	Procurement	Actual 	Travel	Lodging	34	7	17846.4	16	8416666.667	20.8			286	3
+158	North America	Illinois	Procurement	Forecast	Travel	Lodging	34	10	10682.1	11	8416666.667	14.3			249	3
+159	North America	Illinois	Procurement	Budget	Travel	meals	34	7	2106	9	8416666.667	11.7			60	3
+160	North America	Illinois	Procurement	Actual 	Travel	meals	34	7	2745.6	16	8416666.667	20.8			44	3
+161	North America	Illinois	Procurement	Forecast	Travel	meals	34	10	2145	11	8416666.667	14.3			50	3
+162	North America	Illinois	Finance	Budget	Travel	Airfare	63	3	150684.3	53	8416666.667	68.9			2187	
+163	North America	Illinois	Finance	Actual 	Travel	Airfare	63	7	133625.7	47	8416666.667	61.1			2187	
+164	North America	Illinois	Finance	Forecast	Travel	Airfare	63	11	103246	38	8416666.667	49.4			2090	
+165	North America	Illinois	Finance	Budget	Travel	Lodging	63	7	34105.5	53	8416666.667	68.9			165	3
+166	North America	Illinois	Finance	Actual 	Travel	Lodging	63	7	34643.7	47	8416666.667	61.1			189	3
+167	North America	Illinois	Finance	Forecast	Travel	Lodging	63	11	29936.4	38	8416666.667	49.4			202	3
+168	North America	Illinois	Finance	Budget	Travel	meals	63	7	14262.3	53	8416666.667	68.9			69	3
+169	North America	Illinois	Finance	Actual 	Travel	meals	63	7	16130.4	47	8416666.667	61.1			88	3
+170	North America	Illinois	Finance	Forecast	Travel	meals	63	11	10077.6	38	8416666.667	49.4			68	3
+171	North America	Illinois	IT	Budget	Travel	Airfare	98	1	873.6	14	8416666.667	18.2			48	
+172	North America	Illinois	IT	Actual 	Travel	Airfare	98	1	332.8	4	8416666.667	5.2			64	
+173	North America	Illinois	IT	Forecast	Travel	Airfare	98	12	631.8	9	8416666.667	11.7			54	
+174	North America	Illinois	IT	Budget	Travel	Lodging	98	1	3494.4	14	8416666.667	18.2			64	3
+175	North America	Illinois	IT	Actual 	Travel	Lodging	98	1	1185.6	4	8416666.667	5.2			76	3
+176	North America	Illinois	IT	Forecast	Travel	Lodging	98	12	1825.2	9	8416666.667	11.7			52	3
+177	North America	Illinois	IT	Budget	Travel	meals	98	1	3494.4	14	8416666.667	18.2			64	3
+178	North America	Illinois	IT	Actual 	Travel	meals	98	1	686.4	4	8416666.667	5.2			44	3
+179	North America	Illinois	IT	Forecast	Travel	meals	98	12	2106	9	8416666.667	11.7			60	3
+180	North America	New York	HR	Budget	Travel	Airfare	44	4	13903.5	5	7416666.667	6.5			2139	
+181	North America	New York	HR	Actual 	Travel	Airfare	44	4	82180.8	36	7416666.667	46.8			1756	
+182	North America	New York	HR	Forecast	Travel	Airfare	44	11	12870	5	7416666.667	6.5			1980	
+183	North America	New York	HR	Budget	Travel	Lodging	44	4	3217.5	5	7416666.667	6.5			165	3
+184	North America	New York	HR	Actual 	Travel	Lodging	44	4	21762	36	7416666.667	46.8			155	3
+185	North America	New York	HR	Forecast	Travel	Lodging	44	11	3471	5	7416666.667	6.5			178	3
+186	North America	New York	HR	Budget	Travel	meals	44	4	1248	5	7416666.667	6.5			64	3
+187	North America	New York	HR	Actual 	Travel	meals	44	4	10670.4	36	7416666.667	46.8			76	3
+188	North America	New York	HR	Forecast	Travel	meals	44	11	1014	5	7416666.667	6.5			52	3
+189	North America	New York	Supply Chain	Budget	Travel	Airfare	77	5	69743.7	27	7416666.667	35.1			1987	
+190	North America	New York	Supply Chain	Actual 	Travel	Airfare	77	5	90550.2	39	7416666.667	50.7			1786	
+191	North America	New York	Supply Chain	Forecast	Travel	Airfare	77	9	2574	33	7416666.667	42.9			60	
+192	North America	New York	Supply Chain	Budget	Travel	Lodging	77	5	17374.5	27	7416666.667	35.1			165	3
+193	North America	New York	Supply Chain	Actual 	Travel	Lodging	77	5	24336	39	7416666.667	50.7			160	3
+194	North America	New York	Supply Chain	Forecast	Travel	Lodging	77	9	21879	33	7416666.667	42.9			170	3
+195	North America	New York	Supply Chain	Budget	Travel	meals	77	5	6739.2	27	7416666.667	35.1			64	3
+196	North America	New York	Supply Chain	Actual 	Travel	meals	77	5	6692.4	39	7416666.667	50.7			44	3
+197	North America	New York	Supply Chain	Forecast	Travel	meals	77	9	7722	33	7416666.667	42.9			60	3

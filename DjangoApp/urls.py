@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^upload', upload, name='upload'),
     url(r'^opex/home', opex_home, name='opex_home'),
     url(r'^opex/projects_list', projects_list, name='projects_list'),
-    url(r'^opex/project_view/(?P<project>(\w*))', project_view, name='project_view'),
+    url(r'^opex/project_view', project_view, name='project_view'),
     url(r'^opex/dashboard', opex_dashboard_v2, name='opex_dashboard_v2'),
     url(r'^opex/visibility/$', opex_visi_dashboard, name='opex_visi_dashboard'),
     url(r'^opex/visibility/package/(?P<package>(\w*))', opex_package_visi_dashboard, name='opex_package_visi_dashboard'),
@@ -37,6 +37,7 @@ urlpatterns = [
 
     ## Control and Monitoring
     url(r'^candm/travel', candm_travel, name='candm_travel'),
+    url(r'^candm/events', candm_events, name='candm_events'),
 
     ## API Calls ##
     url(r'^get_json_table', get_json_table, name='get_json_table'),

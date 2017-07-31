@@ -36,15 +36,6 @@ def excel_to_json(file, n_lines=None):
 
     return json_table, json_columns
 
-def get_models():
-    models = []
-    model1 = fields(VisiFinancials)
-    models.append(['VisiFinancials',model1])
-    model2 = fields(VisiMappings)
-    models.append(['VisiMappings',model2])
-    json_models = json.dumps(models, cls=DjangoJSONEncoder)
-    return json_models
-
 from django.apps import apps
 from django.contrib import admin
 from django.contrib.admin.sites import AlreadyRegistered
@@ -57,8 +48,6 @@ def get_models_details():
                               fields(model)])
     json_models = json.dumps(models_details, cls=DjangoJSONEncoder)
     return json_models
-
-print (fields(MappingFull))
 
 
 
@@ -74,7 +63,13 @@ def get_dataset(table,dimensions, filters={}):
             object=Transaction.objects
         dataset = object.values(*dimensions).annotate(value=Sum('spend'), count = Count('uid'))
         dataset_json = json.dumps(list(dataset), cls=DjangoJSONEncoder)
-
+    if table == 'candmtravel':
+        if filters != {} :
+            object=CandMTravel.objects.filter(**filters)
+        else:
+            object=CandMTravel.objects
+        dataset = object.values(*dimensions).annotate(value=Sum('Spend'), count = Count('id'))
+        dataset_json = json.dumps(list(dataset), cls=DjangoJSONEncoder)
     return dataset_json
 
 def get_value_list(table,dimension):
@@ -100,3 +95,14 @@ def insert_new_data(variables):
     for key, value in variables.iteritems():
         print ("%s %s" % (key, value))
     return 'ok'
+
+######################################
+########  SESSION FUNCTIONS  #########
+######################################
+
+def get_session_info(request):
+    project = request.session.get('project', 'Demo Project.')
+    session = {
+        'project':project
+        }
+    return session

@@ -1,0 +1,541 @@
+{% extends "v2/layout.html" %}
+{% block head %}
+<title>AurorAI - C and M</title>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'plugins/bootstrap-slider/bootstrap-slider.css' %}">
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+    </section>
+    <!-- /.content -->
+    
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}
+{% block javascript %}
+<!-- NVD3 Graphs -->
+<script src="/static/dist/js/d3.js"></script>
+<script src="/static/dist/js/crossfilter.js"></script>
+<!--<script src="/static/dist/js/streamlayer.js"></script>-->
+<script src="/static/dist/js/nv.d3.js"></script>
+<link rel="stylesheet" href="{% static 'dist/css/nvd3.css' %}">
+<script type="text/html" id="content_ractive">
+   
+        <!-- Info boxes -->
+        
+        {% verbatim %}
+    <div class="row  border-bottom dashboard-header">
+        
+        <div class="col-md-3">
+            <div class="widget style1 navy-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-6">
+                        <i class="fa fa-plane fa-4x"></i>
+                        <i class="fa fa-hotel fa-4x"></i>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <h2 class="font-bold">Travel</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-group btn-block m-l-xs m-b-md">
+                <button type="button" class="btn btn-w-m btn-lg btn-success">Total Spend</button>
+                <button type="button" class="btn btn-w-m btn-lg btn-outline btn-success">per FTE</button>
+                <button type="button" class="btn btn-w-m btn-lg btn-outline btn-success"> as % of NR</button>
+            </div>
+            <div class="ibox m-b-sm">
+                <div class="ibox-content">
+                    <h5>Current Spend</h5>
+                    <h1 class="no-margins text-danger">{{format(kpiValuesList['currentActual'])}} (<i class="fa fa-arrow-up"></i>12%)</h1>
+                    <div class="stat-percent font-bold text-danger">{{format(kpiValuesList['currentBudget'])}}<i class="fa fa-arrow-up"></i></div>
+                    <small>Budgeted Spend</small>
+                </div>
+            </div>
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>Forecasted Year Spend</h5>
+                    <h1 class="no-margins text-danger">{{format(kpiValuesList['currentForecast'] + kpiValuesList['currentActual'])}} (<i class="fa fa-arrow-up"></i>14%)</h1>
+                    <div class="stat-percent font-bold text-danger">{{format(kpiValuesList['currentBudget'] + kpiValuesList['currentForecast'])}}<i class="fa fa-bolt"></i></div>
+                    <small>Year Budget</small>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="col-md-9" style="height:380px;">
+            <svg id="areaChart1" style="display:block; width:100%; height:100%;"></svg>
+            <div class="content content-wrapper">
+                <button on-click="removeFilter:Function" type="button" class="btn btn-warning">Function: {{filters.Function}}</button>
+                <button on-click="removeFilter:Function" type="button" class="btn btn-warning">Country: {{filters.Coutry}}</button>
+                <button on-click="removeFilter:Function" type="button" class="btn btn-warning">Sub-Package: {{filters.SubPackage}}</button>
+            </div>
+        </div>
+       
+        
+    </div>
+        
+        <div class="row border-bottom wrapper-content p-sm">
+            <div class="col-md-4" style="height:250px;">
+                <svg id="areaChart2" style="display:block; width:100%; height:100%;"></svg>
+            </div>
+            <div class="col-md-1">
+                <div class="widget m-t-xs navy-bg p-h-lg h-200 text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-plane fa-4x"></i>
+                        <h1 class="m-xs">{{format(kpiValuesList['AirfareSpend'])}}</h1>
+                        <h3 class="font-bold no-margins">
+                            Airfare
+                        </h3>
+                        <small>+12%</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs"># trips</h2>
+                                <h1 class="no-margins">{{format(kpiValuesList['amountTrips'])}}</h1>
+                                <div class="font-bold text-danger">+10% <i class="fa fa-bolt"></i></div>
+                            </div>
+                            
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>{{format(kpiValuesList['amountTrips']*0.9)}}</strong> Last Year
+
+                                    </td>
+                                    
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>{{format(kpiValuesList['amountTrips']*0.8)}}</strong> Budgeted
+                                    </td>
+                                   
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-md-3">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs"># trips booked &lt; 14d</h2>
+                                <h1 class="no-margins">500 (20%)</h1>
+                                <div class="font-bold text-danger">+10% <i class="fa fa-bolt"></i></div>
+                            </div>
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>520</strong> Last Year
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>480</strong> Budgeted
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row wrapper-content">
+            <div class="col-md-4">
+                <div id="world-map" style="height: 200px;"></div>
+                
+            </div>
+            <div class="col-md-1">
+                <div class="widget m-t-xs navy-bg p-h-lg h-200 text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-hotel fa-4x"></i>
+                        <h1 class="m-xs">{{format(kpiValuesList['LodgingSpend'])}}</h1>
+                        <h3 class="font-bold no-margins">
+                            Lodging
+                        </h3>
+                        <small>+10%</small>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3 border-right">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs">Domestic trips > 2 d</h2>
+                                <h1 class="no-margins">{{format(kpiValuesList['tripLT2days'])}} (15%)</h1>
+                                <div class="font-bold text-danger">+10% <i class="fa fa-bolt"></i></div>
+                            </div>
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>170</strong> Last Year
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>160</strong> Budgeted
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="widget m-t-xs navy-bg p-h-lg h-200 text-center">
+                    <div class="m-b-md">
+                        <i class="fa fa-cutlery fa-4x"></i>
+                        <h1 class="m-xs">{{format(kpiValuesList['MealSpend'])}}</h1>
+                        <h3 class="font-bold no-margins">
+                            Meals
+                        </h3>
+                        <small>+10%</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 border-right">
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row m-t-xs">
+                            <div class="col-xs-12">
+                                <h2 class="m-b-xs">Meals over per diem allowance</h2>
+                                <h1 class="no-margins">20%</h1>
+                                <div class="font-bold text-success">5% <i class="fa fa-bolt"></i></div>
+                            </div>
+                        </div>
+                        <table class="table small m-t-md m-b-xs">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>25%</strong> Last Year
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>22%</strong> Budgeted
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+
+                    <!-- /.box-header -->
+                    
+                    
+        <!-- /.row -->
+        {% endverbatim %}
+       
+   
+    
+</script>
+
+<!-- Models to draw graphs, to be exported in separate .js -->
+<script src="{% static 'dist/js/charts_new.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-slider/bootstrap-slider.js' %}"></script>
+ <!-- Jvectormap -->
+<script src="{% static 'v2/js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js' %}"></script>
+<script src="{% static 'v2/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+<!-- Data Models and Manipulation -->
+<!--retrieving data from python : TO add API call/Ajax async load-->
+<script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+
+
+</script>
+<script type="text/javascript">
+    
+    
+</script>
+<<!-- Dataset Objects and functions-->
+<script src="/static/v2/js/AuroraDash.js"></script>
+<script type="text/javascript">
+    
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '.content',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#content_ractive',
+
+        // Here, we're passing in some initial data
+        data: { 
+            //Needed for AuroraDash
+            myDash:'',
+            filters:{
+                Function:'',
+                Month:''
+            },
+            kpiValuesListStick:{},
+            kpiValuesList:{},
+            tables:{},
+            loading_data:true,
+            // specific for template
+            format: function ( num ) {
+                if ( num > 1000000000 ) return ( num / 1000000000 ).toFixed( 1 ) + ' b';
+                if ( num > 1000000 ) return ( num / 1000000 ).toFixed( 1 ) + ' m';
+                if ( num > 1000 ) return (num / 1000 ).toFixed( 1 ) + ' k';
+                if ( num > 0 ) return ( Math.round(num * 100) / 100);
+                return num;
+            }
+        }
+    });
+    
+    ractive.on( 'removeFilter', function ( event, dim ) {
+        ractive.animate('filters.'+dim,'');
+    });
+    ractive.on('loading_data', function(event, value) {
+        ractive.set('loading_data', value);
+    });
+    launchDash = function(ds){
+        var ADash = new AuroraDash();
+        ADash.addDataSet(ds);
+        ADash.addChart({
+            name:'functions_chart',
+            chartType: 'BarChart',
+            dimension: ['Function'],
+            sum: 'value',
+            format: { type: 'series', dimension: 'Scenario', values: ['Budget', 'Actual', 'Forecast'] },
+            top: 20,
+            div: '#areaChart2',
+            hasFilter: true
+
+        });
+        ADash.addChart({
+            name: 'month_chart',
+            chartType: 'LineChart',
+            dimension: ['Month'],
+            sum: 'value',
+            format: { type: 'series', dimension: 'Scenario', values: ['Budget', 'Actual', 'Forecast'], Xaxis: 'month' },
+            top: 20,
+            div: '#areaChart1',
+            hasFilter: true
+
+        });
+        ADash.addKPI({
+            name: 'currentActual',
+            dimension: [],
+            sum: 'value',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'Scenario', values: ['Actual'] }],
+
+        });
+        ADash.addKPI({
+            name: 'currentBudget',
+            dimension: [],
+            sum: 'value',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'Scenario', values: ['Budget'] }],
+
+        });
+        ADash.addKPI({
+            name: 'currentForecast',
+            dimension: [],
+            sum: 'value',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'Scenario', values: ['Forecast'] }],
+
+        })
+        ADash.addKPI({
+            name: 'amountTrips',
+            dimension: [],
+            sum: 'Total_Trips',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'Scenario', values: ['Actual'] }],
+
+        })
+        ADash.addKPI({
+            name: 'amountTrips',
+            dimension: [],
+            sum: 'Total_Trips',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'Scenario', values: ['Actual'] }],
+
+        })
+        ADash.addKPI({
+            name: 'AirfareSpend',
+            dimension: [],
+            sum: 'value',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'SubPackage', values: ['Airfare'] }],
+
+        })
+        ADash.addKPI({
+            name: 'LodgingSpend',
+            dimension: [],
+            sum: 'value',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'SubPackage', values: ['Lodging'] }],
+
+        })
+        ADash.addKPI({
+            name: 'MealSpend',
+            dimension: [],
+            sum: 'value',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'SubPackage', values: ['meals'] }],
+
+        })
+        ADash.addKPI({
+            name: 'tripLT2days',
+            dimension: [],
+            sum: 'count',
+            type: 'kpi',
+            format: { type: 'total' },
+            filterLocal: [{ dimension: 'Trip_length', values: [3, 4] }],
+
+        })
+        // 'functions_chart', 'DiscreteBarChart', '[Function', 'sum', 'value', '#areaChart2', true
+        //ADash.addChart('historic_chart', 'LineChart', 'Month', 'sum', 'value', '#areaChart1', true);
+        //ADash.addKPI('total_sum','total', 'sum', 'value', 'millions', true);
+        //ADash.addKPI('total_count','total', 'sum', 'count', 'millions', true);
+        //ADash.addKPI('vendor_count','vendor', 'sum', 'count', 'millions', true);
+        //ADash.addKPI('gl_count','gl', 'sum', 'count', 'millions', true);
+        //ADash.addTable('table_gl', ['gl'], true);
+        ADash.setRactive(ractive);
+        observer = ractive.observe( 'filters.*', function ( newValue, oldValue, keypath ) {
+            if(newValue!==oldValue){
+                ADash.refreshData(ractive);
+            }
+        });
+    };
+    get_dataset_ajax = function(table, dimensions, filters){
+        $.ajax({
+            url: '/get_json_dataset',
+            type: 'post',
+            data: {
+                table:table,
+                dimensions:dimensions,
+                filters: JSON.stringify(filters)
+            },
+            //dataType: 'json',
+            success: function (results) {
+                myds2 = new AuroraData(JSON.parse(results));
+                launchDash(myds2);
+            },
+            error: function(jqxhr,textStatus,errorThrown) {
+                console.log('failure');-
+                console.log(jqxhr);
+                console.log(textStatus);
+                console.log(errorThrown);     
+            }
+        });
+    };
+    
+    $(document).ready(function() {
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            },
+            
+        });
+        get_dataset_ajax("candmtravel", ['Scenario', 'Function', 'Month', 'Total_Trips', 'Trip_length', 'SubPackage'], {});
+
+        
+    });
+</script>
+<script type="text/javascript">
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    var mapData = {
+        "US": getRandomInt(50,800),
+        "SA": getRandomInt(50, 800),
+        "DE": getRandomInt(50, 800),
+        "FR": getRandomInt(50, 800),
+        "CN": getRandomInt(50, 800),
+        "AU": getRandomInt(50, 800),
+        "BR": getRandomInt(50, 800),
+        "IN": getRandomInt(50, 800),
+        "GB": getRandomInt(50, 800),
+        "BE": getRandomInt(50, 800),
+    };
+
+    $('#world-map').vectorMap({
+        map: 'world_mill_en',
+        backgroundColor: "transparent",
+        regionStyle: {
+            initial: {
+                fill: '#e4e4e4',
+                "fill-opacity": 0.9,
+                stroke: 'none',
+                "stroke-width": 0,
+                "stroke-opacity": 0
+            }
+
+        },
+
+        series: {
+            regions: [{
+                values: mapData,
+                scale: ["#a2ff94", "#ff8080"],
+                normalizeFunction: 'polynomial'
+            }]
+        },
+        onRegionTipShow: function(e, el, code){
+            el.html(el.html()+' (Spend - '+mapData[code]+')');
+        }
+    });
+</script>
+{% endblock %}

@@ -42,7 +42,7 @@
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{ user.first_name }} {{ user.last_name }}</strong>
-                             </span> <span class="text-muted text-xs block">Demo Project <b class="caret"></b></span> </span> </a>
+                             </span> <span class="text-muted text-xs block">{{ session.project }} <b class="caret"></b></span> </span> </a>
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a href="{% url 'projects_list' %}">Change Project</a></li>
                                 <li class="divider"></li>
@@ -57,7 +57,7 @@
                         <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">Home</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {% if page == "projects_list" %} class="active" {% endif %}><a href="{% url 'projects_list' %}">Projects List</a></li>
-                            <li {% if page == "project_view" %} class="active" {% endif %}><a href="{% url 'project_view' project='Demo Project' %}">Project Overview</a></li>
+                            <li {% if page == "project_view" %} class="active" {% endif %}><a href="{% url 'project_view' %}">Project Overview</a></li>
                             <li><a href="index.html">Dashboard General</a></li>
                             <li{% if page == "opex_dashboard_v2" %} class="active" {% endif %}><a href="{% url 'opex_dashboard_v2' %}">Dashboard OPEX</a></li>
                             
@@ -91,7 +91,7 @@
                         <a href="#"><i class="fa fa-line-chart"></i> <span class="nav-label">Control &amp; Monitoring</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
                             <li{% if page == "candm_travel" %} class="active" {% endif %}><a href="{% url 'candm_travel' %}">Travel</a></li>
-                            <li><a href="#">Events</a></li>
+                            <li{% if page == "candm_events" %} class="active" {% endif %}><a href="{% url 'candm_events' %}">Events</a></li{%>
                         </ul>
                     </li>
                     <li>

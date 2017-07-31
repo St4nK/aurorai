@@ -1,5 +1,5 @@
-// //Based on crossfilter.js
-//@StanK 20170509
+// Based on crossfilter.js
+// @StanK 20170509
 var DataSet = function (data) {
     this.rawData = crossfilter(data);
     this.dimensions = {};
@@ -69,6 +69,9 @@ var DataSet = function (data) {
                 if (type === 'count') {
                     var tempView = this.dimensions[dimension].group().reduceCount(function (f) { return f[on]; });
                 }
+                if (dimension === 'Month') {
+                    tempView = tempView.order(function (f) { return f.key; });
+                }
                 this.views['view_' + dimension + '_' + type + '_on_' + on] = tempView;
                 return 'view_' + dimension + '_' + type + '_on_' + on
             }
@@ -89,18 +92,40 @@ var DataSet = function (data) {
     this.removeFilter = function (dimension) {
         this.dimensions[dimension].filter(null);
     };
-    this.returnDataSet = function (view, format) {
-        var b = this.views[view].top(20).filter(function (d) { return d.value > 0; });
+    this.returnDataSet = function (view, format, scenarios) {
+        var b = this.views[view].top(20);
+        b = b.filter(function (d) { return d.value !== 0; });
+        var newb = []
+        b.forEach(function (d) {
+            newb.push({ key: d.key, value: d.value });
+        })
+        console.log(newb)
         if (format === 'multi') {
             return [
                     {
                         key: view,
-                        values: b
+                        values: newb
                     }
             ]
         }
         if (format === 'unique') {
             return b
+        }
+        if (format === 'multiline') {
+            
+            var c = [];
+            for (var i = 0, len = b.length; i < len; i++) {
+                c.push([parseInt(b[i].key), b[i].value]);        
+            };
+            c.sort(function (a, b) {
+                return a[0] - b[0];
+            });
+            return [
+                    {
+                        key: view,
+                        values: c
+                    }
+            ]
         }
     };
     this.returnKPI = function (view) {
@@ -137,6 +162,7 @@ var DataSet = function (data) {
     function orderValue(p) {
         return p.value;
     }
+    
 };
 
 ///////////////////////////////
@@ -151,23 +177,27 @@ var AuroraDash = function(options) {
     this.addDataSet = function (dataset) {
         this.dataset = dataset;
         return true
-    }
-    this.addChart = function (name, chart_type, dimension, sum_count, on, div, hasfilter) {
+    };
+    
+    this.addChart = function (name, chart_type, dimension, sum_count, on, div, hasfilter, scenarios) {
         mydim = this.dataset.createDimension(dimension);
         myview = this.dataset.createView(mydim, sum_count, on);
         if (chart_type === 'DiscreteBarChart') {
             format = 'multi';
         }
+        else if (chart_type === 'LineChart') {
+            format = 'multiline';
+        }
         else {
             format = 'unique';
         }
-        
         mychart = new AuroraChart({
             chartType: chart_type,
             div: div,
             view: myview,
             format: format,
-            dataset: this.dataset.returnDataSet(myview, format),
+            xAxis: 'month',
+            dataset: this.dataset.returnDataSet(myview, format, scenarios),
             dimension: dimension,
             hasFilter: hasfilter
         });

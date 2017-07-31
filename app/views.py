@@ -87,7 +87,7 @@ def upload(request):
         form = UploadFileForm()
     uploads_root = settings.MEDIA_ROOT
     json_table, json_columns = f.excel_to_json(uploads_root +"/user_4/Data1_light.xlsx",3)
-    models = f.get_models()
+    models = f.get_models_details()
     data = {'form': form, 'table':json_table, 'columns':json_columns, 'table_models':models, 'user':request.user.id}
     #data=RequestContext(request, data2)
     return render(request,'app/OPEX/upload.html', data)
@@ -212,7 +212,8 @@ def projects_list(request):
             'title':'Home Page',
             'year':datetime.now().year,
             'user':request.user,
-            'page':'projects_list'
+            'page':'projects_list',
+            'session': f.get_session_info(request)
         }
     return render(
         request,
@@ -221,7 +222,7 @@ def projects_list(request):
     )
 
 @login_required
-def project_view(request, project):
+def project_view(request):
     """Renders the home page."""
     template = 'v2/project_view.html'
     assert isinstance(request, HttpRequest)
@@ -229,8 +230,8 @@ def project_view(request, project):
             'title':'Home Page',
             'year':datetime.now().year,
             'user':request.user,
-            'project': project,
-            'page':'project_view'
+            'page':'project_view',
+            'session': f.get_session_info(request)
         }
     return render(
         request,
@@ -252,6 +253,7 @@ def opex_dashboard_v2(request):
             'title':'Home Page',
             'year':datetime.now().year,
             'page':'opex_dashboard_v2',
+            'session': f.get_session_info(request)
         }
     )
 
@@ -268,7 +270,8 @@ def opex_visi_dashboard(request):
             'title':'Home Page',
             'year':datetime.now().year,
             'user':request.user,
-            'page':'opex_visi_dashboard'
+            'page':'opex_visi_dashboard',
+            'session': f.get_session_info(request)
         }
     )
 
@@ -282,8 +285,9 @@ def opex_package_visi_dashboard(request, package):
             'package_list':package_list,
             'package':package,
             'user':request.user,
-            'page':'opex_package_visi_dashboard'
-            
+            'page':'opex_package_visi_dashboard',
+            'session': f.get_session_info(request)
+
         }
     return render(
         request,
@@ -304,7 +308,9 @@ def opex_candm_dashboard(request):
             'title':'Home Page',
             'year':datetime.now().year,
             'user':request.user,
-            'page':'opex_candm_dashboard'
+            'page':'opex_candm_dashboard',
+            'session': f.get_session_info(request)
+
         }
     )
 
@@ -322,7 +328,7 @@ def improve_confidence(request):
         form = UploadFileForm()
     uploads_root = settings.MEDIA_ROOT
     json_table, json_columns = f.excel_to_json(uploads_root +"/user_4/Data1_light.xlsx",3)
-    models = f.get_models()
+    models = f.get_models_details()
     data = {'form': form, 'table':json_table, 'columns':json_columns, 'table_models':models, 'user_id':request.user.id, 'user':request.user, 'page':'improve_confidence'}
     #data=RequestContext(request, data2)
     return render(request,'v2/improve_confidence.html', data)
@@ -356,13 +362,28 @@ def adddata(request):
 def candm_travel(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    
-    #model_list = f.get_models_details()
+
+    return render(
+        request,
+        'v2/candm-travel2.html',
+        {
+            'page':'candm_travel',
+            'user':request.user,
+            'session': f.get_session_info(request)
+        }
+    )
+@login_required
+def candm_events(request):
+    """Renders the opex dashboard."""
+    assert isinstance(request, HttpRequest)
+
     return render(
         request,
         'v2/candm-travel.html',
         {
             'page':'candm_travel',
+            'user':request.user,
+            'session': f.get_session_info(request)
         }
     )
 
