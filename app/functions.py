@@ -70,6 +70,7 @@ def get_dataset(table,dimensions, filters={}):
             object=CandMTravel.objects
         dataset = object.values(*dimensions).annotate(value=Sum('Spend'), count = Count('id'))
         dataset_json = json.dumps(list(dataset), cls=DjangoJSONEncoder)
+        print dataset_json
     return dataset_json
 
 def get_value_list(table,dimension):
@@ -77,6 +78,23 @@ def get_value_list(table,dimension):
     value_list = object.order_by(dimension).values_list(dimension, flat = True).distinct()
     
     return json.dumps(list(value_list), cls=DjangoJSONEncoder)
+
+def get_user_list(table,dimension):
+    object=User.objects
+    value_list = object.order_by(dimension).values_list(dimension, flat = True).distinct()
+    
+    #return value_list
+    user_string = json.dumps(list(value_list), cls=DjangoJSONEncoder)
+    return json.loads(user_string)
+
+def get_projects_list(request):
+    projects = Project_User.objects.filter(user = request.user)
+    project_list = []
+    for p in projects:
+		project_list.append(p.project)
+		print(p.id)
+	
+    return project_list
 
 def get_visi(company_id, dimensions):
     company = CompanyInfo.objects.get(id = company_id)
@@ -96,13 +114,35 @@ def insert_new_data(variables):
         print ("%s %s" % (key, value))
     return 'ok'
 
+def add_member(id, request):
+    user = User.objects.get(id = id)
+    print id, user
+    project = request.session.get('project')
+    print request
+    new_entry_Project_User = Project_User(user = user, project = project, role = "")
+    new_entry_Project_User.save() 
+
+def remove_member(id, request):
+    user = User.objects.get(id = id)
+    project = request.session.get('project')
+    entry_Project_User = Project_User(user = user, project = project, role = "")
+    entry_Project_User.delete()
+    
+
 ######################################
 ########  SESSION FUNCTIONS  #########
 ######################################
 
 def get_session_info(request):
-    project = request.session.get('project', 'Demo Project.')
-    session = {
-        'project':project
-        }
-    return session
+	project_id = request.session.get('project', None)
+	project = Project.objects.get(id=project_id)
+	notification = request.session.get('notification', None)
+	session = {
+		'project':project,
+		'notification': notification,
+		}
+	return session
+
+def select_project(request, project_id):
+    project = Project_User.objects.get(user = request.user, project = project_id)
+    request.session['project'] = project.id

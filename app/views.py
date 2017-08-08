@@ -3,7 +3,7 @@ Definition of views.
 """
 
 from django.shortcuts import render, render_to_response
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_project_access
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
@@ -14,6 +14,7 @@ import functions as f
 from run_functions import *
 from django.conf import settings
 from django.core.serializers.json import DjangoJSONEncoder
+
 
 def handler404(request):
     response = render_to_response('v2/404.html', {},
@@ -192,9 +193,12 @@ def home_v2(request):
     """Renders the home page."""
     template = 'v2/index.html'
     assert isinstance(request, HttpRequest)
+    project_list = f.get_projects_list(request)
     context = {
             'title':'Home Page',
             'year':datetime.now().year,
+            'project_list':project_list,
+            'session': f.get_session_info(request),
             'user':request.user,
             
         }
@@ -203,15 +207,18 @@ def home_v2(request):
         template,
         context
     )
+
 @login_required
 def projects_list(request):
     """Renders the home page."""
     template = 'v2/projects_list.html'
     assert isinstance(request, HttpRequest)
+    project_list = f.get_projects_list(request)
     context = {
             'title':'Home Page',
             'year':datetime.now().year,
             'user':request.user,
+			'project_list':project_list,
             'page':'projects_list',
             'session': f.get_session_info(request)
         }
@@ -221,15 +228,17 @@ def projects_list(request):
         context
     )
 
-@login_required
+@user_project_access
 def project_view(request):
     """Renders the home page."""
     template = 'v2/project_view.html'
     assert isinstance(request, HttpRequest)
+    project_list = f.get_projects_list(request)
     context = {
             'title':'Home Page',
             'year':datetime.now().year,
             'user':request.user,
+            'project_list':project_list,
             'page':'project_view',
             'session': f.get_session_info(request)
         }
@@ -239,6 +248,40 @@ def project_view(request):
         context
     )
 
+def edit_project_view(request):
+    """Renders the home page."""
+    template = 'v2/edit_project.html'
+    assert isinstance(request, HttpRequest)
+    query_results = f.get_user_list('auth_user', 'id')
+    if request.method == 'POST' :
+        search_term = request.POST['userSelector']
+        f.add_member(search_term, request)
+    context = {
+            'title':'Edit Project',
+            'year':datetime.now().year,
+            'user':request.user,
+            'page':'edit_project',
+            'user_list':query_results,
+            'session': f.get_session_info(request)
+        }
+    return render(
+        request,
+        template,
+        context
+    )
+
+def select_project_view(request):
+   """Renders the home page."""
+   template = 'v2/select_project.html'
+   assert isinstance(request, HttpRequest)
+   project_id =  request.GET.get('id','')
+   f.select_project(request, project_id)
+   redirect = request.GET.get('redirect','')
+   if redirect == "True":
+       return HttpResponseRedirect("project_view.html")
+   else:
+       return HttpResponseRedirect(request.META['HTTP_REFERER'])
+       
 
 @login_required
 def opex_dashboard_v2(request):
