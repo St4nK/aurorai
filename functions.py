@@ -134,16 +134,19 @@ def remove_member(id, request):
 ######################################
 
 def get_session_info(request):
-	project_id = request.session.get('project', None)
-	if project_id != None :
-		project = Project.objects.get(id=project_id)
-	notification = request.session.get('notification', None)
-	session = {
-		'project':project,
-		'notification': notification,
-		}
-	return session
+    project_id = request.session.get('project', None)
+    print project_id
+    if project_id != None :
+        project = Project.objects.get(id=project_id)
+    else :
+        project = None
+    notification = request.session.get('notification', None)
+    session = {
+        'project':project,
+        'notification': notification,
+        }
+    return session
 
 def select_project(request, project_id):
     project = Project_User.objects.get(user = request.user, project = project_id)
-    request.session['project'] = project.id
+    request.session['project'] = project.project_id
