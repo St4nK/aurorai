@@ -143,9 +143,12 @@ def get_session_info(request):
         try:
             exists = Project_User.objects.get(project_id=1, user_id=request.user)
         except ObjectDoesNotExist:
-            default_project = Project.objects.get(id=1)
-            new_entry_Project_User = Project_User(user=request.user, project=default_project, role="")
-            new_entry_Project_User.save()
+            email = User.objects.get(id=request.user.id).email
+            print email[-13:]
+            if email[-13:] == 'accenture.com':
+                default_project = Project.objects.get(id=1)
+                new_entry_Project_User = Project_User(user=request.user, project=default_project, role="")
+                new_entry_Project_User.save()
     notification = request.session.get('notification', None)
     session = {
         'project':project,

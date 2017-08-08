@@ -228,7 +228,7 @@ def projects_list(request):
         template,
         context
     )
-
+@login_required
 @user_project_access
 def project_view(request):
     """Renders the home page."""
