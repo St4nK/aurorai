@@ -135,7 +135,10 @@ def remove_member(id, request):
 
 def get_session_info(request):
 	project_id = request.session.get('project', None)
-	project = Project.objects.get(id=project_id)
+	if project_id != None :
+		project = Project.objects.get(id=project_id)
+	else :
+		project = Project.objects.get(id=1)
 	notification = request.session.get('notification', None)
 	session = {
 		'project':project,

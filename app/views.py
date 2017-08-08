@@ -208,6 +208,7 @@ def home_v2(request):
         context
     )
 
+
 @login_required
 def projects_list(request):
     """Renders the home page."""
