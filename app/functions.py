@@ -11,7 +11,7 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Count, F, Sum
 from app.models import *
-
+from django.core.exceptions import ObjectDoesNotExist
 start_time = time.time()
 ######################################
 ###### EXCEL IMPORT FUNCTIONS ########
@@ -134,18 +134,27 @@ def remove_member(id, request):
 ######################################
 
 def get_session_info(request):
-	project_id = request.session.get('project', None)
-	if project_id != None :
-		project = Project.objects.get(id=project_id)
-	else :
-		project = Project.objects.get(id=1)
-	notification = request.session.get('notification', None)
-	session = {
-		'project':project,
-		'notification': notification,
-		}
-	return session
+    project_id = request.session.get('project', None)
+    print project_id
+    if project_id != None :
+        project = Project.objects.get(id=project_id)
+    else:
+        project = None
+        try:
+            exists = Project_User.objects.get(project_id=1, user_id=request.user)
+            print exists
+        except ObjectDoesNotExist:
+            default_project = Project.objects.get(id=1)
+            new_entry_Project_User = Project_User(user=request.user, project=default_project, role="")
+            new_entry_Project_User.save()
+            request.session['project'] = 1
+    notification = request.session.get('notification', None)
+    session = {
+        'project':project,
+        'notification': notification,
+        }
+    return session
 
 def select_project(request, project_id):
     project = Project_User.objects.get(user = request.user, project = project_id)
-    request.session['project'] = project.id
+    request.session['project'] = project.project_id
