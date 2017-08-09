@@ -73,21 +73,42 @@ def get_dataset(table,dimensions, filters={}):
         print dataset_json
     return dataset_json
 
+
 def get_value_list(table,dimension):
     object=Transaction.objects
     value_list = object.order_by(dimension).values_list(dimension, flat = True).distinct()
     
     return json.dumps(list(value_list), cls=DjangoJSONEncoder)
 
-def get_user_list(table,dimension):
-    object=User.objects
-    value_list = object.order_by(dimension).values_list(dimension, flat = True).distinct()
-    
-    #return value_list
-    user_string = json.dumps(list(value_list), cls=DjangoJSONEncoder)
-    return json.loads(user_string)
 
-def get_projects_list(request):
+def get_assigned_users(request):  # returns users assigned to current project
+    users = Project_User.objects.filter(project_id=request.session.get('project'))
+    users_list = []
+    for u in users:
+        users_list.append(u.user.first_name.encode("latin-1"))
+    users_list = json.dumps(users_list)
+
+    return users_list
+
+
+def get_unassigned_users(request):  # returns users unassigned to current project
+    assigned_users = Project_User.objects.filter(project_id=request.session.get('project'))
+
+    assigned_users_names = []
+    for u in assigned_users:
+        assigned_users_names.append(u.user.first_name.encode("latin-1"))
+    assigned_users_names = json.dumps(assigned_users_names)
+
+    unassigned_users = []
+    for u in User.objects.all():
+        if u.first_name not in assigned_users_names:
+            print u.first_name
+            unassigned_users.append(u.first_name.encode("latin-1"))
+
+    return json.dumps(unassigned_users)
+
+
+def get_projects_list(request):  # returns projects assigned to current user
     projects = Project_User.objects.filter(user = request.user)
     project_list = []
     for p in projects:
@@ -114,13 +135,11 @@ def insert_new_data(variables):
         print ("%s %s" % (key, value))
     return 'ok'
 
-def add_member(id, request):
-    user = User.objects.get(id = id)
-    print id, user
-    project = request.session.get('project')
-    print request
-    new_entry_Project_User = Project_User(user = user, project = project, role = "")
-    new_entry_Project_User.save() 
+def add_member(new_user, request):
+    project = get_session_info(request).get('project')
+    new_entry_Project_User = Project_User(user=new_user, project=project, role="")
+    new_entry_Project_User.save()
+
 
 def remove_member(id, request):
     user = User.objects.get(id = id)
@@ -144,7 +163,6 @@ def get_session_info(request):
             exists = Project_User.objects.get(project_id=1, user_id=request.user)
         except ObjectDoesNotExist:
             email = User.objects.get(id=request.user.id).email
-            print email[-13:]
             if email[-13:] == 'accenture.com':
                 default_project = Project.objects.get(id=1)
                 new_entry_Project_User = Project_User(user=request.user, project=default_project, role="")

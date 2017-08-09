@@ -1,17 +1,42 @@
 {% extends "v2/layout.html" %}
 {% block head %}
 <title>AurorAI | Projects</title>
+{% load staticfiles %}
 {% endblock %}
 {% block content %}
-<!-- Start content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}
+{% block javascript %}
+<!-- NVD3 Graphs -->
+<script src="/static/dist/js/d3.js"></script>
+<script src="/static/dist/js/crossfilter.js"></script>
+<!--<script src="/static/dist/js/streamlayer.js"></script>-->
+<script src="/static/dist/js/nv.d3.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'dist/css/nvd3.css' %}">
+<script type="text/html" id="content_ractive">
+
+        <!-- Info boxes -->
+
+        {% verbatim %}
+
+<!-- MY HTML CODE STARTS HEREEEEEEEEEEE -->
+
 <div class="row  border-bottom white-bg dashboard-header">
     <div class="col-md-3">
-        <h2>Editing project   {{session.project}}</h2>
+        <h2>Editing project   {{session.project.name}}</h2>
     </div>
 </div>
 <div class="row border-bottom white-bg">
     <div class="col-lg-12">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="row">
                 <h3>Edit Project name</h3>
             </div>
@@ -28,6 +53,19 @@
                 <h3>Edit team members</h3>
             </div>
             <div class="row">
+                <p>Current team members: {{assigned_users}}</p><p id="newUser"></p>
+                <form id="frm" type="POST">
+                    <input autocomplete="off" name="selected" type="text"
+                    data-provide="typeahead"
+                    data-source='{{unassigned_users}}'
+                    placeholder="Type here the name..."
+                    minLength="0"
+                    class="form-control" />
+                </form>
+                <br>
+            </div>
+            <!--
+            <div class="row">
                 <p>Select the user you want to add to the project: </p>
                 <form action="{% url 'edit_project' %}" class="form-inline" method="POST" id="my_form">
                     {% csrf_token %}
@@ -36,20 +74,20 @@
                         <option value="{{i}}">{{i}}</option>
                         {% endfor %}
                     </select>
-                    <a onclick="document.getElementById('my_form').submit();"  class="btn btn-white btn-xs pull-right">GO</a>
                 </form>
             </div>
             <br/>
             <div class="row">
                 <p>Select the role of the user: </p>
-                <select>              
+                <select>
                     <option>Manager</option>
                     <option>Developer</option>
                     <option>Other</option>
                 </select>
             </div>
+            -->
         </div>
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="row">
                     <h3>Edit Project Files</h3>
                 </div>
@@ -62,16 +100,53 @@
                 <div class="row">
                     <h5>...</h5>
                 </div>
+
             </div>
-        </div>
-    </div>  
-</div>
 
 
+    </div>
+    </div>
+
+<!-- MY HTML CODE ENDS HEREEEEEEEEEEE -->
+{% endverbatim %}
+
+
+
+</script>
+
+<script type="text/javascript">
+    var ractive = new Ractive({
+        // The `el` option can be a node, an ID, or a CSS selector.
+        el: '.content',
+
+        // We could pass in a string, but for the sake of convenience
+        // we're passing the ID of the <script> tag above.
+        template: '#content_ractive',
+
+        // Here, we're passing in some initial data
+        data: {
+            assigned_users:{{assigned_users|safe}},
+            unassigned_users:{{unassigned_users|safe}}
+        }
+    });
+    var frm = $('#frm')
+    frm.submit(function() { // catch the form's submit event
+        console.log($(this).serialize())
+        $.ajax({ // create an AJAX call...
+            data: $(this).serialize(), // get the form data
+            type: $(this).attr('POST'), // GET or POST
+            success: function(response) { // on success..
+                //response = JSON.parse(response);
+                console.log(response.unassigned_users)
+                ractive.animate('unassigned_users', response.unassigned_users)
+                ractive.animate('assigned_users', response.assigned_users)
+            }
+        });
+        return false;
+    });
+
+</script>
 
 <!-- End Content -->
-{% endblock %}
-{% block javascript %}
-
 {% endblock %}
 

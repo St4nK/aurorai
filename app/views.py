@@ -253,16 +253,28 @@ def edit_project_view(request):
     """Renders the home page."""
     template = 'v2/edit_project.html'
     assert isinstance(request, HttpRequest)
-    query_results = f.get_user_list('auth_user', 'id')
-    if request.method == 'POST' :
-        search_term = request.POST['userSelector']
-        f.add_member(search_term, request)
+    assigned_users = f.get_assigned_users(request)
+    assigned_users = json.dumps(assigned_users)
+    unassigned_users = f.get_unassigned_users(request)
+    unassigned_users = json.dumps(unassigned_users)
+    if request.GET.get('selected') != None:
+        new_user = request.GET.get('selected')
+        new_user = User.objects.get(first_name=new_user)
+        f.add_member(new_user, request)
+        assigned_users = f.get_assigned_users(request)
+        unassigned_users = f.get_unassigned_users(request)
+        data = json.dumps({
+            'assigned_users': assigned_users,
+            'unassigned_users': unassigned_users
+        })
+        return HttpResponse(data, content_type='application/json')
     context = {
-            'title':'Edit Project',
-            'year':datetime.now().year,
-            'user':request.user,
-            'page':'edit_project',
-            'user_list':query_results,
+            'title': 'Edit Project',
+            'year': datetime.now().year,
+            'user': request.user,
+            'page': 'edit_project',
+            'assigned_users': assigned_users,
+            'unassigned_users': unassigned_users,
             'session': f.get_session_info(request)
         }
     return render(
