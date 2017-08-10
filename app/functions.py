@@ -142,9 +142,11 @@ def add_member(new_user, request):
 
 
 def remove_member(user, request):
-    project = get_session_info(request).get('project')
-    entry_Project_User = Project_User(user = user, project = project, role = "")
-    entry_Project_User.delete()
+    if user != request.user:
+        project = get_session_info(request).get('project')
+        project_user = Project_User.objects.get(user=user, project=project)
+        entry_Project_User = Project_User(id=project_user.id, user = user, project = project, role = "")
+        entry_Project_User.delete()
     
 
 ######################################

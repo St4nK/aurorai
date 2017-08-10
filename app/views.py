@@ -268,6 +268,17 @@ def edit_project_view(request):
             'unassigned_users': unassigned_users
         })
         return HttpResponse(data, content_type='application/json')
+    if request.GET.get('delete') != None:
+        delete_user = request.GET.get('delete')
+        delete_user = User.objects.get(first_name=delete_user)
+        f.remove_member(delete_user, request)
+        assigned_users = f.get_assigned_users(request)
+        unassigned_users = f.get_unassigned_users(request)
+        data = json.dumps({
+            'assigned_users': assigned_users,
+            'unassigned_users': unassigned_users
+        })
+        return HttpResponse(data, content_type='application/json')
     context = {
             'title': 'Edit Project',
             'year': datetime.now().year,

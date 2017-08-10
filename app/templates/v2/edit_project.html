@@ -55,8 +55,8 @@
             </div>
             <div class="row">
                 <p>Current team members: </p>
-                {{#each JSON.parse(assigned_users)}}
-                <button name="delete" id="delete">{{.}}</button>
+                {{#each JSON.parse(assigned_users):i}}
+                <input value="{{.}}" type="submit" onclick="deleteUser({{i}})" name="delete" id="delete{{i}}"/>
 
                 {{/each}}
 
@@ -100,6 +100,10 @@
 </script>
 
 <script type="text/javascript">
+
+    var assigned_len = 0;
+    var unassigned_len = 0;
+
     var ractive = new Ractive({
         // The `el` option can be a node, an ID, or a CSS selector.
         el: '.content',
@@ -123,6 +127,8 @@
             success: function(response) { // on success..
                 //response = JSON.parse(response);
                 console.log(response.unassigned_users)
+                assigned_len = (JSON.parse(response.assigned_users)).length
+                console.log(assigned_len)
                 ractive.animate('unassigned_users', response.unassigned_users)
                 ractive.animate('assigned_users', response.assigned_users)
             }
@@ -130,19 +136,29 @@
         return false;
     });
 
+    function deleteUser(i){
+         var deleted = $('#delete'+i)
+         console.log($(this).attr('value'))
+         var retVal = confirm("Do you want to remove user "+$(deleted).attr('value')+"?");
+         if(retVal == true){
+            $.ajax({ // create an AJAX call...
+                data: "delete="+$(deleted).attr('value'), // get the form data
+                type: $(deleted).attr('POST'), // GET or POST
+                success: function(response) { // on success..
+                    console.log(response.unassigned_users)
+                    assigned_len = (JSON.parse(response.assigned_users)).length
+                    console.log(assigned_len)
+                    ractive.animate('unassigned_users', response.unassigned_users)
+                    ractive.animate('assigned_users', response.assigned_users)
+                }
+            });
 
-    var deleted = $('#delete')
-    deleted.click(function() { // catch the form's submit event
-    window.alert("Do you want to delete this user?")
-        $.ajax({ // create an AJAX call...
-            data: $(this).serialize(), // get the form data
-            type: $(this).attr('POST'), // GET or POST
-            success: function(response) { // on success..
+         }
 
-            }
-        });
-        return false;
-    });
+
+    }
+
+
 
 </script>
 
