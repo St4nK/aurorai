@@ -89,7 +89,7 @@ var AuroraData = function (dataset) {
             // 3. in case this is a chart/table unique dimension
             else if (options.dimension.length === 1 && options.type !=='table') {
                 tempDim = this.createDimension(options.dimension); //create the dimension
-                
+
                 if (typeof options.sum != 'undefined') {
                     var tempView = this.dimensions[tempDim].group().reduceSum(function (f) { return f[options.sum]; });
                 }
@@ -107,11 +107,13 @@ var AuroraData = function (dataset) {
                 tempDim = this.createDimension(options.dimension); //create the multiple dimension
                 var tempView = this.dimensions[tempDim].group().reduce(reduceAdd, reduceRemove, reduceInitial).order(orderValue); // see helpers for the reduce functions
             }
+
             // 5. Oops something went wrong
             else {
                 console.log('Ooops, dimension could not be created')
                 return
             }
+
         }
         var viewObject = {
             view: tempView,
@@ -239,6 +241,14 @@ var AuroraData = function (dataset) {
         }
         else if (viewObject.type === 'table') {
             return viewObject.view.top(viewObject.topnum).filter(function (d) { return d.value.count > 0; });
+        }
+        else if (viewObject.type === 'map') {
+            serie = viewObject.view.top(100);
+            var tempS = {};
+            serie.forEach(function (s) {
+                tempS[s.key] = s.value
+            });
+            return tempS
         }
     }
 
@@ -419,7 +429,32 @@ var AuroraDash = function (options) {
         };
         return this.tables;
     };
-    
+
+    this.addMap = function (options) {
+        var options_view = {
+            name:'view_' + options.name,
+            dimension: options.dimension,
+            sum: options.sum,
+            count: options.count,
+            filterLocal: options.filterLocal,
+            type: 'map',
+            format: options.format,
+            topnum: options.topnum
+        }
+        var div = options.div;
+        var hasFilter = options.hasFilter;
+        myview = this.dataset.createView(options_view);
+        mychart = new AuroraMap({
+            div: div,
+            view: myview,
+            xAxis: 'month',
+            dataset: this.dataset.returnData(myview),
+            dimension: options.dimension[0],
+            hasFilter: hasFilter
+        });
+        this.charts[options.name] = mychart;
+    };
+
     this.setRactive = function (ractive) {
         ractive.set('myDash', this);
         ractive.set('kpiValuesListStick', this.kpiValues());
