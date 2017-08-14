@@ -74,6 +74,7 @@ function AuroraChart(options) {
                         d3.select(options.div)
                             .datum(data)
                             .call(chart);
+
                         d3.selectAll('.nvtooltip').remove();
                         chart.multibar.dispatch.on(
                             "elementClick",
@@ -218,6 +219,17 @@ function AuroraChart(options) {
                         return chart;
                     });
                     break;
+                case 'Map':
+                    var map = new Datamap({
+                        element: document.getElementById(options.div),
+                        done: function(datamap) {
+                            datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+                                ractive.animate('filters.' + 'country', geography.properties.name);
+                            });
+                        }
+                    });
+
+                    break;
             }
             
 
@@ -254,50 +266,50 @@ function AuroraTable(options) {
     }
 }
 function AuroraMap(options) {
+    var selectedNames = []
+    for(var name in options.dataset) {
+        selectedNames.push(name);
+    }
+    var countries = Datamap.prototype.worldTopo.objects.world.geometries;
+    var countriesIds = {};
+    for (i in selectedNames) {
+
+        for (j in countries){
+            if(countries[j].properties.name == selectedNames[i]) {
+                countriesIds[countries[j].id] = {fillKey:"exists"}
+
+            }
+        }
+    }
+
     this.view = options.view;
-    this.dimensions = options.dimensions;
+    this.format = options.format;
+    this.xAxis = options.xAxis;
     this.colorsList = ['rgb(0, 183, 238)', 'rgb(153, 153, 153)', 'rgb(123, 219, 255)'];
     this.colorActive = 'rgb(248, 172, 89)';
-    //var mapData = {
-    //    "US": getRandomInt(50, 800),
-    //    "SA": getRandomInt(50, 800),
-    //    "DE": getRandomInt(50, 800),
-    //    "FR": getRandomInt(50, 800),
-    //    "CN": getRandomInt(50, 800),
-    //    "AU": getRandomInt(50, 800),
-    //    "BR": getRandomInt(50, 800),
-    //    "IN": getRandomInt(50, 800),
-    //    "GB": getRandomInt(50, 800),
-    //    "BE": getRandomInt(50, 800),
-    //};
-
-    $(options.div).vectorMap({
-        map: 'world_mill_en',
-        backgroundColor: "transparent",
-        regionStyle: {
-            initial: {
-                fill: '#e4e4e4',
-                "fill-opacity": 0.9,
-                stroke: 'none',
-                "stroke-width": 0,
-                "stroke-opacity": 0
+    this.filters = {};
+    this.dataset = options.dataset
+    this.update = function (data, filters) {
+        this.filters = filters;
+        this.dataset = data;
+        colorsList = this.colorsList
+        colorActive = this.colorActive
+        document.getElementById(options.div).innerHTML = "";
+        var map = new Datamap({
+            element: document.getElementById(options.div),
+            fills: {
+                defaultFill: "#ABDDA4",
+                exists: "#fa0fa0"
+            },
+            data: countriesIds,
+            done: function(datamap) {
+                datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+                    console.log( geography.properties)
+                    ractive.animate('filters.' + 'country', geography.properties.name);
+                });
             }
+        });
 
-        },
-
-        series: {
-            regions: [{
-                values: options.data,
-                scale: ['rgb(0, 183, 238)', 'rgb(123, 219, 255)'],
-                normalizeFunction: 'polynomial'
-            }]
-        },
-        onRegionTipShow: function (e, el, code) {
-            el.html(el.html() + ' (Spend - ' + mapData[code] + ')');
-            console.log(mapData[code])
-        }
-    });
-    this.update = function (data) {
-
-    }
+    };
+    this.update(this.dataset, this.filters);
 }
