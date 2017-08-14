@@ -248,7 +248,7 @@ def project_view(request):
         template,
         context
     )
-
+@login_required
 def edit_project_view(request):
     """Renders the home page."""
     template = 'v2/edit_project.html'
@@ -328,10 +328,10 @@ def opex_dashboard_v2(request):
 def opex_visi_dashboard(request):
     """Renders the opex dashboard."""
     assert isinstance(request, HttpRequest)
-    dataset = f.get_dataset("transactions", ['package','sub_package', 'vendor'])
+    dataset = f.get_dataset("transactions", ['package','sub_package', 'vendor', 'country'])
     return render(
         request,
-        'v2/visibility_dashboard.html',
+        'v2/visibility_dashboard2.html',
         {
             'data2':dataset,
             'title':'Home Page',

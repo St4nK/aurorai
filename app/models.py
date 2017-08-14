@@ -44,6 +44,7 @@ class Transaction(models.Model):
     package=models.CharField(max_length=255, default='')
     sub_package=models.CharField(max_length=255, default='')
     spend=models.FloatField(default=0)
+    country=models.CharField(max_length=255, default='')
     
     def __str__(self):
         return str(self.uid)
