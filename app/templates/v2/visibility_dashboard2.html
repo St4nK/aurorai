@@ -216,10 +216,10 @@
         ADash.addChart({
             name:'top_chart',
             chartType: 'BarChart',
-            dimension: ['package'],
+            dimension: ['gl'],
             sum: 'value',
             format: { type: 'multi' },
-            top: 20,
+            topnum: 20,
             div: '#areaChart1',
             hasFilter: false
 
@@ -252,7 +252,7 @@
             chartType: 'map',
             dimension: ['country'],
             sum: 'value',
-            format: { type: 'multi' },
+            format: { type: 'multi'},
             top: 20,
             div: 'world-map',
             hasFilter: true
@@ -298,7 +298,7 @@
             },
 
         });
-        get_dataset_ajax("transactions", ['package', 'sub_package', 'country'], {});
+        get_dataset_ajax("transactions", ['package', 'sub_package', 'country', 'gl', 'spend'], {});
 
 
     });
