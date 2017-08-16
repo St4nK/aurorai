@@ -33,39 +33,36 @@ function AuroraChart(options) {
             switch (chartType) {
                 case 'BarChart':
                     nv.addGraph(function () {
+                        var labels = []
                         var chart = nv.models.multiBarChart()
                         
-                            .x(function (d) { return d.label })    //Specify the data accessors.
+                            .x(function (d) {labels.push(d.label); return d.label })    //Specify the data accessors.
                             .y(function (d) { return d.value })
-                            .staggerLabels(true)    //Too many bars and not enough room? Try staggering labels.
-                            //.rotateLabels(-45)
+                            .staggerLabels(false)    //Too many bars and not enough room? Try staggering labels.
+                            .rotateLabels(-35)
                             //.showValues(true)       //...instead, show the bar value right on top of each bar.
                             .duration(1000)
-                            //.margin({ bottom: 100 })
+                            .margin({ bottom: 80 })
                             .useInteractiveGuideline(true)
                             .reduceXTicks(false)
                             //.wrapLabels(true)
-                            //.barColor(function (d, i) {
-                                
-                            //    if (options.hasFilter) {
-                                   
-                            //        if (filters.hasOwnProperty(options.dimension)) {
-                                        
-                            //            if (filters[options.dimension] === d.label && d.label !== '') {
-                            //                return colorActive
-                            //            }
-                            //            else {
-                            //                return colorsList[i]
-                            //            }
-                            //        }
-                            //    }
+                            .color(function (d) {
+                                if(options.hasFilter) {
+                                    for (i = 0; i < labels.length; i++) {
+                                        if (filters[options.dimension] === labels[i]) {
+                                            return 'rgb(255, 127, 14)'
+                                        }
+                                    }
 
-                            //})
-                            .color(function (d, i) {
-                            
-                                return colorsList[i]
-                                
+                                }
+                                return 'rgb(0, 183, 238)'
+
                             })
+                            //.color(function (d, i) {
+                            
+                                //return colorsList[i]
+                                
+                            //})
                             
                             //.valueFormat(d3.format('.2s'))
                         ;
@@ -254,10 +251,8 @@ function AuroraTable(options) {
     this.view = options.view;
     this.dimensions = options.dimensions;
     this.headers = [];
-    this.headers.push(...options.dimensions);
     this.headers.push('Spend', 'Transactions');
     this.columns = [];
-    this.columns.push(...options.dimensions);
     this.columns.push('count', 'value');
     this.content = options.content;
     this.update = function (content) {
@@ -266,18 +261,35 @@ function AuroraTable(options) {
     }
 }
 function AuroraMap(options) {
-    var selectedNames = []
+    var totalSpend=0, averageSpend=0;
+    var selectedNames = [];
+    var countries = Datamap.prototype.worldTopo.objects.world.geometries;
+    var countriesIds = {};
+
     for(var name in options.dataset) {
         selectedNames.push(name);
     }
-    var countries = Datamap.prototype.worldTopo.objects.world.geometries;
-    var countriesIds = {};
-    for (i in selectedNames) {
 
+    for (i in selectedNames){
+        totalSpend += options.dataset[selectedNames[i]];
+    }
+    averageSpend = totalSpend/selectedNames.length;
+    console.log(options.dataset.length)
+    console.log(averageSpend)
+
+
+    for (i in selectedNames) {
         for (j in countries){
             if(countries[j].properties.name == selectedNames[i]) {
-                countriesIds[countries[j].id] = {fillKey:"exists"}
-
+                if((options.dataset[countries[j].properties.name]) > averageSpend){
+                    countriesIds[countries[j].id] = {fillKey: "high"}
+                }else{
+                    if((options.dataset[countries[j].properties.name])>1000){
+                        countriesIds[countries[j].id] = {fillKey: "mid"}
+                    }else {
+                        countriesIds[countries[j].id] = {fillKey: "low"}
+                    }
+                }
             }
         }
     }
@@ -285,21 +297,28 @@ function AuroraMap(options) {
     this.view = options.view;
     this.format = options.format;
     this.xAxis = options.xAxis;
-    this.colorsList = ['rgb(0, 183, 238)', 'rgb(153, 153, 153)', 'rgb(123, 219, 255)'];
-    this.colorActive = 'rgb(248, 172, 89)';
     this.filters = {};
-    this.dataset = options.dataset
+    this.dataset = options.dataset;
+
     this.update = function (data, filters) {
         this.filters = filters;
         this.dataset = data;
-        colorsList = this.colorsList
-        colorActive = this.colorActive
+
         document.getElementById(options.div).innerHTML = "";
+
         var map = new Datamap({
             element: document.getElementById(options.div),
             fills: {
-                defaultFill: "#ABDDA4",
-                exists: "#fa0fa0"
+                defaultFill: "#00b7ee",
+                high: "#ff7f0e",
+                mid: "#f7b57b",
+                low: "#ffe7d3"
+            },
+            geographyConfig: {
+                popupTemplate: function(geography, dataset) {
+                    var spend = options.dataset[geography.properties.name];
+                    return ('<div class="hoverinfo">' + geography.properties.name + '. Spend: ' + spend  +'');
+                }
             },
             data: countriesIds,
             done: function(datamap) {
