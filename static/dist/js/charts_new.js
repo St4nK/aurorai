@@ -261,46 +261,45 @@ function AuroraTable(options) {
     }
 }
 function AuroraMap(options) {
-    var totalSpend=0, averageSpend=0;
-    var selectedNames = [];
-    var countries = Datamap.prototype.worldTopo.objects.world.geometries;
-    var countriesIds = {};
 
-    for(var name in options.dataset) {
-        selectedNames.push(name);
-    }
+    this.update = function (data, filters) {
+        console.log(data)
+        console.log(options.dataset)
+        var totalSpend=0, averageSpend=0;
+        var selectedNames = [];
+        var countries = Datamap.prototype.worldTopo.objects.world.geometries;
+        var countriesIds = {};
 
-    for (i in selectedNames){
-        totalSpend += options.dataset[selectedNames[i]];
-    }
-    averageSpend = totalSpend/selectedNames.length;
-    console.log(options.dataset.length)
-    console.log(averageSpend)
+        for(var name in data) {
+            selectedNames.push(name);
+        }
 
+        for (i in selectedNames){
+            totalSpend += data[selectedNames[i]];
+        }
+        averageSpend = totalSpend/selectedNames.length;
 
-    for (i in selectedNames) {
-        for (j in countries){
-            if(countries[j].properties.name == selectedNames[i]) {
-                if((options.dataset[countries[j].properties.name]) > averageSpend){
-                    countriesIds[countries[j].id] = {fillKey: "high"}
-                }else{
-                    if((options.dataset[countries[j].properties.name])>1000){
-                        countriesIds[countries[j].id] = {fillKey: "mid"}
-                    }else {
-                        countriesIds[countries[j].id] = {fillKey: "low"}
+        for (i in selectedNames) {
+            for (j in countries){
+                if(countries[j].properties.name == selectedNames[i]) {
+                    if((data[countries[j].properties.name]) > averageSpend){
+                        countriesIds[countries[j].id] = {fillKey: "high"}
+                    }else{
+                        if((data[countries[j].properties.name])>1000){
+                            countriesIds[countries[j].id] = {fillKey: "mid"}
+                        }else {
+                            countriesIds[countries[j].id] = {fillKey: "low"}
+                        }
                     }
                 }
             }
         }
-    }
 
-    this.view = options.view;
-    this.format = options.format;
-    this.xAxis = options.xAxis;
-    this.filters = {};
-    this.dataset = options.dataset;
-
-    this.update = function (data, filters) {
+        this.view = options.view;
+        this.format = options.format;
+        this.xAxis = options.xAxis;
+        this.filters = {};
+        this.dataset = options.dataset;
         this.filters = filters;
         this.dataset = data;
 
@@ -316,7 +315,7 @@ function AuroraMap(options) {
             },
             geographyConfig: {
                 popupTemplate: function(geography, dataset) {
-                    var spend = options.dataset[geography.properties.name];
+                    var spend = data[geography.properties.name];
                     return ('<div class="hoverinfo">' + geography.properties.name + '. Spend: ' + spend  +'');
                 }
             },
