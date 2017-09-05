@@ -2,9 +2,7 @@ Django==1.11.2
 django-excel==0.0.6
 django-pyodbc-azure==1.11.0.0
 lml==0.0.1
-numpy==1.12.1
 oauthlib==2.0.2
-pandas==0.20.1
 pyexcel==0.4.5
 pyexcel-io==0.4.0
 pyexcel-webio==0.0.11
